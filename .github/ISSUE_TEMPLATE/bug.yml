@@ -1,0 +1,78 @@
+name: '🐛 Bug'
+description: 버그 제보 및 버그 수정 작업
+title: '[Fix] 한 줄 요약' # 예: [Fix] 로그인 버튼 클릭 시 에러 수정
+
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 🏷️ Type
+      description: '작업 유형을 선택하세요 (커밋 prefix 기준)'
+      options:
+        - Fix # 버그 수정
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🎯 버그 설명
+      description: '어떤 문제가 발생했는지 작성해주세요.'
+      placeholder: |
+        예시)
+        - 로그인 버튼 클릭 시 500 에러 발생
+        - 특정 브라우저(모바일 사파리)에서 화면이 깨짐
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 🔁 재현 단계 (Steps to Reproduce)
+      description: '버그를 재현할 수 있는 단계를 순서대로 적어주세요.'
+      placeholder: |
+        1. 로그인 페이지로 이동
+        2. 이메일/비밀번호 입력
+        3. 로그인 버튼 클릭
+        4. 에러 메시지 확인
+    validations:
+      required: true
+
+  - type: textarea
+    id: body
+    attributes:
+      label: 🛠 수정 내용
+      description: '어떻게 수정할 계획인지 또는 수정했는지 작성하세요.'
+      placeholder: |
+        - [ ] 잘못된 API 요청 파라미터 수정
+        - [ ] null 체크 추가
+        - [ ] 에러 메시지 사용자 친화적으로 변경
+    validations:
+      required: true
+
+  - type: textarea
+    id: ac
+    attributes:
+      label: ✅ 수용조건 (AC)
+      description: '버그 수정 완료 여부를 판단할 수 있는 기준을 작성하세요.'
+      placeholder: |
+        예시)
+        Given 올바른 계정 정보로 로그인 요청 시
+        When 로그인 버튼을 클릭하면
+        Then 200 응답을 받고, 메인 페이지로 정상 이동한다.
+    validations:
+      required: true
+
+  - type: input
+    id: links
+    attributes:
+      label: 🔗 참고 정보 (선택)
+      placeholder: '에러 스크린샷, Sentry 링크, API 로그 등'
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        💡 **브랜치 규칙:** `type/{이슈번호-요약}`  
+        예) `fix/12-login-error`  
+        💡 **커밋 prefix 예시:** Fix

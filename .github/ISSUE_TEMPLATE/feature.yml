@@ -1,0 +1,67 @@
+name: '✨ Feature'
+description: 새로운 기능 / 페이지 / API 연동 작업
+title: '[Feat] 한 줄 요약' # 예: [Feat] 로그인 페이지 UI 구현
+
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 🏷️ Type
+      description: '작업 유형을 선택하세요 (커밋 prefix 기준)'
+      options:
+        - Feat # 새로운 기능 추가
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 🎯 목적/배경
+      description: '이 기능이 필요한 이유를 적어주세요.'
+      placeholder: |
+        예시)
+        - 메인 목록에 필터 기능이 없어 사용성이 떨어짐
+        - 로그인 후 유저 정보를 전역으로 관리할 필요가 있음
+    validations:
+      required: true
+
+  - type: textarea
+    id: body
+    attributes:
+      label: 📋 작업 내용
+      description: '구현할 내용을 체크리스트로 작성하세요.'
+      placeholder: |
+        - [ ] 라우팅 구조 정의 (`/posts`, `/posts/:id`)
+        - [ ] 타입 정의 (`types/` or `api/types/`)
+        - [ ] React Query 훅 구현 (`usePostsQuery` 등)
+        - [ ] UI 구현 및 상태 연동
+        - [ ] 로딩/에러 상태 처리
+    validations:
+      required: true
+
+  - type: textarea
+    id: ac
+    attributes:
+      label: ✅ 수용조건 (AC)
+      description: '완료 여부를 판단할 수 있는 기준을 작성하세요. (Given-When-Then 권장)'
+      placeholder: |
+        예시)
+        Given 사용자가 게시글 목록 페이지에 접속했을 때
+        When API 요청이 성공하면
+        Then 서버에서 받은 게시글 목록이 최신 순으로 표시된다.
+    validations:
+      required: true
+
+  - type: input
+    id: links
+    attributes:
+      label: 🔗 참고 링크 (선택)
+      placeholder: '디자인 시안, API 문서, 플로우 차트 등 링크를 추가하세요.'
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        💡 **브랜치 규칙:** `type/{이슈번호-요약}`  
+        예) `feat/5-login-ui`  
+        💡 **커밋 prefix 예시:** Feat, Fix, Style, Docs, Refactor, Chore
