@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 1) 공통: ESLint
+      - name: Run ESLint
+        run: npm run lint
+
+      # 2) 공통: Prettier 포맷 체크
+      - name: Run Prettier check
+        run: npm run format:check
+
+      # 3) 공통: 타입 체크 (TS)
+      - name: Run TypeScript type-check
+        run: npm run type-check
+
+      # 4) main에서만 테스트 실행
+      - name: Run tests (main only)
+        if: |
+          github.ref == 'refs/heads/main' ||
+          github.base_ref == 'main'
+        run: npm run test:run
+
+      # 5) main에서만 빌드 실행
+      - name: Build project (main only)
+        if: |
+          github.ref == 'refs/heads/main' ||
+          github.base_ref == 'main'
+        run: npm run build
