@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+echo "🔎 [1/1] lint-staged로 변경된 파일 검사 시작..."
+
+npx lint-staged
+if [ $? -ne 0 ]; then
+  echo "❌ lint-staged 검사 실패: ESLint/Prettier 오류를 먼저 수정해주세요."
+  exit 1
+fi
+
+echo "✅ pre-commit 훅 통과! (변경된 파일 기준 ESLint + Prettier OK)"

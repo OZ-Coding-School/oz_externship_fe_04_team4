@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+echo "📝 [커밋 메시지] 규칙 검사 시작..."
+
+npx --no-install commitlint --edit "$1"
+if [ $? -ne 0 ]; then
+  echo "❌ 커밋 메시지 규칙 위반: 정해둔 형식을 확인해주세요."
+  echo "   예) feat: 로그인 폼 UI 구현"
+  exit 1
+fi
+
+echo "✅ 커밋 메시지 규칙 통과!"
