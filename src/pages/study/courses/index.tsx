@@ -1,1 +1,3 @@
-export default function CourseManagementPage() {}
+export default function CourseManagementPage() {
+  return <>CourseManagementPage</>
+}

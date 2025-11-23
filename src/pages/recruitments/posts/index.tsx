@@ -1,1 +1,3 @@
-export default function ApplicationManagementPage() {}
+export default function ApplicationManagementPage() {
+  return <>ApplicationManagementPage</>
+}

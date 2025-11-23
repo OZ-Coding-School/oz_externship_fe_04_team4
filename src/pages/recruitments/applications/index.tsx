@@ -1,1 +1,3 @@
-export default function RecruitmentPostManagementPage() {}
+export default function RecruitmentPostManagementPage() {
+  return <>RecruitmentPostManagementPage</>
+}

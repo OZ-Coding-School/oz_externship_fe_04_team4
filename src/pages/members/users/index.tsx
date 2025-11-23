@@ -1,1 +1,3 @@
-export default function UserManagementPage() {}
+export default function UserManagementPage() {
+  return <>UserManagementPage</>
+}

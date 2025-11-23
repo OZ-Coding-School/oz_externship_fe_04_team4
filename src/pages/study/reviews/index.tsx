@@ -1,1 +1,3 @@
-export default function ReviewManagementPage() {}
+export default function ReviewManagementPage() {
+  return <>ReviewManagementPage</>
+}

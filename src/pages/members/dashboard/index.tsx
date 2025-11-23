@@ -1,1 +1,3 @@
-export default function MembersDashboardPage() {}
+export default function MembersDashboardPage() {
+  return <>MembersDashboardPage</>
+}

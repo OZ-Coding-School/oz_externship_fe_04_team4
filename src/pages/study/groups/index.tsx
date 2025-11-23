@@ -1,1 +1,3 @@
-export default function StudyGroupManagementPage() {}
+export default function StudyGroupManagementPage() {
+  return <>StudyGroupManagementPage</>
+}

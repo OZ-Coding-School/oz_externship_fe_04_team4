@@ -5,8 +5,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 
 async function enableMocking() {
+  // true MSW on, false MSW off
   if (!import.meta.env.DEV) {
-    // true MSW on, false MSW off
     return
   }
 

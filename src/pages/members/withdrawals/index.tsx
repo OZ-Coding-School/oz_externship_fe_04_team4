@@ -1,1 +1,3 @@
-export default function WithdrawalManagementPage() {}
+export default function WithdrawalManagementPage() {
+  return <>WithdrawalManagementPage</>
+}

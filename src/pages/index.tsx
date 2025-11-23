@@ -1,9 +1,15 @@
-const HomePage = () => {
+import Sidebar from '@/components/layout/Sidebar'
+import type { ReactNode } from 'react'
+
+type Props = { children: ReactNode }
+
+const Layout = ({ children }: Props) => {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="">
+      <Sidebar />
+      {children}
     </div>
   )
 }
 
-export default HomePage
+export default Layout
