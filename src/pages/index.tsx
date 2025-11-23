@@ -1,15 +1,3 @@
-import Sidebar from '@/components/layout/Sidebar'
-import type { ReactNode } from 'react'
-
-type Props = { children: ReactNode }
-
-const Layout = ({ children }: Props) => {
-  return (
-    <div className="">
-      <Sidebar />
-      {children}
-    </div>
-  )
+export default function Login() {
+  return <div className="w-[3999px] bg-red-900">login</div>
 }
-
-export default Layout
