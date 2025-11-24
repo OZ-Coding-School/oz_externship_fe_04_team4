@@ -5,7 +5,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-pretendard: 'roboto', sans-serif;
+  --font-roboto: 'roboto', sans-serif;
   --color-basic-bg: #fef9c3;
   --color-basic-inner: #854d0e;
   --color-primary-black: #111827;
@@ -22,11 +22,13 @@
   --color-state-decline: #fee2e2;
   --color-state-decline-txt: #991b1b;
 }
+
 @layer base {
   body {
-    @apply font-roboto text-color-primary-black font-regular;
+    @apply font-roboto text-primary-black;
   }
 }
+
 @layer components {
   .btn {
     @apply flex items-center justify-center rounded-lg text-[14px] font-medium text-[#374151] transition-colors duration-200;
