@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.2.9",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.80.7",
     "axios": "^1.10.0",

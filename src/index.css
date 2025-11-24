@@ -1,0 +1,40 @@
+@import '@fontsource/roboto';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-pretendard: 'roboto', sans-serif;
+  --color-basic-bg: #fef9c3;
+  --color-basic-inner: #854d0e;
+  --color-primary-black: #111827;
+  --color-primary-red: #dc2626;
+  --color-primary-blue: #2563eb;
+  --color-primary-green: #16a34a;
+  --color-primary-yellow: #eab308;
+  --color-primary-light-gray: #d1d5db;
+  --color-primary-dark-gray: #6b7280;
+  --color-state-permission: #dcfce7;
+  --color-state-permission-txt: #166534;
+  --color-state-waiting: #dbeafe;
+  --color-state-waiting-txt: #1e40af;
+  --color-state-decline: #fee2e2;
+  --color-state-decline-txt: #991b1b;
+}
+@layer base {
+  body {
+    @apply font-roboto text-color-primary-black font-regular;
+  }
+}
+@layer components {
+  .btn {
+    @apply flex items-center justify-center rounded-lg text-[14px] font-medium text-[#374151] transition-colors duration-200;
+  }
+  .btn-filled {
+    @apply bg-primary-dark-gray text-white hover:opacity-90;
+  }
+  .btn-delete {
+    @apply bg-primary-red text-white hover:opacity-90;
+  }
+}
