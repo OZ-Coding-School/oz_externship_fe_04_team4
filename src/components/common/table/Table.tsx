@@ -5,6 +5,8 @@ interface Column<T> {
   key: keyof T | string
   header: string
   width?: string
+  // value = T[keyof T]여야 하지만 column.key의 정확한 타입 추론이 어려움
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: (value: any, row: T) => ReactNode
 }
 interface PaginationResponse<T> {
