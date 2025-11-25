@@ -93,6 +93,7 @@ export default function ExampleTable() {
   }
   return (
     <div className="space-y-4 p-6">
+      {`queryParams: ${JSON.stringify(queryParams)}`}
       <Table
         currentPage={currentPage}
         onPageChange={setCurrentPage}
