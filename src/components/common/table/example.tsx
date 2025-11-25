@@ -1,4 +1,4 @@
-import { Table } from '@/components/common/table/Table'
+import { type SortConfig, Table } from '@/components/common/table/Table'
 import { useState } from 'react'
 
 const exampleData = Array.from({ length: 1000 }, (_, i) => ({
@@ -18,8 +18,18 @@ const columns = [
   { key: 'id', header: '회원 ID', width: '100px' },
   { key: 'email', header: '이메일', width: '200px' },
   { key: 'nickname', header: '닉네임', width: '120px' },
-  { key: 'name', header: '이름', width: '100px' },
-  { key: 'birthday', header: '생년월일', width: '120px' },
+  {
+    key: 'name',
+    header: '이름',
+    width: '100px',
+    sortable: { asc: 'id_asc', desc: 'id_desc' },
+  },
+  {
+    key: 'birthday',
+    header: '생년월일',
+    width: '120px',
+    sortable: { asc: 'oldest', desc: 'latest' },
+  },
   { key: 'role', header: '권한', width: '100px' },
   {
     key: 'status',
@@ -41,6 +51,14 @@ const columns = [
 ]
 export default function ExampleTable() {
   const [currentPage, setCurrentPage] = useState(1)
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
+  const [queryParams, setQueryParams] = useState({
+    page: 1,
+    page_size: 10,
+    search: '',
+    role: '',
+    sort: '',
+  })
   // 페이지네이션 테스트 용 데이터 슬라이스(실제론 API에서 results에 10개씩만 들어있음)
   const startIndex = (currentPage - 1) * 10
   const endIndex = startIndex + 10
@@ -51,6 +69,28 @@ export default function ExampleTable() {
     previous: currentPage > 1 ? `...?page=${currentPage - 1}` : null,
     results: currentPageData,
   }
+  const handleSort = (
+    sortValue: string,
+    direction: 'asc' | 'desc',
+    key: string
+  ) => {
+    if (sortValue === '') {
+      // 정렬 해제
+      setSortConfig(null)
+      setQueryParams((prev) => ({ ...prev, sort: '', page: 1 }))
+    } else {
+      setSortConfig({ key, value: sortValue, direction })
+      setQueryParams((prev) => ({
+        ...prev,
+        sort: sortValue,
+        page: 1,
+      }))
+    }
+    setCurrentPage(1)
+
+    // API 호출
+    // fetchUsers(queryParams)
+  }
   return (
     <div className="space-y-4 p-6">
       <Table
@@ -60,6 +100,8 @@ export default function ExampleTable() {
         response={exampleResponse}
         // isLoading
         // error={'error'}
+        sortConfig={sortConfig}
+        onSort={handleSort}
       />
     </div>
   )
