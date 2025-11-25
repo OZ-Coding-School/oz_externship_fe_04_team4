@@ -1,4 +1,5 @@
 import { Pagination } from '@/components/common/table/Pagination'
+import { TableError } from '@/components/common/table/TableError'
 import type { ReactNode } from 'react'
 
 interface Column<T> {
@@ -22,6 +23,8 @@ interface TableProps<T> {
   onPageChange: (newPage: number) => void
   pageSize?: number
   isLoading?: boolean
+  error?: Error | string
+  onRetry?: () => void
 }
 /**
  * Table 컴포넌트
@@ -38,6 +41,9 @@ interface TableProps<T> {
  * @param currentPage 현재 페이지
  * @param onPageChange 페이지 변경 핸들러
  * @param pageSize 10고정
+ * @param isLoading 로딩 상태
+ * @param error 에러 상태
+ * @param onRetry 재시도 핸들러
  * @returns 페이징테이블
  */
 export function Table<T>({
@@ -47,6 +53,8 @@ export function Table<T>({
   onPageChange,
   pageSize = 10,
   isLoading,
+  error,
+  onRetry,
 }: TableProps<T>) {
   const totalPages = Math.ceil(response.count / pageSize)
   return (
@@ -68,7 +76,13 @@ export function Table<T>({
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {isLoading ? (
+            {error ? (
+              <TableError
+                error={error}
+                colSpan={columns.length}
+                onRetry={onRetry}
+              />
+            ) : isLoading ? (
               Array.from({ length: 10 }).map((_, rowIndex) => (
                 <tr key={`skeleton-${rowIndex}`}>
                   {columns.map((_, colIndex) => (
