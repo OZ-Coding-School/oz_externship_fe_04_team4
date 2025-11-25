@@ -7,19 +7,28 @@ interface Column<T> {
   width?: string
   render?: (value: any, row: T) => ReactNode
 }
+interface PaginationResponse<T> {
+  count: number
+  next: string | null
+  previous: string | null
+  results: T[]
+}
 interface TableProps<T> {
   columns: Column<T>[]
-  data: T[]
+  response: PaginationResponse<T>
   currentPage: number
-  totalPages: number
+  onPageChange: (newPage: number) => void
+  pageSize?: number
 }
 
 export function Table<T>({
   columns,
-  data,
+  response,
   currentPage = 1,
-  totalPages = 1,
+  onPageChange,
+  pageSize = 10,
 }: TableProps<T>) {
+  const totalPages = Math.ceil(response.count / pageSize)
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -39,7 +48,7 @@ export function Table<T>({
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {data.map((row, rowIndex) => (
+            {response.results.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="cursor-pointer transition-colors hover:bg-gray-50"
@@ -56,7 +65,11 @@ export function Table<T>({
           </tbody>
         </table>
       </div>
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
     </div>
   )
 }
