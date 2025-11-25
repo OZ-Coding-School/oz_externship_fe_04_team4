@@ -64,20 +64,31 @@ export function Table<T>({
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {response.results.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="cursor-pointer transition-colors hover:bg-gray-50"
-              >
-                {columns.map((column, colIndex) => (
-                  <td key={colIndex} className="px-4 py-3 text-gray-600">
-                    {column.render
-                      ? column.render(row[column.key as keyof T], row)
-                      : (row[column.key as keyof T] as ReactNode)}
-                  </td>
-                ))}
+            {response.results.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="px-4 py-8 text-center text-gray-500"
+                >
+                  데이터가 없습니다
+                </td>
               </tr>
-            ))}
+            ) : (
+              response.results.map((row, rowIndex) => (
+                <tr
+                  key={rowIndex}
+                  className="cursor-pointer transition-colors hover:bg-gray-50"
+                >
+                  {columns.map((column, colIndex) => (
+                    <td key={colIndex} className="px-4 py-3 text-gray-600">
+                      {column.render
+                        ? column.render(row[column.key as keyof T], row)
+                        : (row[column.key as keyof T] as ReactNode)}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
