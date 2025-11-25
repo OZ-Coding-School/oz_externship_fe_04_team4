@@ -5,7 +5,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-pretendard: 'roboto', sans-serif;
+  --font-roboto: 'roboto', sans-serif;
   --color-basic-bg: #fef9c3;
   --color-basic-inner: #854d0e;
   --color-primary-black: #111827;
