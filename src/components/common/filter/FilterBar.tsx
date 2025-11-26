@@ -29,7 +29,7 @@ interface FilterBarProps {
  */
 export function FilterBar({ searchConfig, filters = [] }: FilterBarProps) {
   return (
-    <div className="flex gap-2">
+    <div className="mb-2 flex gap-2 pr-4 pl-4">
       <SearchInput
         label={searchConfig.label}
         placeholder={searchConfig.placeholder}
