@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { X } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface ModalProps {
@@ -14,6 +14,7 @@ interface ModalProps {
   titleClassName?: string
   contentClassName?: string
   topCloseButton?: boolean
+  zIndex?: number
 }
 
 export default function Modal({
@@ -27,21 +28,53 @@ export default function Modal({
   contentClassName,
   footerClassName,
   topCloseButton,
+  zIndex = 50,
 }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (isOpen) {
+      const prevActiveElement = document.activeElement as HTMLElement
+
+      requestAnimationFrame(() => {
+        modalRef.current?.focus()
+      })
+      return () => {
+        prevActiveElement?.focus()
+      }
+    }
+  }, [isOpen])
+
+  const handlekeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      e.stopPropagation()
+      onClose()
+    }
+  }
+  const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+  }
   if (!isOpen) return null
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      onClick={onClose}
+      style={{ zIndex }}
+    >
       <div
         className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-        onClick={onClose}
         aria-hidden="true"
       />
       <div
         role="dialog"
         aria-modal="true"
+        ref={modalRef}
+        tabIndex={-1}
+        onKeyDown={handlekeyDown}
+        onClick={handleContentClick}
+        style={{ zIndex: zIndex + 1 }}
         className={twMerge(
           clsx(
-            `animate-fadeIn relative z-60 w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-xl`,
+            `animate-fadeIn relative z-60 w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-xl focus:outline-none`,
             className
           )
         )}
