@@ -1,7 +1,9 @@
+import { Search } from 'lucide-react'
+
+import { useEffect, useState } from 'react'
+
 import type { SearchConfig } from '@/components/common/filter/types'
 import { useDebounce } from '@/hooks'
-import { Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 export function SearchInput({
   label = '검색',

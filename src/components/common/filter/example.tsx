@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
+
 import { FilterBar } from '@/components/common/filter'
 import ExampleTable from '@/components/common/table/example'
-import { useEffect, useState } from 'react'
 
 export default function ExampleFilter() {
   const [search, setSearch] = useState('')

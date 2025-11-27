@@ -1,5 +1,4 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
-
 import type { ReactNode } from 'react'
 
 import { Pagination } from '@/components/common/table/Pagination'
@@ -10,8 +9,6 @@ import type {
   PaginationResponse,
   SortConfig,
 } from '@/components/common/table/types'
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
-import type { ReactNode } from 'react'
 
 interface TableProps<T> {
   columns: Column<T>[]
