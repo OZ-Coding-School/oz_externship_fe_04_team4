@@ -5,27 +5,14 @@ import type { ReactNode } from 'react'
 import { Pagination } from '@/components/common/table/Pagination'
 import { TableDataNone } from '@/components/common/table/TableDataNone'
 import { TableError } from '@/components/common/table/TableError'
+import type {
+  Column,
+  PaginationResponse,
+  SortConfig,
+} from '@/components/common/table/types'
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
+import type { ReactNode } from 'react'
 
-interface Column<T> {
-  key: keyof T | string
-  header: string
-  width?: string
-  // value = T[keyof T]여야 하지만 column.key의 정확한 타입 추론이 어려움
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render?: (value: any, row: T) => ReactNode
-  sortable?: { asc: string; desc: string }
-}
-export interface SortConfig {
-  key: string
-  value: string // 실제 쿼리스트링에 사용되는 값
-  direction: 'asc' | 'desc'
-}
-interface PaginationResponse<T> {
-  count: number
-  next: string | null
-  previous: string | null
-  results: T[]
-}
 interface TableProps<T> {
   columns: Column<T>[]
   response: PaginationResponse<T>
