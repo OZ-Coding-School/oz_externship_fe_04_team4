@@ -1,3 +1,6 @@
+import { http, HttpResponse } from 'msw'
+
+import { ADMIN_API_PREFIX, BASE_URL } from '@/config/api'
 import {
   mockAccountDetailMap,
   mockAccountsList,
@@ -17,9 +20,6 @@ import {
   mockWithdrawalsDetailMap,
   mockWithdrawalsList,
 } from '@/mocks/data/accounts'
-
-import { ADMIN_API_PREFIX, BASE_URL } from '@/config/api'
-import { http, HttpResponse } from 'msw'
 
 /**
  * 공통 admin 인증 체크

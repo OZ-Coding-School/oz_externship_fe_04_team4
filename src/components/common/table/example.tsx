@@ -1,5 +1,6 @@
-import { type SortConfig, Table } from '@/components/common/table/Table'
 import { useState } from 'react'
+
+import { type SortConfig, Table } from '@/components/common/table/Table'
 
 const exampleData = Array.from({ length: 1000 }, (_, i) => ({
   id: i + 1,

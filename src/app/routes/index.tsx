@@ -1,3 +1,5 @@
+import { Route, Routes } from 'react-router'
+
 import { ProtectedRoute } from '@/app/routes/ProtectedRoute'
 import Layout from '@/pages/layout'
 import Login from '@/pages/login'
@@ -9,7 +11,6 @@ import RecruitmentPostManagementPage from '@/pages/recruitment/posts'
 import LectureManagementPage from '@/pages/study/courses'
 import StudyGroupManagementPage from '@/pages/study/groups'
 import ReviewManagementPage from '@/pages/study/reviews'
-import { Route, Routes } from 'react-router'
 
 export default function AppRouter() {
   return (

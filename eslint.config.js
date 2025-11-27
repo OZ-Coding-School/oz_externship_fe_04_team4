@@ -1,10 +1,11 @@
 import js from '@eslint/js' // JavaScript 기본 규칙 세트
-import tseslint from 'typescript-eslint' // TypeScript 전용 규칙 세트
+import prettier from 'eslint-config-prettier' // Prettier와 충돌하는 ESLint 규칙 비활성화
+import importPlugin from 'eslint-plugin-import'
 import react from 'eslint-plugin-react' // React 컴포넌트 관련 규칙
 import reactHooks from 'eslint-plugin-react-hooks' // React Hooks 관련 규칙
 import reactRefresh from 'eslint-plugin-react-refresh' // Vite HMR 최적화 규칙
-import prettier from 'eslint-config-prettier' // Prettier와 충돌하는 ESLint 규칙 비활성화
 import globals from 'globals' // 글로벌 변수 정의 (window, document 등)
+import tseslint from 'typescript-eslint' // TypeScript 전용 규칙 세트
 
 export default tseslint.config(
   // 1. 무시할 파일/폴더 설정
@@ -34,6 +35,7 @@ export default tseslint.config(
       react, // React 컴포넌트 관련
       'react-hooks': reactHooks, // React Hooks 관련
       'react-refresh': reactRefresh, // Vite HMR 관련
+      import: importPlugin,
     },
 
     // 언어 및 파싱 설정
@@ -111,6 +113,28 @@ export default tseslint.config(
         },
       ],
       // 설명: Vite의 Hot Module Replacement 최적화를 위한 규칙
+
+      'import/order': [
+        'warn', // 경고로 띄움 (에러는 아님)
+        {
+          groups: [
+            'external', // 외부 라이브러리 (예: react, axios)
+            'internal', // 프로젝트 내부 import (@/components 등)
+            ['parent', 'sibling', 'index'], // 상대경로 import (../, ./)
+          ],
+          pathGroups: [
+            {
+              pattern: '@/**', // @로 시작하는 경로를 internal로 인식
+              group: 'internal',
+            },
+          ],
+          'newlines-between': 'always-and-inside-groups', // 그룹 간 줄바꿈
+          alphabetize: {
+            order: 'asc', // 알파벳순 정렬
+            caseInsensitive: true, // 대소문자 구분 X
+          },
+        },
+      ],
     },
   },
 

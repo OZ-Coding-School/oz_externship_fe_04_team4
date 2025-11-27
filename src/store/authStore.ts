@@ -1,6 +1,7 @@
-import type { LoginResponse } from '@/api/auth'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
+import type { LoginResponse } from '@/api/auth'
 
 type AuthState = {
   accessToken: string | null

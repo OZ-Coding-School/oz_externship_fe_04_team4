@@ -1,9 +1,11 @@
 // login 페이지
 
+import { useState, type FormEvent } from 'react'
+
+import { useNavigate } from 'react-router'
+
 import { useLoginMutation } from '@/api/auth/useLoginMutation'
 import Button from '@/components/common/Button'
-import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router'
 
 const INPUT_STYLE =
   'h-12 w-[328px] rounded-sm border border-[#BDBDBD] bg-white mb-3 placeholder-[#BDBDBD] py-3.5 px-4 outline-0'

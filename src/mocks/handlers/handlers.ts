@@ -1,6 +1,8 @@
 // src/mocks/handlers/handlers.ts
-import { ADMIN_API_PREFIX } from '@/config/api'
 import { http, HttpResponse } from 'msw'
+
+import { ADMIN_API_PREFIX } from '@/config/api'
+
 import { adminHandlers } from './adminHandlers'
 
 // (선택) 로그인 전용 핸들러 예시
