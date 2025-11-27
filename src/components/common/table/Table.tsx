@@ -33,14 +33,6 @@ interface TableProps<T> {
  * 3. 담당자는 currentPage 상태 관리 필요(useState...)
  * 4. onPageChange 핸들러 넘기기(setCurrentPage)
  * 5. 정렬 기능 사용 시 sortConfig, onSort 핸들러 넘기기(선택)
- * @param columns 테이블 컬럼 정의
- * @param response API 응답 객체(전부)
- * @param currentPage 현재 페이지
- * @param onPageChange 페이지 변경 핸들러
- * @param pageSize 10고정
- * @param isLoading 로딩 상태
- * @param error 에러 상태
- * @param onRetry 재시도 핸들러
  * @returns 페이징테이블
  */
 export function Table<T>({
@@ -91,13 +83,11 @@ export function Table<T>({
                         sortConfig?.key === column.key
                           ? sortConfig.direction
                           : null
-
                       // 순환: null → asc → desc → null
                       let newDirection: 'asc' | 'desc' | null
                       if (!currentDirection) newDirection = 'asc'
                       else if (currentDirection === 'asc') newDirection = 'desc'
                       else newDirection = null
-
                       if (newDirection) {
                         const sortValue = column.sortable[newDirection]
                         onSort?.(sortValue, newDirection, column.key)
@@ -115,53 +105,40 @@ export function Table<T>({
               ))}
             </tr>
           </thead>
-
           <tbody className="divide-y divide-gray-200">
-            {(() => {
-              return (
-                <>
-                  {hasError && (
-                    <TableError
-                      error={error}
-                      colSpan={columns.length}
-                      onRetry={onRetry}
-                    />
-                  )}
-
-                  {showLoading &&
-                    Array.from({ length: 10 }).map((_, rowIndex) => (
-                      <tr key={`skeleton-${rowIndex}`}>
-                        {columns.map((_, colIndex) => (
-                          <td key={colIndex} className="px-4 py-3">
-                            <div className="h-4 animate-pulse rounded bg-gray-200" />
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-
-                  {isEmpty && <TableDataNone length={columns.length} />}
-
-                  {hasData &&
-                    response.results.map((row, rowIndex) => (
-                      <tr
-                        key={rowIndex}
-                        className="cursor-pointer transition-colors hover:bg-gray-50"
-                      >
-                        {columns.map((column, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className="px-4 py-3 text-gray-600"
-                          >
-                            {column.render
-                              ? column.render(row[column.key as keyof T], row)
-                              : (row[column.key as keyof T] as ReactNode)}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                </>
-              )
-            })()}
+            {hasError && (
+              <TableError
+                error={error}
+                colSpan={columns.length}
+                onRetry={onRetry}
+              />
+            )}
+            {showLoading &&
+              Array.from({ length: 10 }).map((_, rowIndex) => (
+                <tr key={`skeleton-${rowIndex}`}>
+                  {columns.map((_, colIndex) => (
+                    <td key={colIndex} className="px-4 py-3">
+                      <div className="h-4 animate-pulse rounded bg-gray-200" />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            {isEmpty && <TableDataNone length={columns.length} />}
+            {hasData &&
+              response.results.map((row, rowIndex) => (
+                <tr
+                  key={rowIndex}
+                  className="cursor-pointer transition-colors hover:bg-gray-50"
+                >
+                  {columns.map((column, colIndex) => (
+                    <td key={colIndex} className="px-4 py-3 text-gray-600">
+                      {column.render
+                        ? column.render(row[column.key as keyof T], row)
+                        : (row[column.key as keyof T] as ReactNode)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
