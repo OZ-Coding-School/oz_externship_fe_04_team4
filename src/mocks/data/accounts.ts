@@ -1154,7 +1154,7 @@ export const mockSignupTrends: SignupTrends = {
 
 // api/v1/admin/analytics/withdrawals/trends
 // 회원 탈퇴 추세 분석
-export const mockWithdrawalsTrends: WithdrawalsTrends = {
+export const mockWithdrawalsTrendsMonthly: WithdrawalsTrends = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1164,6 +1164,26 @@ export const mockWithdrawalsTrends: WithdrawalsTrends = {
     { period: '2025-01', count: 70 },
     { period: '2025-02', count: 75 },
     { period: '2025-03', count: 80 },
+    { period: '2025-04', count: 85 },
+    { period: '2025-05', count: 90 },
+    { period: '2025-06', count: 95 },
+    { period: '2025-07', count: 100 },
+    { period: '2025-08', count: 105 },
+    { period: '2025-09', count: 110 },
+    { period: '2025-10', count: 115 },
+    { period: '2025-11', count: 120 },
+  ],
+}
+export const mockWithdrawalsTrendsYearly: WithdrawalsTrends = {
+  interval: 'yearly',
+  from_date: '2024-12-01',
+  to_date: '2025-11-30',
+  total: 1105,
+  items: [
+    { period: '2024-12', count: 100 },
+    { period: '2025-01', count: 80 },
+    { period: '2025-02', count: 100 },
+    { period: '2025-03', count: 78 },
     { period: '2025-04', count: 85 },
     { period: '2025-05', count: 90 },
     { period: '2025-06', count: 95 },

@@ -19,7 +19,8 @@ import {
   mockWithdrawalReasonsStatsMonthly,
   mockWithdrawalsDetailMap,
   mockWithdrawalsList,
-  mockWithdrawalsTrends,
+  mockWithdrawalsTrendsMonthly,
+  mockWithdrawalsTrendsYearly,
 } from '@/mocks/data/accounts'
 
 /**
@@ -393,7 +394,18 @@ export const getAdminWithdrawalsTrendsHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
-    return HttpResponse.json(mockWithdrawalsTrends, { status: 200 })
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('interval')
+
+    let interval: 'monthly' | 'yearly' = 'monthly'
+    if (raw === 'yearly') interval = 'yearly'
+
+    return HttpResponse.json(
+      interval === 'yearly'
+        ? mockWithdrawalsTrendsYearly
+        : mockWithdrawalsTrendsMonthly,
+      { status: 200 }
+    )
   }
 )
 
