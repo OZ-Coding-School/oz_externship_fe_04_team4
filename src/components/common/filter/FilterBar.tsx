@@ -27,7 +27,7 @@ interface FilterBarProps {
  */
 export function FilterBar({ searchConfig, filters = [] }: FilterBarProps) {
   return (
-    <div className="mb-2 grid grid-cols-3 gap-2 px-4">
+    <div className="grid grid-cols-3 gap-2 bg-white px-4 pb-4">
       <SearchInput
         label={searchConfig.label}
         placeholder={searchConfig.placeholder}

@@ -24,7 +24,7 @@ export function SearchInput({
       {label && (
         <label className="text-xs font-medium text-gray-700">{label}</label>
       )}
-      <div className="relative">
+      <div className="relative rounded-lg bg-white">
         <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <input
           type="text"
