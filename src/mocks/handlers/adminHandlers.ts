@@ -18,11 +18,8 @@ import {
   mockWithdrawalsList,
 } from '@/mocks/data/accounts'
 
+import { ADMIN_API_PREFIX, BASE_URL } from '@/config/api'
 import { http, HttpResponse } from 'msw'
-
-const BASE_URL = 'http://api.ozcoding.site'
-const API_V1_PREFIX = '/api/v1'
-export const ADMIN_API_PREFIX = `${API_V1_PREFIX}/admin`
 
 /**
  * 공통 admin 인증 체크
@@ -188,7 +185,7 @@ export const patchAdminAccountHandler = http.patch(
     }
 
     // 메모리 상의 더미 데이터도 함께 갱신
-    mockAccountDetailMap[id] = updated as any
+    mockAccountDetailMap[id] = updated
 
     return HttpResponse.json(updated, { status: 200 })
   }

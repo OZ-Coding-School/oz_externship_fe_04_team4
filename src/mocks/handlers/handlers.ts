@@ -1,6 +1,7 @@
 // src/mocks/handlers/handlers.ts
+import { ADMIN_API_PREFIX } from '@/config/api'
 import { http, HttpResponse } from 'msw'
-import { ADMIN_API_PREFIX, adminHandlers } from './adminHandlers'
+import { adminHandlers } from './adminHandlers'
 
 // (선택) 로그인 전용 핸들러 예시
 type LoginRequestBody = { email: string; password: string }

@@ -1,4 +1,4 @@
-import { ADMIN_API_PREFIX } from '@/mocks/handlers/adminHandlers'
+import { ADMIN_API_PREFIX } from '@/config/api'
 import { useAuthStore } from '@/store/authStore'
 
 type AdminFetchOptions = Omit<RequestInit, 'headers'> & {
