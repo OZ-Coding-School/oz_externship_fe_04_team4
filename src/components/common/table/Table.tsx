@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import { Pagination } from '@/components/common/table/Pagination'
 import { TableDataNone } from '@/components/common/table/TableDataNone'
@@ -16,7 +16,7 @@ interface TableProps<T> {
   columns: Column<T>[]
   response: PaginationResponse<T>
   currentPage: number
-  onPageChange: (newPage: number) => void
+  onPageChange: Dispatch<SetStateAction<number>>
   pageSize?: number
   isLoading?: boolean
   error?: Error | string
