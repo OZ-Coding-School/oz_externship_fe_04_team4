@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
       ) : (
         <>
           <Sidebar />
-          <div className="p-8">
+          <div className="bg-gray-5 flex-1 p-8">
             <h1 className="mb-6 text-2xl font-bold text-gray-900">
               {getPageTitle(pathname)}
             </h1>
