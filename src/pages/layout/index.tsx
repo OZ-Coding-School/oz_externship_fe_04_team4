@@ -7,9 +7,9 @@ type Props = { children: ReactNode }
 const Layout = ({ children }: Props) => {
   const { pathname } = useLocation()
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       {pathname !== '/' && <Sidebar />}
-      {children}
+      <div className="flex-1 bg-gray-50">{children}</div>
     </div>
   )
 }
