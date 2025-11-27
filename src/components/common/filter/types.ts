@@ -14,5 +14,4 @@ export interface SearchConfig {
   placeholder: string
   value: string
   onChange: (value: string) => void
-  debounceDelay?: number
 }

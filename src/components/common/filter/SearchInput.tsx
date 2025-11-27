@@ -1,19 +1,17 @@
 import { Search } from 'lucide-react'
 
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 
 import type { SearchConfig } from '@/components/common/filter/types'
-import { useDebounce } from '@/hooks'
 
 export function SearchInput({
   label = '검색',
   placeholder,
   value,
   onChange,
-  debounceDelay = 500,
 }: SearchConfig) {
   const [localValue, setLocalValue] = useState(value)
-  const debounceValue = useDebounce(localValue, debounceDelay)
+  const debounceValue = useDeferredValue(localValue)
 
   useEffect(() => {
     setLocalValue(value)

@@ -33,7 +33,6 @@ export function FilterBar({ searchConfig, filters = [] }: FilterBarProps) {
         placeholder={searchConfig.placeholder}
         value={searchConfig.value}
         onChange={searchConfig.onChange}
-        debounceDelay={searchConfig.debounceDelay}
       />
 
       {filters.map((filter) => (
