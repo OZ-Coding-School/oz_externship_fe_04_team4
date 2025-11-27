@@ -28,9 +28,9 @@ export function Pagination({
       return Array.from({ length: totalPages }, (_, i) => i + 1)
     }
 
-    const firstPages = Math.floor(VISIBLE_PAGES / 2)
+    const pageSize = Math.floor(VISIBLE_PAGES / 2)
 
-    if (currentPage <= firstPages) {
+    if (currentPage <= pageSize) {
       return [
         ...Array.from({ length: VISIBLE_PAGES }, (_, i) => i + 1),
         ELLIPSIS,
@@ -38,7 +38,7 @@ export function Pagination({
       ]
     }
 
-    if (currentPage >= totalPages - firstPages) {
+    if (currentPage >= totalPages - pageSize) {
       return [
         1,
         ELLIPSIS,
@@ -49,13 +49,12 @@ export function Pagination({
       ]
     }
 
-    const middleCount = VISIBLE_PAGES
     return [
       1,
       ELLIPSIS,
       ...Array.from(
-        { length: middleCount },
-        (_, i) => currentPage - Math.floor(middleCount / 2) + i
+        { length: VISIBLE_PAGES },
+        (_, i) => currentPage - pageSize + i
       ),
       ELLIPSIS,
       totalPages,
