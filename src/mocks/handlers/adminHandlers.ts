@@ -17,11 +17,12 @@ import {
   mockStudyReviewDetail,
   mockStudyReviewList,
   mockWithdrawalReasonsPercentage,
-  mockWithdrawalReasonsStatsMonthly,
+  mockWithdrawalReasonsStatsMonthlyMap,
   mockWithdrawalsDetailMap,
   mockWithdrawalsList,
   mockWithdrawalsTrendsMonthly,
   mockWithdrawalsTrendsYearly,
+  type WithdrawalReason,
 } from '@/mocks/data/accounts'
 
 /**
@@ -440,7 +441,26 @@ export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
-    return HttpResponse.json(mockWithdrawalReasonsStatsMonthly, { status: 200 })
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('reason')
+
+    // reason 변수 선언 + 기본값
+    let reason: WithdrawalReason = 'OTHER'
+
+    // valid reasons 목록 (map 기반)
+    const validReasons: WithdrawalReason[] = Object.keys(
+      mockWithdrawalReasonsStatsMonthlyMap
+    ) as WithdrawalReason[]
+
+    // raw가 유효한 reason이면 교체
+    if (raw && validReasons.includes(raw as WithdrawalReason)) {
+      reason = raw as WithdrawalReason
+    }
+
+    // 타입 안전하게 매핑
+    const data = mockWithdrawalReasonsStatsMonthlyMap[reason]
+
+    return HttpResponse.json(data, { status: 200 })
   }
 )
 
