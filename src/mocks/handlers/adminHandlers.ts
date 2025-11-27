@@ -19,6 +19,7 @@ import {
   mockWithdrawalReasonsStatsMonthly,
   mockWithdrawalsDetailMap,
   mockWithdrawalsList,
+  mockWithdrawalsTrends,
 } from '@/mocks/data/accounts'
 
 /**
@@ -380,6 +381,19 @@ export const getAdminSignupTrendsHandler = http.get(
     }
 
     return HttpResponse.json(mockSignupTrends, { status: 200 })
+  }
+)
+
+// GET /api/v1/admin/analytics/withdrawals/trends - 회원탈퇴 추세 분석
+export const getAdminWithdrawalsTrendsHandler = http.get(
+  `${ADMIN_API_PREFIX}/analytics/withdrawals/trends`,
+  ({ request }) => {
+    const authError = requireAdminAuth(request)
+    if (authError) {
+      return HttpResponse.json(authError.body, { status: authError.status })
+    }
+
+    return HttpResponse.json(mockWithdrawalsTrends, { status: 200 })
   }
 )
 
@@ -789,6 +803,7 @@ export const adminHandlers = [
   getAdminWithdrawalsHandler,
   getAdminWithdrawalDetailHandler,
   getAdminSignupTrendsHandler,
+  getAdminWithdrawalsTrendsHandler,
   getAdminWithdrawalReasonsPercentageHandler,
   getAdminWithdrawalReasonsStatsMonthlyHandler,
 

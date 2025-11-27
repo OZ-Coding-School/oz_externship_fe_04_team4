@@ -10,34 +10,14 @@ import {
   YAxis,
 } from 'recharts'
 
+import type {
+  ApiItem,
+  ApiResponse,
+  BarChartProps,
+} from '@/pages/members/dashboard/graphs/types'
 import { formatperiodToMonth } from '@/utils/formatperiodToMonth'
 
-interface ApiRawItem {
-  period: string
-  count: number
-}
-
-interface ApiResponse {
-  interval: string
-  from_date: string
-  to_date: string
-  total: number
-  items: ApiRawItem[]
-}
-
-interface ApiItem {
-  label: string
-  value: number
-}
-
-interface BarChartProps {
-  apiUrl: string
-  title?: string
-  barColor?: string
-  height?: number
-}
-
-export default function BarChart({
+export default function AnalyzingSignupTrendsGraph({
   apiUrl,
   title,
   barColor = '#6366f1',
@@ -59,22 +39,15 @@ export default function BarChart({
         },
       })
       .then((res) => {
-        const items = res?.data?.items ?? []
-
-        if (!Array.isArray(items)) {
-          setData([])
-          return
-        }
+        const mapped = Array.isArray(res?.data?.items)
+          ? res.data.items.map((item) => ({
+              label: formatperiodToMonth(item.period),
+              value: item.count,
+            }))
+          : []
 
         setRawData(res.data)
-
-        const mapped = res.data.items.map((item) => ({
-          label: formatperiodToMonth(item.period),
-          value: item.count,
-        }))
         setData(mapped)
-        console.log('raw:', res.data)
-        console.log('mapped:', mapped)
       })
       .catch((error) => {
         console.error(error)
