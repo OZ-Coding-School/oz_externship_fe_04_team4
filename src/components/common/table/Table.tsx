@@ -96,7 +96,7 @@ export function Table<T>({
 
                       if (newDirection) {
                         const sortValue = column.sortable[newDirection]
-                        onSort?.(sortValue, newDirection, column.key as string)
+                        onSort?.(sortValue, newDirection, column.key)
                       } else {
                         onSort?.('', 'asc', '') // 정렬 해제
                       }
@@ -105,7 +105,7 @@ export function Table<T>({
                 >
                   <div className="flex items-center">
                     {column.header}
-                    {column.sortable && getSortIcon(column.key as string)}
+                    {column.sortable && getSortIcon(column.key)}
                   </div>
                 </th>
               ))}
