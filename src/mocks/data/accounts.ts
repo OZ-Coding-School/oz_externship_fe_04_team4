@@ -1131,7 +1131,7 @@ export const mockWithdrawalsDetailMap: Record<number, WithdrawalsDetail> = {
 
 // api/v1/admin/analytics/signup/trends
 // 회원가입 추세 분석
-export const mockSignupTrends: SignupTrends = {
+export const mockSignupTrendsMonthly: SignupTrends = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1148,6 +1148,27 @@ export const mockSignupTrends: SignupTrends = {
     { period: '2025-08', count: 130 },
     { period: '2025-09', count: 140 },
     { period: '2025-10', count: 150 },
+    { period: '2025-11', count: 160 },
+  ],
+}
+
+export const mockSignupTrendsYearly: SignupTrends = {
+  interval: 'yearly',
+  from_date: '2024-12-01',
+  to_date: '2025-11-30',
+  total: 1135,
+  items: [
+    { period: '2024-12', count: 60 },
+    { period: '2025-01', count: 30 },
+    { period: '2025-02', count: 105 },
+    { period: '2025-03', count: 100 },
+    { period: '2025-04', count: 110 },
+    { period: '2025-05', count: 80 },
+    { period: '2025-06', count: 115 },
+    { period: '2025-07', count: 120 },
+    { period: '2025-08', count: 130 },
+    { period: '2025-09', count: 140 },
+    { period: '2025-10', count: 120 },
     { period: '2025-11', count: 160 },
   ],
 }

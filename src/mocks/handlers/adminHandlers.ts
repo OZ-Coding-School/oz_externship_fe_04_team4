@@ -10,7 +10,8 @@ import {
   mockLecturesList,
   mockRecruitmentDetail,
   mockRecruitmentList,
-  mockSignupTrends,
+  mockSignupTrendsMonthly,
+  mockSignupTrendsYearly,
   mockStudyGroupDetail,
   mockStudyGroupList,
   mockStudyReviewDetail,
@@ -380,8 +381,16 @@ export const getAdminSignupTrendsHandler = http.get(
     if (authError) {
       return HttpResponse.json(authError.body, { status: authError.status })
     }
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('interval')
 
-    return HttpResponse.json(mockSignupTrends, { status: 200 })
+    let interval: 'monthly' | 'yearly' = 'monthly'
+    if (raw === 'yearly') interval = 'yearly'
+
+    return HttpResponse.json(
+      interval === 'yearly' ? mockSignupTrendsYearly : mockSignupTrendsMonthly,
+      { status: 200 }
+    )
   }
 )
 
