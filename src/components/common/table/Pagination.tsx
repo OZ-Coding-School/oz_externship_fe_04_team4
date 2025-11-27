@@ -25,18 +25,39 @@ export function Pagination({
 }: PaginationProps) {
   const getPageNumbers = () => {
     if (totalPages <= VISIBLE_PAGES) {
-      return [...Array(totalPages)].map((_, i) => i + 1)
+      return Array.from({ length: totalPages }, (_, i) => i + 1)
     }
-    const startPage = Math.max(2, currentPage - 1)
-    const endPage = Math.min(totalPages - 1, currentPage + 1)
-    const middlePages = [...Array(endPage - startPage + 1)].map(
-      (_, i) => startPage + i
-    )
+
+    const firstPages = Math.floor(VISIBLE_PAGES / 2)
+
+    if (currentPage <= firstPages) {
+      return [
+        ...Array.from({ length: VISIBLE_PAGES }, (_, i) => i + 1),
+        ELLIPSIS,
+        totalPages,
+      ]
+    }
+
+    if (currentPage >= totalPages - firstPages) {
+      return [
+        1,
+        ELLIPSIS,
+        ...Array.from(
+          { length: VISIBLE_PAGES },
+          (_, i) => totalPages - (VISIBLE_PAGES - 1) + i
+        ),
+      ]
+    }
+
+    const middleCount = VISIBLE_PAGES
     return [
       1,
-      ...(startPage > 2 ? [ELLIPSIS] : []),
-      ...middlePages,
-      ...(endPage < totalPages - 1 ? [ELLIPSIS] : []),
+      ELLIPSIS,
+      ...Array.from(
+        { length: middleCount },
+        (_, i) => currentPage - Math.floor(middleCount / 2) + i
+      ),
+      ELLIPSIS,
       totalPages,
     ]
   }
