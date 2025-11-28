@@ -23,44 +23,28 @@ interface FilterBarProps {
  *   - 해당 select 필터에 대한 설정을 FilterConfig 타입 참고하여 배열로 전달
  *
  * Select 필터를 선택할 때 마다, SearchInput에서 입력할 때 마다 조회 API 전달용 쿼리 파라미터 구성 > 전달
- * @param searchConfig 텍스트 필터 설정
- * @param filters select 필터 설정 배열
  * @returns 조회필터바
  */
 export function FilterBar({ searchConfig, filters = [] }: FilterBarProps) {
   return (
-    <div className="mb-2 grid grid-cols-3 gap-2 px-4">
+    <div className="grid grid-cols-3 gap-2 bg-white px-4 pb-4">
       <SearchInput
         label={searchConfig.label}
         placeholder={searchConfig.placeholder}
         value={searchConfig.value}
         onChange={searchConfig.onChange}
-        debounceDelay={searchConfig.debounceDelay}
       />
 
-      {filters[0] ? (
+      {filters.map((filter) => (
         <FilterSelect
-          label={filters[0].label}
-          options={filters[0].options}
-          value={filters[0].value}
-          onChange={filters[0].onChange}
-          placeholder={filters[0].placeholder}
+          key={filter.value}
+          label={filter.label}
+          options={filter.options}
+          value={filter.value}
+          onChange={filter.onChange}
+          placeholder={filter.placeholder}
         />
-      ) : (
-        <div />
-      )}
-
-      {filters[1] ? (
-        <FilterSelect
-          label={filters[1].label}
-          options={filters[1].options}
-          value={filters[1].value}
-          onChange={filters[1].onChange}
-          placeholder={filters[1].placeholder}
-        />
-      ) : (
-        <div />
-      )}
+      ))}
     </div>
   )
 }

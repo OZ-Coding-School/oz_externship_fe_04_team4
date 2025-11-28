@@ -1,5 +1,8 @@
+import clsx, { type ClassValue } from 'clsx'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
+
+import { twMerge } from 'tailwind-merge'
 
 import { Pagination } from '@/components/common/table/Pagination'
 import { TableDataNone } from '@/components/common/table/TableDataNone'
@@ -14,7 +17,7 @@ interface TableProps<T> {
   columns: Column<T>[]
   response: PaginationResponse<T>
   currentPage: number
-  onPageChange: (newPage: number) => void
+  onPageChange: Dispatch<SetStateAction<number>>
   pageSize?: number
   isLoading?: boolean
   error?: Error | string
@@ -33,14 +36,6 @@ interface TableProps<T> {
  * 3. 담당자는 currentPage 상태 관리 필요(useState...)
  * 4. onPageChange 핸들러 넘기기(setCurrentPage)
  * 5. 정렬 기능 사용 시 sortConfig, onSort 핸들러 넘기기(선택)
- * @param columns 테이블 컬럼 정의
- * @param response API 응답 객체(전부)
- * @param currentPage 현재 페이지
- * @param onPageChange 페이지 변경 핸들러
- * @param pageSize 10고정
- * @param isLoading 로딩 상태
- * @param error 에러 상태
- * @param onRetry 재시도 핸들러
  * @returns 페이징테이블
  */
 export function Table<T>({
@@ -56,15 +51,29 @@ export function Table<T>({
   onRetry,
 }: TableProps<T>) {
   const totalPages = Math.ceil(response.count / pageSize)
+
+  const twClassName = (classes: ClassValue[]) => {
+    return twMerge(clsx(classes))
+  }
+
   const getSortIcon = (columnKey: string) => {
+    const baseClass = 'ml-1 inline h-4 w-4'
+
     if (!sortConfig || sortConfig.key !== columnKey) {
-      return <ArrowUpDown className="ml-1 inline h-4 w-4 text-gray-400" />
+      return (
+        <ArrowUpDown className={twClassName([baseClass, 'text-gray-400'])} />
+      )
     }
     if (sortConfig.direction === 'asc') {
-      return <ArrowUp className="ml-1 inline h-4 w-4 text-blue-600" />
+      return <ArrowUp className={twClassName([baseClass, 'text-blue-600'])} />
     }
-    return <ArrowDown className="ml-1 inline h-4 w-4 text-blue-600" />
+    return <ArrowDown className={twClassName([baseClass, 'text-blue-600'])} />
   }
+
+  const hasError = !!error
+  const showLoading = isLoading && !hasError
+  const isEmpty = !hasError && !isLoading && response.results.length === 0
+  const hasData = !hasError && !isLoading && response.results.length > 0
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -87,16 +96,14 @@ export function Table<T>({
                         sortConfig?.key === column.key
                           ? sortConfig.direction
                           : null
-
                       // 순환: null → asc → desc → null
                       let newDirection: 'asc' | 'desc' | null
                       if (!currentDirection) newDirection = 'asc'
                       else if (currentDirection === 'asc') newDirection = 'desc'
                       else newDirection = null
-
                       if (newDirection) {
                         const sortValue = column.sortable[newDirection]
-                        onSort?.(sortValue, newDirection, column.key as string)
+                        onSort?.(sortValue, newDirection, column.key)
                       } else {
                         onSort?.('', 'asc', '') // 정렬 해제
                       }
@@ -105,21 +112,21 @@ export function Table<T>({
                 >
                   <div className="flex items-center">
                     {column.header}
-                    {column.sortable && getSortIcon(column.key as string)}
+                    {column.sortable && getSortIcon(column.key)}
                   </div>
                 </th>
               ))}
             </tr>
           </thead>
-
           <tbody className="divide-y divide-gray-200">
-            {error ? (
+            {hasError && (
               <TableError
                 error={error}
                 colSpan={columns.length}
                 onRetry={onRetry}
               />
-            ) : isLoading ? (
+            )}
+            {showLoading &&
               Array.from({ length: 10 }).map((_, rowIndex) => (
                 <tr key={`skeleton-${rowIndex}`}>
                   {columns.map((_, colIndex) => (
@@ -128,10 +135,9 @@ export function Table<T>({
                     </td>
                   ))}
                 </tr>
-              ))
-            ) : response.results.length === 0 ? (
-              <TableDataNone length={columns.length} />
-            ) : (
+              ))}
+            {isEmpty && <TableDataNone length={columns.length} />}
+            {hasData &&
               response.results.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
@@ -145,8 +151,7 @@ export function Table<T>({
                     </td>
                   ))}
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
       </div>

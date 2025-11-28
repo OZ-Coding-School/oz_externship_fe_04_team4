@@ -14,41 +14,51 @@ interface PaginationProps {
  * Pagination 컴포넌트
  * @description 페이지네이션 컴포넌트 입니다
  * @howto Table 컴포넌트와 함께 사용. 직접사용할 경우 해당 파라미터 참조
- * @param currentPage 현재 페이지
- * @param totalPages 전체 페이지
- * @param onPageChange 페이지 변경 핸들러 콜백
  * @returns 페이지네이션
  */
+const ELLIPSIS = '...'
+const VISIBLE_PAGES = 10
 export function Pagination({
   currentPage,
   totalPages,
   onPageChange,
 }: PaginationProps) {
   const getPageNumbers = () => {
-    const pages: (number | string)[] = []
-    const visiblePages = 5
-    if (totalPages <= visiblePages + 5) {
-      // 10페이지까지는 모두 표시
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i)
-      }
-    } else {
-      const startPage = Math.max(2, currentPage - 1)
-      const endPage = Math.min(totalPages - 1, currentPage + 1)
-      pages.push(1)
-      if (startPage > 2) {
-        pages.push('...')
-      }
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i)
-      }
-      if (endPage < totalPages - 1) {
-        pages.push('...')
-      }
-      pages.push(totalPages)
+    if (totalPages <= VISIBLE_PAGES) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1)
     }
 
-    return pages
+    const pageSize = Math.floor(VISIBLE_PAGES / 2)
+
+    if (currentPage <= pageSize) {
+      return [
+        ...Array.from({ length: VISIBLE_PAGES }, (_, i) => i + 1),
+        ELLIPSIS,
+        totalPages,
+      ]
+    }
+
+    if (currentPage >= totalPages - pageSize) {
+      return [
+        1,
+        ELLIPSIS,
+        ...Array.from(
+          { length: VISIBLE_PAGES },
+          (_, i) => totalPages - (VISIBLE_PAGES - 1) + i
+        ),
+      ]
+    }
+
+    return [
+      1,
+      ELLIPSIS,
+      ...Array.from(
+        { length: VISIBLE_PAGES },
+        (_, i) => currentPage - pageSize + i
+      ),
+      ELLIPSIS,
+      totalPages,
+    ]
   }
   const handlePreviousChange = () => {
     if (currentPage > 1) {
@@ -78,13 +88,13 @@ export function Pagination({
       </button>
 
       {getPageNumbers().map((page, index) => {
-        if (page === '...') {
+        if (page === ELLIPSIS) {
           return (
             <span
               key={`ellipsis-${index}`}
               className="flex h-8 w-8 items-center justify-center text-gray-600"
             >
-              ...
+              {ELLIPSIS}
             </span>
           )
         }

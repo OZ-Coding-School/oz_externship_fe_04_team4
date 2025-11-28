@@ -1,19 +1,17 @@
 import { Search } from 'lucide-react'
 
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 
 import type { SearchConfig } from '@/components/common/filter/types'
-import { useDebounce } from '@/hooks'
 
 export function SearchInput({
   label = '검색',
   placeholder,
   value,
   onChange,
-  debounceDelay = 500,
 }: SearchConfig) {
   const [localValue, setLocalValue] = useState(value)
-  const debounceValue = useDebounce(localValue, debounceDelay)
+  const debounceValue = useDeferredValue(localValue)
 
   useEffect(() => {
     setLocalValue(value)
@@ -26,7 +24,7 @@ export function SearchInput({
       {label && (
         <label className="text-xs font-medium text-gray-700">{label}</label>
       )}
-      <div className="relative">
+      <div className="relative rounded-lg bg-white">
         <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <input
           type="text"
