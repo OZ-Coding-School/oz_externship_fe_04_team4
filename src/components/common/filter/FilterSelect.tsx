@@ -1,9 +1,15 @@
+import clsx from 'clsx'
 import { ChevronDown } from 'lucide-react'
+
+import { twMerge } from 'tailwind-merge'
 
 import type { FilterOption } from '@/components/common/filter/types'
 
 interface FilterSelectProps {
+  className?: string
   label?: string
+  labelClassName?: string
+  selectClassName?: string
   options: FilterOption[]
   value: string
   onChange: (value: string) => void
@@ -11,22 +17,36 @@ interface FilterSelectProps {
 }
 
 export function FilterSelect({
+  className,
   label,
+  labelClassName,
+  selectClassName,
   options,
   value,
   onChange,
   placeholder = 'Select',
 }: FilterSelectProps) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className={twMerge(clsx('flex flex-col gap-1', className))}>
       {label && (
-        <label className="text-xs font-medium text-gray-700">{label}</label>
+        <label
+          className={twMerge(
+            clsx('text-xs font-medium text-gray-700', labelClassName)
+          )}
+        >
+          {label}
+        </label>
       )}
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-4 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          className={twMerge(
+            clsx(
+              'w-full appearance-none rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-4 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none',
+              selectClassName
+            )
+          )}
         >
           <option value="">{placeholder}</option>
           {options.map((option) => (
