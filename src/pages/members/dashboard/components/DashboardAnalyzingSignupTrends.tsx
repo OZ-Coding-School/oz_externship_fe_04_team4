@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import ReviewRating from '@/components/common/ReviewRating'
 import AnalyzingSignupTrendsGraph from '@/pages/members/dashboard/graphs/AnalyzingSignupTrendsGraph'
 
 type Interval = 'monthly' | 'yearly'
@@ -9,6 +10,7 @@ export function DashboardAnalyzingSignupTrends() {
 
   return (
     <div className="h-1vh relative flex w-full max-w-[1120px] flex-1 flex-col rounded-xl bg-white p-6 shadow">
+      <ReviewRating value={5} />
       <div className="absolute top-5 right-6 flex justify-end">
         <select
           value={interval}
