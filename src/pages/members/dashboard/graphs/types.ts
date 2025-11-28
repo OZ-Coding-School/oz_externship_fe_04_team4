@@ -55,3 +55,22 @@ export interface PieChartProps {
   height?: number
   isAnimationActive?: boolean
 }
+
+export interface CustomLegendItem {
+  label: string
+  value: number // percentage
+  count: number
+}
+
+export interface CustomLegendProps {
+  items: CustomLegendItem[]
+  colors: string[]
+}
+
+export interface LegendItemPayload {
+  payload: {
+    label: string
+    value: number
+    count: number
+  }
+}

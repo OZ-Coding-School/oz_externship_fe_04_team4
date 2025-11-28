@@ -1231,7 +1231,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'LACK_OF_INTEREST',
-      reason_label: '관심 감소 / 흥미 저하',
+      reason_label: '관심 감소/흥미 저하',
       count: 850,
       percentage: 17,
     },
@@ -1249,7 +1249,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'PRIVACY_CONCERNS',
-      reason_label: '개인정보 / 보안 관련 우려',
+      reason_label: '개인정보/보안 관련 우려',
       count: 550,
       percentage: 11,
     },
@@ -1267,7 +1267,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'LACK_OF_CONTENT',
-      reason_label: '원하는 콘텐츠 / 기능 부족',
+      reason_label: '원하는 콘텐츠/기능 부족',
       count: 300,
       percentage: 6,
     },

@@ -10,7 +10,11 @@ import {
   Tooltip,
 } from 'recharts'
 
+import type { Payload } from 'recharts/types/component/DefaultTooltipContent'
+
 import type {
+  CustomLegendItem,
+  CustomLegendProps,
   PieApiItem,
   PieApiResponse,
   PieChartProps,
@@ -28,6 +32,25 @@ const COLORS = [
   '#A3E635',
 ]
 
+export const CustomLegend = ({ items, colors }: CustomLegendProps) => {
+  return (
+    <ul className="mr-30 flex w-[256px] flex-col gap-2.5">
+      {items?.map((item, index) => (
+        <li key={index} className="flex items-center justify-between gap-3">
+          <span className="flex items-center gap-3">
+            <span
+              className="flex h-4 w-4 rounded-[50%]"
+              style={{ backgroundColor: colors[index % colors.length] }}
+            />
+            <span className="text-sm text-[#374151]">{item.label}</span>
+          </span>
+          <span className="text-sm text-[#374151]">{item.count}명</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
   isAnimationActive = true,
   apiUrl,
@@ -39,6 +62,17 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  function isLegendItemPayload(payload: unknown): payload is CustomLegendItem {
+    if (typeof payload !== 'object' || payload === null) return false
+
+    const p = payload as Record<string, unknown>
+
+    return (
+      typeof p.label === 'string' &&
+      typeof p.value === 'number' &&
+      typeof p.count === 'number'
+    )
+  }
   useEffect(() => {
     setLoading(true)
     setErrorMessage(null)
@@ -52,6 +86,7 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
         const mapped = res.data.items.map((item) => ({
           label: item.reason_label,
           value: item.percentage,
+          count: item.count,
         }))
 
         setRawData(res.data)
@@ -133,33 +168,40 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
               layout="vertical"
               verticalAlign="middle"
               iconType="circle"
-              content={<CustomLegend />}
+              content={(props) => {
+                console.log('payload:', props.payload)
+                console.log(
+                  'mapped:',
+                  props.payload?.map((p) => p.payload)
+                )
+                console.log(
+                  'filtered:',
+                  props.payload
+                    ?.map((p) => p.payload)
+                    .filter(isLegendItemPayload)
+                )
+                return (
+                  <CustomLegend
+                    items={(props.payload ?? [])
+                      .map((p) => p.payload)
+                      .filter(isLegendItemPayload)}
+                    colors={COLORS}
+                  />
+                )
+              }}
             />
             <Tooltip
-              formatter={(value: number, name: string, props: any) => {
-                const { payload } = props
-                return [`${value}%`, payload.label]
+              formatter={(
+                value: number,
+                _name: string,
+                props: Payload<number, string>
+              ) => {
+                return [`${value}%`, props.payload?.label ?? '']
               }}
             />
           </PieChart>
         </ResponsiveContainer>
       </div>
     </div>
-  )
-}
-
-export const CustomLegend = ({ payload }: any) => {
-  return (
-    <ul className="">
-      {payload.map((entry: any, index: number) => (
-        <li key={`item-${index}`} className="flex items-center gap-2">
-          <span
-            className="inline-block h-3 w-3 rounded-sm"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="text-gray-600">{entry.value}</span>
-        </li>
-      ))}
-    </ul>
   )
 }
