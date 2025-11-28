@@ -10,15 +10,19 @@ import {
   mockLecturesList,
   mockRecruitmentDetail,
   mockRecruitmentList,
-  mockSignupTrends,
+  mockSignupTrendsMonthly,
+  mockSignupTrendsYearly,
   mockStudyGroupDetail,
   mockStudyGroupList,
   mockStudyReviewDetail,
   mockStudyReviewList,
   mockWithdrawalReasonsPercentage,
-  mockWithdrawalReasonsStatsMonthly,
+  mockWithdrawalReasonsStatsMonthlyMap,
   mockWithdrawalsDetailMap,
   mockWithdrawalsList,
+  mockWithdrawalsTrendsMonthly,
+  mockWithdrawalsTrendsYearly,
+  type WithdrawalReason,
 } from '@/mocks/data/accounts'
 
 /**
@@ -378,8 +382,40 @@ export const getAdminSignupTrendsHandler = http.get(
     if (authError) {
       return HttpResponse.json(authError.body, { status: authError.status })
     }
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('interval')
 
-    return HttpResponse.json(mockSignupTrends, { status: 200 })
+    let interval: 'monthly' | 'yearly' = 'monthly'
+    if (raw === 'yearly') interval = 'yearly'
+
+    return HttpResponse.json(
+      interval === 'yearly' ? mockSignupTrendsYearly : mockSignupTrendsMonthly,
+      { status: 200 }
+    )
+  }
+)
+
+// GET /api/v1/admin/analytics/withdrawals/trends - 회원탈퇴 추세 분석
+export const getAdminWithdrawalsTrendsHandler = http.get(
+  `${ADMIN_API_PREFIX}/analytics/withdrawals/trends`,
+  ({ request }) => {
+    const authError = requireAdminAuth(request)
+    if (authError) {
+      return HttpResponse.json(authError.body, { status: authError.status })
+    }
+
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('interval')
+
+    let interval: 'monthly' | 'yearly' = 'monthly'
+    if (raw === 'yearly') interval = 'yearly'
+
+    return HttpResponse.json(
+      interval === 'yearly'
+        ? mockWithdrawalsTrendsYearly
+        : mockWithdrawalsTrendsMonthly,
+      { status: 200 }
+    )
   }
 )
 
@@ -405,7 +441,26 @@ export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
-    return HttpResponse.json(mockWithdrawalReasonsStatsMonthly, { status: 200 })
+    const url = new URL(request.url)
+    const raw = url.searchParams.get('reason')
+
+    // reason 변수 선언 + 기본값
+    let reason: WithdrawalReason = 'OTHER'
+
+    // valid reasons 목록 (map 기반)
+    const validReasons: WithdrawalReason[] = Object.keys(
+      mockWithdrawalReasonsStatsMonthlyMap
+    ) as WithdrawalReason[]
+
+    // raw가 유효한 reason이면 교체
+    if (raw && validReasons.includes(raw as WithdrawalReason)) {
+      reason = raw as WithdrawalReason
+    }
+
+    // 타입 안전하게 매핑
+    const data = mockWithdrawalReasonsStatsMonthlyMap[reason]
+
+    return HttpResponse.json(data, { status: 200 })
   }
 )
 
@@ -789,6 +844,7 @@ export const adminHandlers = [
   getAdminWithdrawalsHandler,
   getAdminWithdrawalDetailHandler,
   getAdminSignupTrendsHandler,
+  getAdminWithdrawalsTrendsHandler,
   getAdminWithdrawalReasonsPercentageHandler,
   getAdminWithdrawalReasonsStatsMonthlyHandler,
 

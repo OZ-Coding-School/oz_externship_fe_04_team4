@@ -1131,7 +1131,7 @@ export const mockWithdrawalsDetailMap: Record<number, WithdrawalsDetail> = {
 
 // api/v1/admin/analytics/signup/trends
 // 회원가입 추세 분석
-export const mockSignupTrends: SignupTrends = {
+export const mockSignupTrendsMonthly: SignupTrends = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1152,9 +1152,30 @@ export const mockSignupTrends: SignupTrends = {
   ],
 }
 
+export const mockSignupTrendsYearly: SignupTrends = {
+  interval: 'yearly',
+  from_date: '2024-12-01',
+  to_date: '2025-11-30',
+  total: 1135,
+  items: [
+    { period: '2024-12', count: 60 },
+    { period: '2025-01', count: 30 },
+    { period: '2025-02', count: 105 },
+    { period: '2025-03', count: 100 },
+    { period: '2025-04', count: 110 },
+    { period: '2025-05', count: 80 },
+    { period: '2025-06', count: 115 },
+    { period: '2025-07', count: 120 },
+    { period: '2025-08', count: 130 },
+    { period: '2025-09', count: 140 },
+    { period: '2025-10', count: 120 },
+    { period: '2025-11', count: 160 },
+  ],
+}
+
 // api/v1/admin/analytics/withdrawals/trends
 // 회원 탈퇴 추세 분석
-export const mockWithdrawalsTrends: WithdrawalsTrends = {
+export const mockWithdrawalsTrendsMonthly: WithdrawalsTrends = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1164,6 +1185,26 @@ export const mockWithdrawalsTrends: WithdrawalsTrends = {
     { period: '2025-01', count: 70 },
     { period: '2025-02', count: 75 },
     { period: '2025-03', count: 80 },
+    { period: '2025-04', count: 85 },
+    { period: '2025-05', count: 90 },
+    { period: '2025-06', count: 95 },
+    { period: '2025-07', count: 100 },
+    { period: '2025-08', count: 105 },
+    { period: '2025-09', count: 110 },
+    { period: '2025-10', count: 115 },
+    { period: '2025-11', count: 120 },
+  ],
+}
+export const mockWithdrawalsTrendsYearly: WithdrawalsTrends = {
+  interval: 'yearly',
+  from_date: '2024-12-01',
+  to_date: '2025-11-30',
+  total: 1105,
+  items: [
+    { period: '2024-12', count: 100 },
+    { period: '2025-01', count: 80 },
+    { period: '2025-02', count: 100 },
+    { period: '2025-03', count: 78 },
     { period: '2025-04', count: 85 },
     { period: '2025-05', count: 90 },
     { period: '2025-06', count: 95 },
@@ -1190,7 +1231,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'LACK_OF_INTEREST',
-      reason_label: '관심 감소 / 흥미 저하',
+      reason_label: '관심 감소/흥미 저하',
       count: 850,
       percentage: 17,
     },
@@ -1208,7 +1249,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'PRIVACY_CONCERNS',
-      reason_label: '개인정보 / 보안 관련 우려',
+      reason_label: '개인정보/보안 관련 우려',
       count: 550,
       percentage: 11,
     },
@@ -1226,7 +1267,7 @@ export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
     },
     {
       reason: 'LACK_OF_CONTENT',
-      reason_label: '원하는 콘텐츠 / 기능 부족',
+      reason_label: '원하는 콘텐츠/기능 부족',
       count: 300,
       percentage: 6,
     },
@@ -1265,6 +1306,219 @@ export const mockWithdrawalReasonsStatsMonthly: WithdrawalReasonsStatsMonthly =
       { period: '2025-11', count: 225 },
     ],
   }
+export type WithdrawalReason =
+  | 'NO_LONGER_NEEDED'
+  | 'LACK_OF_INTEREST'
+  | 'TOO_DIFFICULT'
+  | 'FOUND_BETTER_SERVICE'
+  | 'PRIVACY_CONCERNS'
+  | 'POOR_SERVICE_QUALITY'
+  | 'TECHNICAL_ISSUES'
+  | 'LACK_OF_CONTENT'
+  | 'OTHER'
+
+export const mockWithdrawalReasonsStatsMonthlyMap: Record<
+  WithdrawalReason,
+  WithdrawalReasonsStatsMonthly
+> = {
+  NO_LONGER_NEEDED: {
+    reason: 'NO_LONGER_NEEDED',
+    reason_label: '더 이상 필요하지 않음',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 1380,
+    items: [
+      { period: '2024-12', count: 80 },
+      { period: '2025-01', count: 95 },
+      { period: '2025-02', count: 110 },
+      { period: '2025-03', count: 120 },
+      { period: '2025-04', count: 115 },
+      { period: '2025-05', count: 130 },
+      { period: '2025-06', count: 140 },
+      { period: '2025-07', count: 135 },
+      { period: '2025-08', count: 125 },
+      { period: '2025-09', count: 130 },
+      { period: '2025-10', count: 145 },
+      { period: '2025-11', count: 155 },
+    ],
+  },
+
+  LACK_OF_INTEREST: {
+    reason: 'LACK_OF_INTEREST',
+    reason_label: '흥미 감소',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 1025,
+    items: [
+      { period: '2024-12', count: 70 },
+      { period: '2025-01', count: 80 },
+      { period: '2025-02', count: 85 },
+      { period: '2025-03', count: 90 },
+      { period: '2025-04', count: 95 },
+      { period: '2025-05', count: 100 },
+      { period: '2025-06', count: 110 },
+      { period: '2025-07', count: 105 },
+      { period: '2025-08', count: 95 },
+      { period: '2025-09', count: 100 },
+      { period: '2025-10', count: 110 },
+      { period: '2025-11', count: 120 },
+    ],
+  },
+
+  TOO_DIFFICULT: {
+    reason: 'TOO_DIFFICULT',
+    reason_label: '사용이 너무 어려움',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 780,
+    items: [
+      { period: '2024-12', count: 50 },
+      { period: '2025-01', count: 55 },
+      { period: '2025-02', count: 60 },
+      { period: '2025-03', count: 65 },
+      { period: '2025-04', count: 70 },
+      { period: '2025-05', count: 75 },
+      { period: '2025-06', count: 80 },
+      { period: '2025-07', count: 85 },
+      { period: '2025-08', count: 75 },
+      { period: '2025-09', count: 80 },
+      { period: '2025-10', count: 85 },
+      { period: '2025-11', count: 90 },
+    ],
+  },
+
+  FOUND_BETTER_SERVICE: {
+    reason: 'FOUND_BETTER_SERVICE',
+    reason_label: '더 좋은 서비스 발견',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 890,
+    items: [
+      { period: '2024-12', count: 60 },
+      { period: '2025-01', count: 65 },
+      { period: '2025-02', count: 70 },
+      { period: '2025-03', count: 75 },
+      { period: '2025-04', count: 80 },
+      { period: '2025-05', count: 85 },
+      { period: '2025-06', count: 90 },
+      { period: '2025-07', count: 95 },
+      { period: '2025-08', count: 85 },
+      { period: '2025-09', count: 90 },
+      { period: '2025-10', count: 100 },
+      { period: '2025-11', count: 115 },
+    ],
+  },
+
+  PRIVACY_CONCERNS: {
+    reason: 'PRIVACY_CONCERNS',
+    reason_label: '개인정보 우려',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 620,
+    items: [
+      { period: '2024-12', count: 40 },
+      { period: '2025-01', count: 45 },
+      { period: '2025-02', count: 50 },
+      { period: '2025-03', count: 55 },
+      { period: '2025-04', count: 50 },
+      { period: '2025-05', count: 55 },
+      { period: '2025-06', count: 60 },
+      { period: '2025-07', count: 65 },
+      { period: '2025-08', count: 55 },
+      { period: '2025-09', count: 60 },
+      { period: '2025-10', count: 70 },
+      { period: '2025-11', count: 75 },
+    ],
+  },
+
+  POOR_SERVICE_QUALITY: {
+    reason: 'POOR_SERVICE_QUALITY',
+    reason_label: '서비스 품질 불만',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 740,
+    items: [
+      { period: '2024-12', count: 55 },
+      { period: '2025-01', count: 60 },
+      { period: '2025-02', count: 65 },
+      { period: '2025-03', count: 70 },
+      { period: '2025-04', count: 75 },
+      { period: '2025-05', count: 80 },
+      { period: '2025-06', count: 85 },
+      { period: '2025-07', count: 90 },
+      { period: '2025-08', count: 80 },
+      { period: '2025-09', count: 85 },
+      { period: '2025-10', count: 95 },
+      { period: '2025-11', count: 100 },
+    ],
+  },
+
+  TECHNICAL_ISSUES: {
+    reason: 'TECHNICAL_ISSUES',
+    reason_label: '기술적 문제',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 880,
+    items: [
+      { period: '2024-12', count: 65 },
+      { period: '2025-01', count: 75 },
+      { period: '2025-02', count: 80 },
+      { period: '2025-03', count: 90 },
+      { period: '2025-04', count: 85 },
+      { period: '2025-05', count: 90 },
+      { period: '2025-06', count: 95 },
+      { period: '2025-07', count: 100 },
+      { period: '2025-08', count: 90 },
+      { period: '2025-09', count: 95 },
+      { period: '2025-10', count: 105 },
+      { period: '2025-11', count: 110 },
+    ],
+  },
+
+  LACK_OF_CONTENT: {
+    reason: 'LACK_OF_CONTENT',
+    reason_label: '콘텐츠 부족',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 670,
+    items: [
+      { period: '2024-12', count: 45 },
+      { period: '2025-01', count: 50 },
+      { period: '2025-02', count: 55 },
+      { period: '2025-03', count: 60 },
+      { period: '2025-04', count: 65 },
+      { period: '2025-05', count: 70 },
+      { period: '2025-06', count: 75 },
+      { period: '2025-07', count: 80 },
+      { period: '2025-08', count: 70 },
+      { period: '2025-09', count: 75 },
+      { period: '2025-10', count: 85 },
+      { period: '2025-11', count: 90 },
+    ],
+  },
+
+  OTHER: {
+    reason: 'OTHER',
+    reason_label: '기타',
+    from_date: '2024-12-01',
+    to_date: '2025-11-30',
+    total: 1945,
+    items: [
+      { period: '2024-12', count: 100 },
+      { period: '2025-01', count: 150 },
+      { period: '2025-02', count: 150 },
+      { period: '2025-03', count: 170 },
+      { period: '2025-04', count: 150 },
+      { period: '2025-05', count: 170 },
+      { period: '2025-06', count: 160 },
+      { period: '2025-07', count: 170 },
+      { period: '2025-08', count: 150 },
+      { period: '2025-09', count: 150 },
+      { period: '2025-10', count: 200 },
+      { period: '2025-11', count: 225 },
+    ],
+  },
+}
 
 // api/v1/admin/lectures
 // 어드민 페이지 강의 목록 조회 API
