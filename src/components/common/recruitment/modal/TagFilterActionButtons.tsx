@@ -1,13 +1,13 @@
-type Props = {
-  setOpen: (value: boolean) => void
-}
+import { useRecruitmentModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 
-export default function TagFilterActionButtons({ setOpen }: Props) {
+export default function TagFilterActionButtons() {
+  const { closeModal } = useRecruitmentModalStore()
+
   return (
     <div className="flex h-[73px] w-full items-center justify-end px-6 py-4">
       <div className="flex h-10 w-auto items-center">
         <div
-          onClick={() => setOpen(false)}
+          onClick={closeModal}
           className="mr-3 cursor-pointer rounded-lg bg-[#6B7280] px-4 py-2 text-white hover:bg-[#585e6a] active:font-bold"
         >
           취소
