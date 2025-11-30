@@ -1,6 +1,6 @@
 import clsx, { type ClassValue } from 'clsx'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import type { ReactNode } from 'react'
 
 import { twMerge } from 'tailwind-merge'
 
@@ -17,7 +17,7 @@ interface TableProps<T> {
   columns: Column<T>[]
   response: PaginationResponse<T>
   currentPage: number
-  onPageChange: Dispatch<SetStateAction<number>>
+  onPageChange: (page: number) => void
   pageSize?: number
   isLoading?: boolean
   error?: Error | string
