@@ -62,7 +62,9 @@ export default function TagOptionList({
             key={el.id}
             onClick={() =>
               setSelectedTagIds((prev) =>
-                prev.includes(el.id) ? prev : [...prev, el.id]
+                prev.includes(el.id)
+                  ? prev.filter((id) => id !== el.id)
+                  : [...prev, el.id]
               )
             }
             aria-current={Boolean(selectedTagIds.find((id) => id === el.id))}
