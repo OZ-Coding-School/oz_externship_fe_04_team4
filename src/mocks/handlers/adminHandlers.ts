@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 
-import { ADMIN_API_PREFIX, BASE_URL } from '@/config/api'
+import { ADMIN_API_PREFIX, API_V1_PREFIX, BASE_URL } from '@/config/api'
 import {
   mockAccountDetailMap,
   mockAccountsList,
@@ -672,7 +672,7 @@ export const getAdminStudyReviewDetailHandler = http.get(
 
 // GET /api/v1/recruitment-tags - 태그 목록 조회
 export const getRecruitmentTagsHandler = http.get(
-  `${BASE_URL}/api/v1/recruitment-tags`,
+  `${BASE_URL}${API_V1_PREFIX}/recruitment-tags`,
   ({ request }) => {
     const url = new URL(request.url)
 
@@ -701,7 +701,7 @@ export const getRecruitmentTagsHandler = http.get(
     const end = start + pageSize
     const paginatedTags = filteredTags.slice(start, end)
 
-    const baseUrl = `${BASE_URL}/api/v1/recruitment-tags`
+    const baseUrl = `${BASE_URL}${API_V1_PREFIX}/recruitment-tags`
     const buildUrl = (p: number) =>
       `${baseUrl}?page=${p}&page_size=${pageSize}${
         search ? `&search=${encodeURIComponent(search)}` : ''
