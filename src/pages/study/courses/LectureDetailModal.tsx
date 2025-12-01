@@ -55,8 +55,7 @@ export function LectureDetailModal({
     error,
   } = useFetchQuery<Lecture>({
     queryKey: ['lecture', lectureId],
-    url: SERVICE_URLS.LECTURES.DETAIL(0),
-    // url: SERVICE_URLS.LECTURES.DETAIL(lectureId || 0),,
+    url: SERVICE_URLS.LECTURES.DETAIL(lectureId || 0),
     enabled: !!lectureId && isOpen,
   })
   if (!lectureId) return null
