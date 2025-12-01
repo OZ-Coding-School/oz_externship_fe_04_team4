@@ -1,9 +1,7 @@
-import clsx, { type ClassValue } from 'clsx'
 import { useState } from 'react'
 
-import { twMerge } from 'tailwind-merge'
-
 import { FilterBar } from '@/components/common/filter'
+import { PlatformBadge } from '@/components/common/PlatformBadge'
 import {
   Table,
   type Column,
@@ -11,6 +9,7 @@ import {
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+import { LectureDetailModal } from '@/pages/study/courses/LectureDetailModal'
 import { formatDateTime } from '@/utils'
 
 export interface Lecture {
@@ -19,26 +18,25 @@ export interface Lecture {
   title: string
   instructor: string
   platform: string
-  thumbnail_url?: string
-  link?: string
+  thumbnail_img_url?: string
+  url_link?: string
   description?: string
   difficulty?: string
-  duration?: string
+  total_class_time?: number
   original_price?: number
   discounted_price?: number
-  categories?: string[]
+  average_rating?: number
+  categories?: { id: number; name: string }[]
   created_at: string
   updated_at: string
 }
-const PLATFORM = {
-  UDEMY: 'UDEMY',
-  INFLEARN: 'INFLEARN',
-} as const
 export default function LectureManagementPage() {
   const [filters, setFilters] = useState<{ search: string; page: number }>({
     search: '',
     page: 1,
   })
+  const [selectedLecture, setSelectedLecture] = useState<number | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<Lecture>
   >({
@@ -50,42 +48,7 @@ export default function LectureManagementPage() {
       search: filters.search,
     },
   })
-  const twClassName = (classes: ClassValue[]) => {
-    return twMerge(clsx(classes))
-  }
-  const getPlatform = (platform: string) => {
-    const baseClass = 'inline-block rounded px-2 py-1 text-xs'
-    switch (platform) {
-      case PLATFORM.UDEMY:
-        return (
-          <span
-            className={twClassName([
-              baseClass,
-              'bg-purple-100 text-purple-700',
-            ])}
-          >
-            {platform}
-          </span>
-        )
-      case PLATFORM.INFLEARN:
-        return (
-          <span
-            className={twClassName([baseClass, 'bg-green-100 text-green-700'])}
-          >
-            {platform}
-          </span>
-        )
 
-      default:
-        return (
-          <span
-            className={twClassName([baseClass, 'bg-gray-100 text-gray-700'])}
-          >
-            {platform}
-          </span>
-        )
-    }
-  }
   const columns: Column<Lecture>[] = [
     {
       key: 'id',
@@ -118,7 +81,7 @@ export default function LectureManagementPage() {
       key: 'platform',
       header: '플랫폼',
       width: '100px',
-      render: (value) => getPlatform(value),
+      render: (value) => <PlatformBadge platform={value} />,
     },
     {
       key: 'created_at',
@@ -133,7 +96,15 @@ export default function LectureManagementPage() {
       render: (value: string) => formatDateTime(value),
     },
   ]
+  const handleRowClick = (lecture: Lecture) => {
+    setSelectedLecture(lecture.id)
+    setIsModalOpen(true)
+  }
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedLecture(0)
+  }
   return (
     <div className="space-y-6 rounded-lg bg-white p-6 shadow-sm">
       <FilterBar
@@ -156,6 +127,12 @@ export default function LectureManagementPage() {
         isLoading={isLoading}
         error={error?.message}
         onRetry={refetch}
+        onRowClick={handleRowClick}
+      />
+      <LectureDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        lectureId={selectedLecture}
       />
     </div>
   )

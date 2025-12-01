@@ -1,0 +1,1 @@
+export { PlatformBadge } from './PlatformBadge'
