@@ -295,7 +295,7 @@ export type StudyReviewDetail = {
   updated_at: string
 }
 
-export type RecruitmentListResultTags = {
+export type RecruitmentTag = {
   id: number
   name: string
 }
@@ -303,12 +303,12 @@ export type RecruitmentTags = {
   count: number
   next: null | string
   previous: null | string
-  results: RecruitmentListResultTags[]
+  results: RecruitmentTag[]
 }
 export type RecruitmentListResults = {
   id: number
   title: string
-  tags: RecruitmentListResultTags[]
+  tags: RecruitmentTag[]
   close_at: string
   is_closed: boolean
   views_count: number
@@ -323,10 +323,6 @@ export type RecruitmentList = {
   results: RecruitmentListResults[]
 }
 
-export type RecruitmentDetailTags = {
-  id: number
-  name: string
-}
 export type RecruitmentDetailFiles = {
   id: number
   file_name: string
@@ -363,7 +359,7 @@ export type RecruitmentDetail = {
   created_at: string
   updated_at: string
   lectures: RecruitmentDetailLectures[]
-  tags: RecruitmentDetailTags[]
+  tags: RecruitmentTag[]
   files: RecruitmentDetailFiles[]
   applications: RecruitmentDetailApplications[]
 }
