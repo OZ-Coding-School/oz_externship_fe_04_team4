@@ -4,6 +4,7 @@ import { ListFilter } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import { FilterSelect, SearchInput } from '@/components/common/filter'
+import TagFilterPreview from '@/features/recruitment/ui/RecruitmentFilter/TagFilterPreview'
 import { useRecruitmentModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
 import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
@@ -58,7 +59,7 @@ export default function RecruitmentFilter() {
             )
           )}
         >
-          <div className="text-sm text-[#374151]">태그 입력</div>
+          <TagFilterPreview />
           <ListFilter className="w-4 text-[#9CA3AF]" />
         </div>
       </div>

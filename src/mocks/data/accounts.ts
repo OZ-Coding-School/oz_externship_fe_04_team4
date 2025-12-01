@@ -2845,7 +2845,7 @@ export const mockRecruitmentTags: RecruitmentTags = {
   next: 'http://api.ozcoding.site/api/v1/recruitments-tags/page=2&page_size=10',
   previous: null,
   results: [
-    { id: 1, name: 'React' },
+    { id: 1, name: 'ReactReactReactReactReactReactReactReactReactReact' },
     { id: 2, name: 'Vue.js' },
     { id: 3, name: 'Angular' },
     { id: 4, name: 'JavaScript' },
@@ -2877,7 +2877,10 @@ export const mockRecruitmentTags: RecruitmentTags = {
     { id: 30, name: '모바일' },
     { id: 31, name: '실무' },
     { id: 32, name: '프로젝트' },
-    { id: 33, name: '포트폴리오' },
+    {
+      id: 33,
+      name: '포트폴리오포트폴리오포트폴리오포트폴리오포트폴리오포트폴리오포트폴리오',
+    },
     { id: 34, name: '취업' },
     { id: 35, name: '신입' },
     { id: 36, name: '경력' },

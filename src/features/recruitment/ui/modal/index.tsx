@@ -2,11 +2,12 @@ import { useState } from 'react'
 
 import { useRecruitmentTagsQuery } from '@/api/recruitment/useRecruitmentTagsQuery'
 import Modal from '@/components/common/Modal'
-import SelectedTagList from '@/components/common/recruitment/modal/SelectedTagList'
-import TagFilterActionButtons from '@/components/common/recruitment/modal/TagFilterActionButtons'
-import TagOptionList from '@/components/common/recruitment/modal/TagOptionList'
-import TagSearchInput from '@/components/common/recruitment/modal/TagSearchInput'
+import SelectedTagList from '@/features/recruitment/ui/modal/SelectedTagList'
+import TagFilterActionButtons from '@/features/recruitment/ui/modal/TagFilterActionButtons'
+import TagOptionList from '@/features/recruitment/ui/modal/TagOptionList'
+import TagSearchInput from '@/features/recruitment/ui/modal/TagSearchInput'
 import { useRecruitmentModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentTagsStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function RecruitmentModal() {
   const { isOpen, closeModal } = useRecruitmentModalStore()
@@ -14,7 +15,7 @@ export default function RecruitmentModal() {
   const [inputSearch, setInputSearch] = useState('')
   const [keywordSearch, setKeywordSearch] = useState('')
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const { selectedTags } = useRecruitmentTagsStore()
 
   const { data, isLoading, isError } = useRecruitmentTagsQuery({
     page: 1,
@@ -41,18 +42,13 @@ export default function RecruitmentModal() {
         setSearch={setInputSearch}
         onSubmit={handleSearchSubmit}
       />
-      {Boolean(selectedTags.length) && (
-        <SelectedTagList
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
-        />
-      )}
+
+      {Boolean(selectedTags.length) && <SelectedTagList />}
+
       <TagOptionList
         tags={data?.results}
         isLoading={isLoading}
         isError={isError}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
       />
     </Modal>
   )

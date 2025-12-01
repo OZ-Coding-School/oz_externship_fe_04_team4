@@ -7,7 +7,7 @@ import AdminDashboardPage from '@/pages/members/dashboard'
 import AdminUserManagementPage from '@/pages/members/users'
 import AdminWithdrawalManagementPage from '@/pages/members/withdrawals'
 import RecruitmentPostManagementPage from '@/pages/recruitment/applications'
-import RecruitmentApplicationsPage from '@/pages/recruitment/recruitment'
+import RecruitmentPage from '@/pages/recruitment/recruitment'
 import LectureManagementPage from '@/pages/study/courses'
 import StudyGroupManagementPage from '@/pages/study/groups'
 import ReviewManagementPage from '@/pages/study/reviews'
@@ -79,7 +79,7 @@ export default function AppRouter() {
           path="/recruitment/applications"
           element={
             <ProtectedRoute>
-              <RecruitmentApplicationsPage />
+              <RecruitmentPage />
             </ProtectedRoute>
           }
         />

@@ -1,17 +1,16 @@
 import { useState } from 'react'
 
+import { Table, type SortConfig } from '@/components/common/table'
 import {
   RecruitmentColumns,
   RecruitmentListData,
-} from '@/components/common/recruitment'
-import RecruitmentFilter from '@/components/common/recruitment/filter'
-import RecruitmentModal from '@/components/common/recruitment/modal'
-import { Table, type SortConfig } from '@/components/common/table'
+} from '@/features/recruitment/columns'
+import RecruitmentModal from '@/features/recruitment/ui/modal'
+import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
 
-export default function RecruitmentApplicationsPage() {
+export default function RecruitmentPage() {
   // const { keyword } = useRecruitmentSearchStore()
   // const { status } = ueeRecruitmentStatusStore()
-  // const { selectedTags } = useRecruitmentTagStore()
 
   const [_, setQueryParams] = useState({
     page: 1,
@@ -59,14 +58,12 @@ export default function RecruitmentApplicationsPage() {
       }))
     }
     setCurrentPage(1)
-
-    // API 호출
-    // fetchUsers(queryParams)
   }
 
   return (
     <>
       <RecruitmentModal />
+
       <div className="mb-6 space-y-4 rounded-lg bg-white p-6">
         <div className="flex items-center">
           <RecruitmentFilter />
@@ -74,7 +71,7 @@ export default function RecruitmentApplicationsPage() {
       </div>
 
       <Table
-        columns={RecruitmentColumns}
+        columns={RecruitmentColumns()}
         sortConfig={sortConfig}
         onSort={handleSort}
         currentPage={currentPage}

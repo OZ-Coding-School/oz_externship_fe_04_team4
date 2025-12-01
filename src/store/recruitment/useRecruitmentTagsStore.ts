@@ -1,14 +1,15 @@
 import { create } from 'zustand'
 
-type TagState = {
+type TagsState = {
   selectedTags: string[]
 
   setSelectedTags: (tags: string[]) => void
   toggleTag: (tag: string) => void
+  deleteSelectedTag: (tag: string) => void
   resetSelectedTags: () => void
 }
 
-export const useRecruitmentTagStore = create<TagState>((set) => ({
+export const useRecruitmentTagsStore = create<TagsState>((set) => ({
   selectedTags: [],
 
   setSelectedTags: (tags) => set({ selectedTags: tags }),
@@ -28,5 +29,22 @@ export const useRecruitmentTagStore = create<TagState>((set) => ({
       }
     }),
 
+  deleteSelectedTag: (tag) =>
+    set((state) => ({
+      selectedTags: state.selectedTags.filter((t) => t !== tag),
+    })),
+
   resetSelectedTags: () => set({ selectedTags: [] }),
+}))
+
+type TagsResultState = {
+  selectedTagsResult: string[]
+
+  setSelectedTagsResult: (tags: string[]) => void
+}
+
+export const useRecruitmentTagListStore = create<TagsResultState>((set) => ({
+  selectedTagsResult: [],
+
+  setSelectedTagsResult: (tags) => set({ selectedTagsResult: tags }),
 }))
