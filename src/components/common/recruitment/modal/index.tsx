@@ -14,6 +14,8 @@ export default function RecruitmentModal() {
   const [inputSearch, setInputSearch] = useState('')
   const [keywordSearch, setKeywordSearch] = useState('')
 
+  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([])
+
   const { data, isLoading, isError } = useRecruitmentTagsQuery({
     page: 1,
     pageSize: 100,
@@ -44,6 +46,8 @@ export default function RecruitmentModal() {
         tags={data?.results}
         isLoading={isLoading}
         isError={isError}
+        selectedTagIds={selectedTagIds}
+        setSelectedTagIds={setSelectedTagIds}
       />
     </Modal>
   )
