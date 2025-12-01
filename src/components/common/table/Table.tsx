@@ -24,6 +24,7 @@ interface TableProps<T> {
   onRetry?: () => void
   sortConfig?: SortConfig | null
   onSort?: (sortValue: string, direction: 'asc' | 'desc', key: string) => void
+  onRowClick?: (row: T) => void
 }
 /**
  * Table 컴포넌트
@@ -49,6 +50,7 @@ export function Table<T>({
   sortConfig,
   onSort,
   onRetry,
+  onRowClick,
 }: TableProps<T>) {
   const totalPages = Math.ceil(response.count / pageSize)
 
@@ -142,6 +144,7 @@ export function Table<T>({
                 <tr
                   key={rowIndex}
                   className="cursor-pointer transition-colors hover:bg-gray-50"
+                  onClick={() => onRowClick?.(row)}
                 >
                   {columns.map((column, colIndex) => (
                     <td key={colIndex} className="px-4 py-3 text-gray-600">
