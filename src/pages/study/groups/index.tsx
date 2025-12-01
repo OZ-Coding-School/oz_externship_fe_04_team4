@@ -78,7 +78,7 @@ export default function StudyGroupManagementPage() {
     {
       key: 'duration',
       header: '스터디 기간',
-      width: '100px',
+      width: '150px',
       render: (_, row) => `${row.start_at} / ${row.end_at}명`,
     },
     {
