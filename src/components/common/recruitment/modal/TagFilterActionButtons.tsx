@@ -1,7 +1,18 @@
 import { useRecruitmentModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import {
+  useRecruitmentTagListStore,
+  useRecruitmentTagsStore,
+} from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function TagFilterActionButtons() {
   const { closeModal } = useRecruitmentModalStore()
+  const { selectedTags } = useRecruitmentTagsStore()
+  const { setSelectedTagsResult } = useRecruitmentTagListStore()
+
+  function SaveSelectedTags() {
+    setSelectedTagsResult(selectedTags)
+    closeModal()
+  }
 
   return (
     <div className="flex h-[73px] w-full items-center justify-end px-6 py-4">
@@ -12,7 +23,10 @@ export default function TagFilterActionButtons() {
         >
           취소
         </div>
-        <div className="cursor-pointer rounded-lg bg-[#EAB308] px-4 py-2 text-white hover:bg-[#854D0E] active:font-bold">
+        <div
+          onClick={SaveSelectedTags}
+          className="cursor-pointer rounded-lg bg-[#EAB308] px-4 py-2 text-white hover:bg-[#854D0E] active:font-bold"
+        >
           적용하기
         </div>
       </div>
