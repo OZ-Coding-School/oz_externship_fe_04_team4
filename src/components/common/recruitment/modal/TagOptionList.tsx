@@ -8,8 +8,8 @@ type Props = {
   tags?: RecruitmentTag[]
   isLoading: boolean
   isError: boolean
-  selectedTagIds: number[]
-  setSelectedTagIds: Dispatch<SetStateAction<number[]>>
+  selectedTags: string[]
+  setSelectedTags: Dispatch<SetStateAction<string[]>>
 }
 
 const ITEMS_STYLE =
@@ -19,8 +19,8 @@ export default function TagOptionList({
   tags,
   isLoading,
   isError,
-  selectedTagIds,
-  setSelectedTagIds,
+  selectedTags,
+  setSelectedTags,
 }: Props) {
   if (isLoading) {
     return (
@@ -38,7 +38,6 @@ export default function TagOptionList({
     )
   }
 
-  // 아직 검색 전(첫 상태) + 결과 없음 처리
   if (!tags) {
     return (
       <div className="max-h-96 w-full border-b border-[#E5E7EB] p-6 text-sm text-gray-500">
@@ -61,17 +60,19 @@ export default function TagOptionList({
           <div
             key={el.id}
             onClick={() =>
-              setSelectedTagIds((prev) =>
-                prev.includes(el.id)
-                  ? prev.filter((id) => id !== el.id)
-                  : [...prev, el.id]
+              setSelectedTags((prev) =>
+                prev.includes(el.name)
+                  ? prev.filter((name) => name !== el.name)
+                  : [...prev, el.name]
               )
             }
-            aria-current={Boolean(selectedTagIds.find((id) => id === el.id))}
+            aria-current={Boolean(
+              selectedTags.find((name) => name === el.name)
+            )}
             className={ITEMS_STYLE}
           >
             {el.name}
-            {selectedTagIds.find((id) => id === el.id) && (
+            {selectedTags.find((name) => name === el.name) && (
               <Check className="w-4 text-[#CA8A04]" />
             )}
           </div>
