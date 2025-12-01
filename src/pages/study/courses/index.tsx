@@ -18,14 +18,15 @@ export interface Lecture {
   title: string
   instructor: string
   platform: string
-  thumbnail_url?: string
-  link?: string
+  thumbnail_img_url?: string
+  url_link?: string
   description?: string
   difficulty?: string
-  duration?: string
+  total_class_time?: number
   original_price?: number
   discounted_price?: number
-  categories?: string[]
+  average_rating?: number
+  categories?: { id: number; name: string }[]
   created_at: string
   updated_at: string
 }
@@ -102,7 +103,7 @@ export default function LectureManagementPage() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
-    setSelectedLecture(null)
+    setSelectedLecture(0)
   }
   return (
     <div className="space-y-6 rounded-lg bg-white p-6 shadow-sm">
