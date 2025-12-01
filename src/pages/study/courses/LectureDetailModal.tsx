@@ -1,7 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 
+import { PlatformBadge } from '@/components/common/badge'
 import Modal from '@/components/common/Modal'
-import { PlatformBadge } from '@/components/common/PlatformBadge'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type { Lecture } from '@/pages/study/courses'
