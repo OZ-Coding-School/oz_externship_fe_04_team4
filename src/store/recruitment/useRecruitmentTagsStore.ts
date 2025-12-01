@@ -5,6 +5,7 @@ type TagState = {
 
   setSelectedTags: (tags: string[]) => void
   toggleTag: (tag: string) => void
+  deleteSelectedTag: (tag: string) => void
   resetSelectedTags: () => void
 }
 
@@ -27,6 +28,11 @@ export const useRecruitmentTagStore = create<TagState>((set) => ({
         selectedTags: [...state.selectedTags, tag],
       }
     }),
+
+  deleteSelectedTag: (tag) =>
+    set((state) => ({
+      selectedTags: state.selectedTags.filter((t) => t !== tag),
+    })),
 
   resetSelectedTags: () => set({ selectedTags: [] }),
 }))

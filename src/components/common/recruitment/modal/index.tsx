@@ -7,6 +7,7 @@ import TagFilterActionButtons from '@/components/common/recruitment/modal/TagFil
 import TagOptionList from '@/components/common/recruitment/modal/TagOptionList'
 import TagSearchInput from '@/components/common/recruitment/modal/TagSearchInput'
 import { useRecruitmentModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentTagStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function RecruitmentModal() {
   const { isOpen, closeModal } = useRecruitmentModalStore()
@@ -14,7 +15,7 @@ export default function RecruitmentModal() {
   const [inputSearch, setInputSearch] = useState('')
   const [keywordSearch, setKeywordSearch] = useState('')
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const { selectedTags } = useRecruitmentTagStore()
 
   const { data, isLoading, isError } = useRecruitmentTagsQuery({
     page: 1,
@@ -41,18 +42,13 @@ export default function RecruitmentModal() {
         setSearch={setInputSearch}
         onSubmit={handleSearchSubmit}
       />
-      {Boolean(selectedTags.length) && (
-        <SelectedTagList
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
-        />
-      )}
+
+      {Boolean(selectedTags.length) && <SelectedTagList />}
+
       <TagOptionList
         tags={data?.results}
         isLoading={isLoading}
         isError={isError}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
       />
     </Modal>
   )

@@ -1,27 +1,20 @@
 import { Check } from 'lucide-react'
 
-import type { Dispatch, SetStateAction } from 'react'
-
 import type { RecruitmentTag } from '@/mocks/types/accounts'
+import { useRecruitmentTagStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 type Props = {
   tags?: RecruitmentTag[]
   isLoading: boolean
   isError: boolean
-  selectedTags: string[]
-  setSelectedTags: Dispatch<SetStateAction<string[]>>
 }
 
 const ITEMS_STYLE =
   'mb-2 flex h-[38px] w-[202px] cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-2 py-3 hover:border-[#FDE047] hover:bg-[#FEF9C3] hover:text-[#854D0E] active:font-bold aria-[current=true]:border-[#FDE047] aria-[current=true]:bg-[#FEF9C3] aria-[current=true]:text-[#854D0E]'
 
-export default function TagOptionList({
-  tags,
-  isLoading,
-  isError,
-  selectedTags,
-  setSelectedTags,
-}: Props) {
+export default function TagOptionList({ tags, isLoading, isError }: Props) {
+  const { selectedTags, toggleTag } = useRecruitmentTagStore()
+
   if (isLoading) {
     return (
       <div className="max-h-96 w-full border-b border-[#E5E7EB] p-6 text-sm text-gray-500">
@@ -55,17 +48,11 @@ export default function TagOptionList({
 
   return (
     <div className="max-h-96 w-full overflow-scroll border-b border-[#E5E7EB] p-6">
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap gap-2">
         {tags?.map((el) => (
           <div
             key={el.id}
-            onClick={() =>
-              setSelectedTags((prev) =>
-                prev.includes(el.name)
-                  ? prev.filter((name) => name !== el.name)
-                  : [...prev, el.name]
-              )
-            }
+            onClick={() => toggleTag(el.name)}
             aria-current={Boolean(
               selectedTags.find((name) => name === el.name)
             )}

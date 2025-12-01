@@ -1,16 +1,11 @@
 import { X } from 'lucide-react'
-import type { Dispatch, SetStateAction } from 'react'
 
-type Props = {
-  selectedTags: string[]
+import { useRecruitmentTagStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
-  setSelectedTags: Dispatch<SetStateAction<string[]>>
-}
+export default function SelectedTagList() {
+  const { selectedTags, resetSelectedTags, deleteSelectedTag } =
+    useRecruitmentTagStore()
 
-export default function SelectedTagList({
-  selectedTags,
-  setSelectedTags,
-}: Props) {
   return (
     <div className="h-[109px] border-b border-[#E5E7EB] bg-[#F9FAFB] p-6">
       <div className="flex w-full justify-between">
@@ -18,7 +13,7 @@ export default function SelectedTagList({
           선택된 태그 <span>{`(${selectedTags.length})`}</span>
         </div>
         <div
-          onClick={() => setSelectedTags([])}
+          onClick={() => resetSelectedTags()}
           className="cursor-pointer text-[#CA8A04] hover:text-[#ab925b]"
         >
           전체 해제
@@ -33,9 +28,7 @@ export default function SelectedTagList({
             {el}
             <div className="text-[#CA8A04]">
               <X
-                onClick={() =>
-                  setSelectedTags((prev) => prev.filter((name) => name !== el))
-                }
+                onClick={() => deleteSelectedTag(el)}
                 className="ml-2 w-4 cursor-pointer"
               />
             </div>

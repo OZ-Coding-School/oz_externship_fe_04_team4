@@ -8,7 +8,7 @@ import RecruitmentFilter from '@/components/common/recruitment/filter'
 import RecruitmentModal from '@/components/common/recruitment/modal'
 import { Table, type SortConfig } from '@/components/common/table'
 
-export default function RecruitmentApplicationsPage() {
+export default function RecruitmentPage() {
   // const { keyword } = useRecruitmentSearchStore()
   // const { status } = ueeRecruitmentStatusStore()
   // const { selectedTags } = useRecruitmentTagStore()
