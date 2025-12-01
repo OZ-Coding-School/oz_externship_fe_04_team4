@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
+import { PlatformBadge } from '@/components/common/badge'
 import { FilterBar } from '@/components/common/filter'
-import { PlatformBadge } from '@/components/common/PlatformBadge'
 import {
   Table,
   type Column,
