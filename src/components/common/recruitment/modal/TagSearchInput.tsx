@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react'
+import { CircleX, Search } from 'lucide-react'
 import type { KeyboardEvent } from 'react'
 
 type Props = {
@@ -26,6 +26,10 @@ export default function TagSearchInput({ search, setSearch, onSubmit }: Props) {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
           onKeyDown={handleKeyDown}
+        />
+        <CircleX
+          className="w-4 cursor-pointer text-[#9CA3AF] hover:text-gray-800"
+          onClick={() => setSearch('')}
         />
       </div>
     </div>
