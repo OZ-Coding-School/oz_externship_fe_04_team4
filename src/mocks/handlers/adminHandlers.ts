@@ -472,10 +472,10 @@ export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
 export const getAdminLecturesHandler = http.get(
   `${ADMIN_API_PREFIX}/lectures`,
   ({ request }) => {
-    const authError = requireAdminAuth(request)
-    if (authError) {
-      return HttpResponse.json(authError.body, { status: authError.status })
-    }
+    // const authError = requireAdminAuth(request)
+    // if (authError) {
+    //   return HttpResponse.json(authError.body, { status: authError.status })
+    // }
 
     const { page, pageSize } = parsePagination(request)
     const baseItems = mockLecturesList.results

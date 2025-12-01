@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react'
 
-import { useDeferredValue, useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useRef, useState } from 'react'
 
 import type { SearchConfig } from '@/components/common/filter/types'
 
@@ -12,13 +12,20 @@ export function SearchInput({
 }: SearchConfig) {
   const [localValue, setLocalValue] = useState(value)
   const debounceValue = useDeferredValue(localValue)
+  const onChangeRef = useRef(onChange)
+
+  useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
 
   useEffect(() => {
     setLocalValue(value)
   }, [value])
+
   useEffect(() => {
-    onChange(debounceValue)
-  }, [debounceValue, onChange])
+    onChangeRef.current(debounceValue)
+  }, [debounceValue])
+
   return (
     <div className="flex flex-col gap-1">
       {label && (
