@@ -7,16 +7,13 @@ import {
 import RecruitmentFilter from '@/components/common/recruitment/filter'
 import RecruitmentModal from '@/components/common/recruitment/modal'
 import { Table, type SortConfig } from '@/components/common/table'
-import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
-import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
-import { useRecruitmentTagStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function RecruitmentApplicationsPage() {
-  const { keyword } = useRecruitmentSearchStore()
-  const { status } = ueeRecruitmentStatusStore()
-  const { selectedTags } = useRecruitmentTagStore()
+  // const { keyword } = useRecruitmentSearchStore()
+  // const { status } = ueeRecruitmentStatusStore()
+  // const { selectedTags } = useRecruitmentTagStore()
 
-  const [queryParams, setQueryParams] = useState({
+  const [_, setQueryParams] = useState({
     page: 1,
     page_size: 10,
     keyword: '',

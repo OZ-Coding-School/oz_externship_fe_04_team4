@@ -14,6 +14,8 @@ export default function RecruitmentModal() {
   const [inputSearch, setInputSearch] = useState('')
   const [keywordSearch, setKeywordSearch] = useState('')
 
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
   const { data, isLoading, isError } = useRecruitmentTagsQuery({
     page: 1,
     pageSize: 100,
@@ -39,11 +41,18 @@ export default function RecruitmentModal() {
         setSearch={setInputSearch}
         onSubmit={handleSearchSubmit}
       />
-      <SelectedTagList />
+      {Boolean(selectedTags.length) && (
+        <SelectedTagList
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+        />
+      )}
       <TagOptionList
         tags={data?.results}
         isLoading={isLoading}
         isError={isError}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
       />
     </Modal>
   )
