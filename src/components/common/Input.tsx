@@ -47,7 +47,6 @@ export default function Input({
       )}
       <input
         id={id}
-        {...props}
         readOnly={!editable}
         className={twMerge(
           clsx(
@@ -57,6 +56,7 @@ export default function Input({
           )
         )}
         value={props.value ?? ''}
+        {...props}
       />
       {error && <span className="text-sm text-red-500">{error}</span>}
     </div>
