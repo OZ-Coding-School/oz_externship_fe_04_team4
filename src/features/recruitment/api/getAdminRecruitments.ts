@@ -9,6 +9,7 @@ export type GetAdminRecruitmentsParams = {
   keyword?: string
   status?: 'all' | 'true' | 'false' | string
   tags?: TagsType[]
+  sort?: string
 }
 
 export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
@@ -30,6 +31,13 @@ export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
   if (params.tags && params.tags.length > 0) {
     // 예시: "python,react" 형식으로 보냄
     searchParams.set('tags', params.tags.map((el) => el.name).join(','))
+  }
+
+  if (params.sort) {
+    searchParams.set(
+      'sort',
+      params.sort === 'created_asc' ? 'oldest' : 'latest'
+    )
   }
 
   const res = await adminFetch(

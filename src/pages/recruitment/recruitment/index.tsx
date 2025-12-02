@@ -31,6 +31,7 @@ export default function RecruitmentPage() {
     keyword,
     status,
     tags: selectedTagsResult,
+    sort: sortConfig?.value,
   }
 
   // 3) Table에 넘길 response 생성
