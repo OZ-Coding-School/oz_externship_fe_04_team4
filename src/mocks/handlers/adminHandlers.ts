@@ -727,20 +727,100 @@ export const getAdminRecruitmentsHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
+    const url = new URL(request.url)
     const { page, pageSize } = parsePagination(request)
+
+    // --- query params 파싱 ---
+    const searchParam = url.searchParams.get('search') ?? ''
+    const sortParam = url.searchParams.get('sort')
+    const isClosedParam = url.searchParams.get('is_closed')
+
+    // tags: ?tags=tag1&tags=tag2 or ?tags=tag1,tag2 둘 다 대응
+    const rawTags = url.searchParams.getAll('tags')
+    const tagFilters = rawTags
+      .flatMap((value) => value.split(','))
+      .map((value) => value.trim())
+      .filter((value) => value.length > 0)
+      .map((value) => value.toLowerCase())
+
+    const search = searchParam.trim().toLowerCase()
+
+    let isClosedFilter: boolean | null = null
+    if (isClosedParam === 'true') isClosedFilter = true
+    if (isClosedParam === 'false') isClosedFilter = false
+
+    type SortType = 'latest' | 'oldest' | 'most_views' | 'most_bookmarks'
+    const sort = (
+      ['latest', 'oldest', 'most_views', 'most_bookmarks'] as SortType[]
+    ).includes(sortParam as SortType)
+      ? (sortParam as SortType)
+      : undefined
+
+    // --- 기본 데이터 ---
     const baseItems = mockRecruitmentList.results
+
+    // --- 필터링 ---
+    let filtered = [...baseItems]
+
+    // search: title 부분 일치
+    if (search) {
+      filtered = filtered.filter((item) =>
+        item.title.toLowerCase().includes(search)
+      )
+    }
+
+    // tags: 요청된 태그 중 하나라도 포함하면 통과 (OR 조건)
+    if (tagFilters.length > 0) {
+      filtered = filtered.filter((item) => {
+        const tagNames = item.tags.map((tag) => tag.name.toLowerCase())
+        return tagFilters.some((t) => tagNames.includes(t))
+      })
+    }
+
+    // is_closed: true/false 명시된 경우에만 필터
+    if (isClosedFilter !== null) {
+      filtered = filtered.filter((item) => item.is_closed === isClosedFilter)
+    }
+
+    // --- 정렬 ---
+    if (sort) {
+      filtered = [...filtered] // 정렬 전 얕은 복사
+      switch (sort) {
+        case 'latest':
+          // created_at 내림차순 (최신순)
+          filtered.sort((a, b) => b.created_at.localeCompare(a.created_at))
+          break
+        case 'oldest':
+          // created_at 오름차순 (오래된순)
+          filtered.sort((a, b) => a.created_at.localeCompare(b.created_at))
+          break
+        case 'most_views':
+          filtered.sort((a, b) => b.views_count - a.views_count)
+          break
+        case 'most_bookmarks':
+          filtered.sort((a, b) => b.bookmark_count - a.bookmark_count)
+          break
+      }
+    }
+
+    // --- 페이지네이션 ---
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filtered,
       page,
       pageSize
     )
 
-    const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/recruitments?page=${page + 1}&page_size=${pageSize}`
-      : null
-    const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/recruitments?page=${page - 1}&page_size=${pageSize}`
-      : null
+    // next / previous URL 생성 (기존 쿼리 유지 + page/page_size만 교체)
+    const baseUrl = `${BASE_URL}${ADMIN_API_PREFIX}/recruitments`
+    const buildUrl = (targetPage: number) => {
+      const params = new URLSearchParams(url.searchParams)
+      params.set('page', String(targetPage))
+      params.set('page_size', String(pageSize))
+      return `${baseUrl}?${params.toString()}`
+    }
+
+    const next = hasNext ? buildUrl(page + 1) : null
+    const previous = hasPrev ? buildUrl(page - 1) : null
 
     return HttpResponse.json(
       {
