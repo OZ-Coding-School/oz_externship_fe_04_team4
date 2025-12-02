@@ -1,15 +1,17 @@
 import { create } from 'zustand'
 
-type StatusState = {
-  status: string
+type StatusType = 'all' | 'false' | 'true'
 
-  setStatus: (value: string) => void
+type StatusState = {
+  status: StatusType
+
+  setStatus: (value: StatusType) => void
   resetStatus: () => void
 }
 
 export const ueeRecruitmentStatusStore = create<StatusState>((set) => ({
-  status: '',
+  status: 'all',
 
   setStatus: (value) => set({ status: value }),
-  resetStatus: () => set({ status: '' }),
+  resetStatus: () => set({ status: 'all' }),
 }))
