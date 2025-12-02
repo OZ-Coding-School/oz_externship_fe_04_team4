@@ -14,6 +14,7 @@ const BOX_STYLE = 'w-[256px] h-9 focus:ring-0 focus:border-0'
 
 export default function RecruitmentFilter() {
   const { openModal } = useRecruitmentModalStore()
+
   const { keyword, setKeyword } = useRecruitmentSearchStore()
   const { status, setStatus } = ueeRecruitmentStatusStore()
 
@@ -44,7 +45,7 @@ export default function RecruitmentFilter() {
         placeholder="전체"
       />
 
-      <div className="flex flex-col">
+      <div className="mr-4 flex flex-col">
         <div
           className={twMerge(clsx('mb-2 text-sm font-medium text-[##374151]'))}
         >

@@ -317,6 +317,8 @@ export type RecruitmentListResults = {
   created_at: string
   updated_at: string
 }
+
+// api/v1/admin/recruitments
 export type RecruitmentList = {
   count: number
   next: null | string

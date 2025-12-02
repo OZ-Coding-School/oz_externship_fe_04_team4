@@ -1,45 +1,46 @@
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Table, type SortConfig } from '@/components/common/table'
 import {
-  RecruitmentColumns,
-  RecruitmentListData,
-} from '@/features/recruitment/columns'
+  getAdminRecruitments,
+  type GetAdminRecruitmentsParams,
+} from '@/features/recruitment/api/getAdminRecruitments'
+import { RecruitmentColumns } from '@/features/recruitment/columns'
 import RecruitmentModal from '@/features/recruitment/ui/modal'
 import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
+import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
+import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
+import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function RecruitmentPage() {
-  // const { keyword } = useRecruitmentSearchStore()
-  // const { status } = ueeRecruitmentStatusStore()
+  const PAGE_SIZE = 10
 
-  const [_, setQueryParams] = useState({
-    page: 1,
-    page_size: 10,
-    keyword: '',
-    selectedTags: '',
-    sort: '',
-  })
-
-  // useEffect(() => {
-  //   setQueryParams((prev) => {
-  //     return { ...prev, keyword, selectedTags, status, page: 1 }
-  //   })
-  // }, [keyword, status, selectedTags])
-
-  // =================== Table =========================
+  // 1) 테이블용 상태
   const [currentPage, setCurrentPage] = useState(1)
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
 
-  // 페이지네이션 테스트 용 데이터 슬라이스(실제론 API에서 results에 10개씩만 들어있음)
-  const startIndex = (currentPage - 1) * 10
-  const endIndex = startIndex + 10
-  const currentPageData = RecruitmentListData.slice(startIndex, endIndex)
-  const exampleResponse = {
-    count: RecruitmentListData.length,
-    next: currentPage < 10 ? `...?page=${currentPage + 1}` : null,
-    previous: currentPage > 1 ? `...?page=${currentPage - 1}` : null,
-    results: currentPageData,
+  // 2) 필터 상태 (zustand)
+  const { keyword } = useRecruitmentSearchStore()
+  const { status } = ueeRecruitmentStatusStore()
+  const { selectedTagsResult } = useRecruitmentTagListStore()
+
+  const queryParams: GetAdminRecruitmentsParams = {
+    page: currentPage,
+    page_size: PAGE_SIZE,
+    keyword,
+    status,
+    tags: selectedTagsResult,
+    sort: sortConfig?.value,
   }
+
+  // 3) Table에 넘길 response 생성
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ['adminRecruitments', queryParams],
+    queryFn: () => getAdminRecruitments(queryParams),
+  })
+
+  // 4) 정렬 핸들러 (Table 헤더에서 호출)
   const handleSort = (
     sortValue: string,
     direction: 'asc' | 'desc',
@@ -48,18 +49,13 @@ export default function RecruitmentPage() {
     if (sortValue === '') {
       // 정렬 해제
       setSortConfig(null)
-      setQueryParams((prev) => ({ ...prev, sort: '', page: 1 }))
     } else {
+      // 어떤 컬럼을 어떤 방향으로 정렬 중인지 저장
       setSortConfig({ key, value: sortValue, direction })
-      setQueryParams((prev) => ({
-        ...prev,
-        sort: sortValue,
-        page: 1,
-      }))
     }
+    // 정렬 바뀌면 항상 1페이지로
     setCurrentPage(1)
   }
-
   return (
     <>
       <RecruitmentModal />
@@ -75,8 +71,19 @@ export default function RecruitmentPage() {
         sortConfig={sortConfig}
         onSort={handleSort}
         currentPage={currentPage}
-        response={exampleResponse}
+        response={
+          data ?? {
+            count: 0,
+            next: null,
+            previous: null,
+            results: [],
+          }
+        }
         onPageChange={setCurrentPage}
+        pageSize={PAGE_SIZE}
+        isLoading={isLoading}
+        error={error instanceof Error ? error : undefined}
+        onRetry={refetch}
       />
     </>
   )

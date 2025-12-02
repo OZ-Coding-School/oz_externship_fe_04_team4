@@ -1,11 +1,16 @@
 import { create } from 'zustand'
 
-type TagsState = {
-  selectedTags: string[]
+export type TagsType = {
+  id: number
+  name: string
+}
 
-  setSelectedTags: (tags: string[]) => void
-  toggleTag: (tag: string) => void
-  deleteSelectedTag: (tag: string) => void
+type TagsState = {
+  selectedTags: TagsType[]
+
+  setSelectedTags: (tags: TagsType[]) => void
+  toggleTag: (tag: TagsType) => void
+  deleteSelectedTag: (tag: TagsType) => void
   resetSelectedTags: () => void
 }
 
@@ -16,11 +21,11 @@ export const useRecruitmentTagsStore = create<TagsState>((set) => ({
 
   toggleTag: (tag) =>
     set((state) => {
-      const isSelected = state.selectedTags.includes(tag)
+      const isSelectedID = state.selectedTags.find((t) => t.id === tag.id)
 
-      if (isSelected) {
+      if (isSelectedID) {
         return {
-          selectedTags: state.selectedTags.filter((t) => t !== tag),
+          selectedTags: state.selectedTags.filter((t) => t.id !== tag.id),
         }
       }
 
@@ -31,16 +36,16 @@ export const useRecruitmentTagsStore = create<TagsState>((set) => ({
 
   deleteSelectedTag: (tag) =>
     set((state) => ({
-      selectedTags: state.selectedTags.filter((t) => t !== tag),
+      selectedTags: state.selectedTags.filter((t) => t.id !== tag.id),
     })),
 
   resetSelectedTags: () => set({ selectedTags: [] }),
 }))
 
 type TagsResultState = {
-  selectedTagsResult: string[]
+  selectedTagsResult: TagsType[]
 
-  setSelectedTagsResult: (tags: string[]) => void
+  setSelectedTagsResult: (tags: TagsType[]) => void
 }
 
 export const useRecruitmentTagListStore = create<TagsResultState>((set) => ({

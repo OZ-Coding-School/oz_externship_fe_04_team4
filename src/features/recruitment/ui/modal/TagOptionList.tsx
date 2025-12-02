@@ -52,14 +52,12 @@ export default function TagOptionList({ tags, isLoading, isError }: Props) {
         {tags?.map((el) => (
           <div
             key={el.id}
-            onClick={() => toggleTag(el.name)}
-            aria-current={Boolean(
-              selectedTags.find((name) => name === el.name)
-            )}
+            onClick={() => toggleTag(el)}
+            aria-current={Boolean(selectedTags.find((tag) => tag.id === el.id))}
             className={ITEMS_STYLE}
           >
             <div className="max-w-[165px] truncate"> {el.name}</div>
-            {selectedTags.find((name) => name === el.name) && (
+            {selectedTags.find((tag) => tag.id === el.id) && (
               <Check className="w-4 text-[#CA8A04]" />
             )}
           </div>

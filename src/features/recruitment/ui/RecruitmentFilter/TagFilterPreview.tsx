@@ -14,10 +14,10 @@ export default function TagFilterPreview() {
         {selectedTagsResult.length
           ? selectedTagsResult.map((el) => (
               <div
-                key={el}
+                key={el.id}
                 className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
               >
-                {el}
+                {el.name}
               </div>
             ))
           : '태그 입력'}
@@ -57,10 +57,10 @@ export default function TagFilterPreview() {
         <div className="flex gap-0.5 text-sm text-[#374151]">
           {selectedTagsResult.map((el) => (
             <div
-              key={el}
+              key={el.id}
               className="max-w-[210px] truncate rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
             >
-              {el}
+              {el.name}
             </div>
           ))}
         </div>
@@ -72,10 +72,10 @@ export default function TagFilterPreview() {
       <div className="flex gap-0.5 truncate text-sm text-[#374151]">
         {selectedTagsResult.map((el) => (
           <div
-            key={el}
+            key={el.id}
             className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
           >
-            {el}
+            {el.name}
           </div>
         ))}
       </div>
@@ -116,10 +116,10 @@ export default function TagFilterPreview() {
     <div className="flex gap-0.5 truncate text-sm text-[#374151]">
       {selectedTagsResult.map((el) => (
         <div
-          key={el}
+          key={el.id}
           className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
         >
-          {el}
+          {el.name}
         </div>
       ))}
     </div>

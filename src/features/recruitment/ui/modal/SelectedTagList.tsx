@@ -22,10 +22,10 @@ export default function SelectedTagList() {
       <div className="flex flex-wrap gap-1 py-3">
         {selectedTags.map((el) => (
           <div
-            key={el}
+            key={el.id}
             className="mr-2 flex cursor-default items-center rounded-full bg-[#FEF9C3] px-3 py-1 text-[#854D0E] hover:bg-[#f1e779] active:bg-[#8b6921] active:text-white"
           >
-            <div className="max-w-[90px] truncate">{el}</div>
+            <div className="max-w-[90px] truncate">{el.name}</div>
             <div className="text-[#CA8A04]">
               <X
                 onClick={() => deleteSelectedTag(el)}
