@@ -114,7 +114,7 @@ export default function StudyGroupManagementPage() {
       <FilterBar
         searchConfig={{
           label: '검색',
-          placeholder: '강의명, 강사명 검색...',
+          placeholder: '그룹명 검색 ...',
           value: filters.search,
           onChange: (value) =>
             setFilters((prev) => ({ ...prev, search: value, page: 1 })),
