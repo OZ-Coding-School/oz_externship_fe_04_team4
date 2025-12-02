@@ -9,6 +9,7 @@ import type { PaginationResponse } from '@/components/common/table'
 import { Table } from '@/components/common/table/Table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+import { UserDetailModal } from '@/pages/members/users/UserDetailModal'
 import { formatDateTime } from '@/utils'
 
 export interface UserApiRawItem {
@@ -52,6 +53,8 @@ export default function UserTable() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('')
   const [role, setRole] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<number | null>(null)
 
   useEffect(() => {
     setPage(1)
@@ -203,6 +206,16 @@ export default function UserTable() {
     },
   ]
 
+  const handleRowClick = (user: UserApiRawItem) => {
+    setSelectedUser(user.id)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedUser(0)
+  }
+
   if (isLoading) return <div>Loading</div>
   if (axios.isAxiosError(error)) {
     console.log(error.response?.status)
@@ -252,6 +265,12 @@ export default function UserTable() {
         isLoading={isLoading}
         error={typeof error === 'string' ? error : error?.message}
         onRetry={refetch}
+        onRowClick={handleRowClick}
+      />
+      <UserDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        userId={selectedUser}
       />
     </div>
   )
