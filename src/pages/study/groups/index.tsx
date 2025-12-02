@@ -9,7 +9,7 @@ import {
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import { LectureDetailModal } from '@/pages/study/courses/LectureDetailModal'
+import { StudyGroupDetailModal } from '@/pages/study/groups/StudyGroupDetailModal'
 import { formatDateTime } from '@/utils'
 
 export interface StudyGroup {
@@ -146,10 +146,10 @@ export default function StudyGroupManagementPage() {
         onRetry={refetch}
         onRowClick={handleRowClick}
       />
-      <LectureDetailModal
+      <StudyGroupDetailModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        lectureId={selectedStudyGroupId}
+        studyGroupId={selectedStudyGroupId}
       />
     </div>
   )
