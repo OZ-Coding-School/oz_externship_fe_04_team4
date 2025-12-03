@@ -700,7 +700,7 @@ export const getAdminStudyReviewsHandler = http.get(
 
 // GET /api/v1/admin/study-reviews/{review_id} - 스터디 리뷰 상세
 export const getAdminStudyReviewDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-reviews/:review_id`,
+  `${ADMIN_API_PREFIX}/study-review2s/:review_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1041,6 +1041,17 @@ export const getAdminApplicationDetailHandler = http.get(
     return HttpResponse.json(mockApplicationsDetail, { status: 200 })
   }
 )
+export const catchAllAdminHandler = http.all(
+  `${ADMIN_API_PREFIX}/*`,
+  ({ request }) => {
+    return HttpResponse.json(
+      {
+        error_detail: `Handler not found for ${request.method} ${request.url}`,
+      },
+      { status: 404 }
+    )
+  }
+)
 
 /* -------------------------------------------------------------------------- */
 /* 전체 admin 핸들러 모음                                                    */
@@ -1083,4 +1094,5 @@ export const adminHandlers = [
   // applications
   getAdminApplicationsHandler,
   getAdminApplicationDetailHandler,
+  catchAllAdminHandler,
 ]
