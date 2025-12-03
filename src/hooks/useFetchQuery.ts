@@ -2,10 +2,8 @@ import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 
 import { axiosInstance } from '@/lib/axios'
 
-interface UseFetchQueryParams<TData, TError = Error> extends Omit<
-  UseQueryOptions<TData, TError>,
-  'queryFn'
-> {
+interface UseFetchQueryParams<TData, TError = Error>
+  extends Omit<UseQueryOptions<TData, TError>, 'queryFn'> {
   url: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params?: Record<string, any>
