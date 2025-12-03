@@ -480,9 +480,18 @@ export const getAdminLecturesHandler = http.get(
     }
 
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockLecturesList.results
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search')
+    let filteredItems = [...mockLecturesList.results]
+    if (search) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.instructor.toLowerCase().includes(search.toLowerCase()) ||
+          item.title.toLowerCase().includes(search.toLowerCase())
+      )
+    }
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )
@@ -556,9 +565,46 @@ export const getAdminStudyGroupsHandler = http.get(
     }
 
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockStudyGroupList.results
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search') || ''
+    const status = url.searchParams.get('status') || ''
+    const sort = url.searchParams.get('sort') || ''
+    let filteredItems = [...mockStudyGroupList.results]
+
+    if (search) {
+      filteredItems = filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+
+    if (status) {
+      filteredItems = filteredItems.filter((item) => item.status === status)
+    }
+
+    if (sort) {
+      filteredItems.sort((a, b) => {
+        switch (sort) {
+          case 'latest':
+            return (
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+            )
+          case 'oldest':
+            return (
+              new Date(a.created_at).getTime() -
+              new Date(b.created_at).getTime()
+            )
+          case 'name_asc':
+            return a.name.localeCompare(b.name)
+          case 'name_desc':
+            return b.name.localeCompare(a.name)
+          default:
+            return 0
+        }
+      })
+    }
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )
@@ -616,9 +662,18 @@ export const getAdminStudyReviewsHandler = http.get(
     }
 
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockStudyReviewList.results
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search')
+    let filteredItems = [...mockStudyReviewList.results]
+    if (search) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.author.nickname.toLowerCase().includes(search.toLowerCase()) ||
+          item.author.email.toLowerCase().includes(search.toLowerCase())
+      )
+    }
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )

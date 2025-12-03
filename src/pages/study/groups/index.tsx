@@ -29,15 +29,22 @@ export default function StudyGroupManagementPage() {
     search: string
     page: number
     status: string
+    sort: string
   }>({
     search: '',
     page: 1,
     status: '',
+    sort: '',
   })
   const [selectedStudyGroupId, setSelectedStudyGroupId] = useState<
     number | null
   >(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [sortConfig, setSortConfig] = useState<{
+    key: string
+    value: string
+    direction: 'asc' | 'desc'
+  } | null>(null)
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<StudyGroup>
   >({
@@ -48,8 +55,17 @@ export default function StudyGroupManagementPage() {
       page_size: 10,
       search: filters.search,
       status: filters.status,
+      sort: filters.sort,
     },
   })
+  const handleSort = (
+    sortValue: string,
+    direction: 'asc' | 'desc',
+    key: string
+  ) => {
+    setFilters((prev) => ({ ...prev, sort: sortValue, page: 1 }))
+    setSortConfig({ key, value: sortValue, direction })
+  }
 
   const columns: Column<StudyGroup>[] = [
     {
@@ -68,6 +84,10 @@ export default function StudyGroupManagementPage() {
       key: 'name',
       header: '그룹명',
       width: '300px',
+      sortable: {
+        asc: 'name_asc',
+        desc: 'name_desc',
+      },
     },
     {
       key: 'headcount',
@@ -92,6 +112,10 @@ export default function StudyGroupManagementPage() {
       header: '생성일시',
       width: '150px',
       render: (value: string) => formatDateTime(value),
+      sortable: {
+        asc: 'oldest',
+        desc: 'latest',
+      },
     },
     {
       key: 'updated_at',
@@ -144,6 +168,8 @@ export default function StudyGroupManagementPage() {
         error={error?.message}
         onRetry={refetch}
         onRowClick={handleRowClick}
+        sortConfig={sortConfig}
+        onSort={handleSort}
       />
       <StudyGroupDetailModal
         isOpen={isModalOpen}
