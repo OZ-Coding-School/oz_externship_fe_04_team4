@@ -25,13 +25,15 @@ axiosInstance.interceptors.request.use(
 )
 axiosInstance.interceptors.response.use(
   (response) => {
-    if (response.status === 200 && !response.data) {
+    if (response.status !== 200 && !response.data) {
       return Promise.reject(new Error('서버 응답이 올바르지 않습니다'))
     }
     // Table 컴포넌트의 데이터 형식 추가 ... response.results << API 명세서 컨벤션에 맞춤
-    if (response.data && typeof response.data === 'object') {
-      if ('results' in response.data && !Array.isArray(response.data.results)) {
-        return Promise.reject(new Error('응답 형식이 올바르지 않습니다'))
+    if (response.data && 'count' in response.data) {
+      if (!('results' in response.data)) {
+        return Promise.reject(
+          new Error('[Axios] Pagination 응답값에 results 값이 없습니다.')
+        )
       }
     }
 
