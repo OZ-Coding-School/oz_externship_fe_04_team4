@@ -25,6 +25,7 @@ import {
   mockWithdrawalsTrendsYearly,
   type WithdrawalReason,
 } from '@/mocks/data/accounts'
+import { parseRequestBody } from '@/mocks/handlers/parseRequestBody'
 import type { RecruitmentTags } from '@/mocks/types/accounts'
 
 /**
@@ -159,6 +160,7 @@ export const getAdminAccountDetailHandler = http.get(
 export const patchAdminAccountHandler = http.patch(
   `${ADMIN_API_PREFIX}/accounts/:account_id`,
   async ({ request, params }) => {
+    const body = await parseRequestBody(request)
     const authError = requireAdminAuth(request)
     if (authError) {
       return HttpResponse.json(authError.body, { status: authError.status })
@@ -182,8 +184,6 @@ export const patchAdminAccountHandler = http.patch(
         { status: 404 }
       )
     }
-
-    const body = (await request.json()) as Record<string, unknown>
 
     const updated = {
       ...current,

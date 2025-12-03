@@ -64,7 +64,7 @@ export default function UserTable() {
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<UserApiRawItem>
   >({
-    queryKey: ['users', page, search, mappedStatus, role],
+    queryKey: ['users-list', page, search, mappedStatus, role],
     url: SERVICE_URLS.ACCOUNTS.LIST,
     params: {
       page,
