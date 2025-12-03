@@ -700,7 +700,7 @@ export const getAdminStudyReviewsHandler = http.get(
 
 // GET /api/v1/admin/study-reviews/{review_id} - 스터디 리뷰 상세
 export const getAdminStudyReviewDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-review2s/:review_id`,
+  `${ADMIN_API_PREFIX}/study-reviews/:review_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
