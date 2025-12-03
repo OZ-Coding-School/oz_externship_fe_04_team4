@@ -1,1 +1,3 @@
-export { PlatformBadge } from './PlatformBadge'
+export * from './ApplicationStatusBadge'
+export * from './PlatformBadge'
+export * from './StudyGroupStatusBadge'
