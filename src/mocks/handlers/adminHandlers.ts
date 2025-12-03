@@ -957,9 +957,40 @@ export const getAdminApplicationsHandler = http.get(
     }
 
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockApplicationsList.results
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search')
+    const status = url.searchParams.get('status')
+    const sort = url.searchParams.get('sort')
+    let filteredItems = [...mockApplicationsList.results]
+    if (search) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.applicant.nickname
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          item.recruitment.title.toLowerCase().includes(search.toLowerCase()) ||
+          item.applicant.email.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+    if (status) {
+      filteredItems = filteredItems.filter((item) => item.status === status)
+    }
+    if (sort) {
+      filteredItems.sort((a, b) => {
+        const dateA = new Date(a.created_at).getTime()
+        const dateB = new Date(b.created_at).getTime()
+
+        if (sort === 'LATEST') {
+          return dateB - dateA
+        } else if (sort === 'OLDEST') {
+          return dateA - dateB
+        }
+        return 0
+      })
+    }
+
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )
