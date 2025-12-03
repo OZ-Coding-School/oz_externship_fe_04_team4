@@ -53,6 +53,7 @@ export function Table<T>({
   onRowClick,
 }: TableProps<T>) {
   const totalPages = Math.ceil(response.count / pageSize)
+  const results = response?.results ?? []
 
   const twClassName = (classes: ClassValue[]) => {
     return twMerge(clsx(classes))
@@ -74,8 +75,8 @@ export function Table<T>({
 
   const hasError = !!error
   const showLoading = isLoading && !hasError
-  const isEmpty = !hasError && !isLoading && response.results.length === 0
-  const hasData = !hasError && !isLoading && response.results.length > 0
+  const isEmpty = !hasError && !isLoading && results.length === 0
+  const hasData = !hasError && !isLoading && results.length > 0
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto rounded-lg border border-gray-200">
@@ -140,7 +141,7 @@ export function Table<T>({
               ))}
             {isEmpty && <TableDataNone length={columns.length} />}
             {hasData &&
-              response.results.map((row, rowIndex) => (
+              results.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
                   className="cursor-pointer transition-colors hover:bg-gray-50"
