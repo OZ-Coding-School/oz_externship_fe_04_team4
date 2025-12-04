@@ -196,6 +196,47 @@ export const patchAdminAccountHandler = http.patch(
     return HttpResponse.json(updated, { status: 200 })
   }
 )
+// POST /api/v1/admin/accounts/{account_id} - 회원 정보 수정 (JSON)
+export const postAdminAccountHandler = http.post(
+  `${ADMIN_API_PREFIX}/accounts/:account_id`,
+  async ({ request, params }) => {
+    const authError = requireAdminAuth(request)
+    if (authError) {
+      return HttpResponse.json(authError.body, { status: authError.status })
+    }
+
+    const { account_id } = params as { account_id?: string }
+    const id = Number(account_id)
+
+    if (!account_id || Number.isNaN(id)) {
+      return HttpResponse.json(
+        { error_detail: '사용자 정보를 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    const current = mockAccountDetailMap[id]
+    if (!current) {
+      return HttpResponse.json(
+        { error_detail: '사용자 정보를 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    const formData = await request.formData()
+    const body = Object.fromEntries(formData.entries())
+
+    const updated = {
+      ...current,
+      ...body,
+    }
+
+    // 메모리 mock 업데이트
+    mockAccountDetailMap[id] = updated
+
+    return HttpResponse.json(updated, { status: 200 })
+  }
+)
 
 // DELETE /api/v1/admin/accounts/{account_id} - 회원 삭제
 export const deleteAdminAccountHandler = http.delete(
@@ -1063,6 +1104,7 @@ export const adminHandlers = [
   getAdminAccountDetailHandler,
   patchAdminAccountHandler,
   deleteAdminAccountHandler,
+  postAdminAccountHandler,
   patchAdminAccountRoleHandler,
   postAdminAccountActivateHandler,
   postAdminAccountDeactivateHandler,

@@ -1,15 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 
-import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { STATUS_LABEL } from '@/config/status'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
+import { UserDetailFooter } from '@/pages/members/users/UserDetailFooter'
 import { UserDetailForm } from '@/pages/members/users/UserDetailForm'
-import { UserDetailMemberDelete } from '@/pages/members/users/UserDetailMemberDelete'
 import type {
   UserDetailModalProps,
   UserDetailUser,
@@ -151,16 +150,21 @@ export function UserDetailModal({
       비활성: 'inactive',
       탈퇴: 'withdraw',
     }
-    const originalRoleKey = Object.keys(ROLE_LABEL).find(
-      (key) => ROLE_LABEL[key as keyof typeof ROLE_LABEL] === form.role
-    )
+    const normalizeRole = (role: string) => {
+      if (ROLE_LABEL[role as keyof typeof ROLE_LABEL]) return role
+
+      const key = Object.keys(ROLE_LABEL).find(
+        (k) => ROLE_LABEL[k as keyof typeof ROLE_LABEL] === role
+      )
+      return key
+    }
     updateUserMutation.mutate({
       name: form.name,
       nickname: form.nickname,
       phone_number: form.phone,
       gender: form.gender,
       status: statusMap[form.status],
-      role: originalRoleKey,
+      role: normalizeRole(form.role),
       profile_img: file ?? undefined,
     })
   }
@@ -180,45 +184,15 @@ export function UserDetailModal({
       topCloseButton
       footerClassName="bg-[#F9FAFB]"
       footer={
-        <div className="flex w-full items-center justify-between">
-          <Button
-            variant="custom"
-            className="bg-primary-green text-white"
-            onClick={() => {
-              if (!isEditMode) setIsRoleModalOpen(true)
-            }}
-          >
-            권한 변경하기
-          </Button>
-          <div className="flex justify-end gap-3">
-            {isEditMode ? (
-              <Button
-                variant="custom"
-                className="bg-primary-blue text-white"
-                onClick={handleFormEditOk}
-              >
-                수정완료
-              </Button>
-            ) : (
-              <Button
-                variant="custom"
-                className="bg-primary-blue text-white"
-                onClick={() => setIsEditMode((prev) => !prev)}
-              >
-                수정하기
-              </Button>
-            )}
-
-            <Button variant="delete" onClick={() => setIsDeleteModalOpen(true)}>
-              삭제하기
-            </Button>
-            <UserDetailMemberDelete
-              isDeleteModalOpen={isDeleteModalOpen}
-              setIsDeleteModalOpen={setIsDeleteModalOpen}
-              handleUserDelete={handleUserDelete}
-            />
-          </div>
-        </div>
+        <UserDetailFooter
+          setIsRoleModalOpen={setIsRoleModalOpen}
+          isEditMode={isEditMode}
+          handleFormEditOk={handleFormEditOk}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+          handleUserDelete={handleUserDelete}
+          setIsEditMode={setIsEditMode}
+          isDeleteModalOpen={isDeleteModalOpen}
+        />
       }
     >
       {user && (

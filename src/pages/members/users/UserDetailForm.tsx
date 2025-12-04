@@ -1,5 +1,7 @@
 import { ChevronDown } from 'lucide-react'
 
+import React from 'react'
+
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
 import Modal from '@/components/common/Modal'
@@ -21,7 +23,7 @@ interface UserDetailFormProps {
   role: string
   handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-export function UserDetailForm({
+function UserDetailFormComponent({
   profileImg,
   isEditMode,
   user,
@@ -43,7 +45,7 @@ export function UserDetailForm({
           <label htmlFor="file-input">
             <img
               src={profileImg || user.profile_img_url}
-              alt=""
+              alt="회원 프로필 사진"
               className="h-20 w-20 rounded-full object-cover"
             />
           </label>
@@ -116,6 +118,7 @@ export function UserDetailForm({
             <Input
               label="상태"
               name="status"
+              onChange={handleFormChange}
               value={form.status}
               editable={false}
             />
@@ -143,7 +146,6 @@ export function UserDetailForm({
                 <Button
                   className="bg-primary-blue text-white"
                   onClick={() => {
-                    console.log('선택된 역할:', role)
                     setForm((prev) => ({
                       ...prev,
                       role: ROLE_LABEL[role as keyof typeof ROLE_LABEL],
@@ -223,3 +225,4 @@ export function UserDetailForm({
     </div>
   )
 }
+export const UserDetailForm = React.memo(UserDetailFormComponent)

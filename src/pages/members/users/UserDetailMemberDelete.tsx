@@ -23,7 +23,9 @@ export function UserDetailMemberDelete({
       footerClassName="border-t-0 pt-0"
       footer={
         <div className="flex w-full flex-row justify-end gap-3">
-          <Button variant="cancel">취소</Button>
+          <Button variant="cancel" onClick={() => setIsDeleteModalOpen(false)}>
+            취소
+          </Button>
           <Button variant="delete" onClick={handleUserDelete}>
             삭제
           </Button>

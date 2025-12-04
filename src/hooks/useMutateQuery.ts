@@ -2,10 +2,12 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 
 import { axiosInstance } from '@/lib/axios'
 
+type HttpMethod = 'post' | 'patch' | 'put' | 'delete' | 'postForm'
+
 interface UseMutateQueryParams<TData, TVariables, TError = Error>
   extends Omit<UseMutationOptions<TData, TError, TVariables>, 'mutationFn'> {
   url: string
-  method?: 'post' | 'patch' | 'put' | 'delete' | 'postForm'
+  method?: HttpMethod
 }
 
 export function useMutateQuery<TData, TVariables = unknown>({
@@ -15,17 +17,29 @@ export function useMutateQuery<TData, TVariables = unknown>({
 }: UseMutateQueryParams<TData, TVariables>) {
   return useMutation<TData, Error, TVariables>({
     mutationFn: async (variables: TVariables) => {
-      if (method === 'postForm') {
-        const response = await axiosInstance.postForm<TData>(url, variables)
-        return response.data
-      }
+      switch (method) {
+        case 'post':
+          return (await axiosInstance.post<TData>(url, variables)).data
 
-      const response = await axiosInstance.request<TData>({
-        url,
-        method,
-        data: variables,
-      })
-      return response.data
+        case 'patch':
+          return (await axiosInstance.patch<TData>(url, variables)).data
+
+        case 'put':
+          return (await axiosInstance.put<TData>(url, variables)).data
+
+        case 'delete':
+          return (
+            await axiosInstance.delete<TData>(url, {
+              data: variables,
+            })
+          ).data
+
+        case 'postForm':
+          return (await axiosInstance.postForm<TData>(url, variables)).data
+
+        default:
+          throw new Error(`Unsupported method: ${method}`)
+      }
     },
     ...options,
   })
