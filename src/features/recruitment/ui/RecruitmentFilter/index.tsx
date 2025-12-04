@@ -30,59 +30,65 @@ export default function RecruitmentFilter() {
   }
 
   return (
-    <>
-      <div className="mr-4 flex flex-col">
-        <div
-          className={'mb-2 cursor-default text-sm font-medium text-[##374151]'}
-        >
-          검색
+    <div className="mb-6 space-y-4 rounded-lg bg-white p-6">
+      <div className="flex items-center">
+        <div className="mr-4 flex flex-col">
+          <div
+            className={
+              'mb-2 cursor-default text-sm font-medium text-[##374151]'
+            }
+          >
+            검색
+          </div>
+          <div className="flex h-9 w-[256px] items-center rounded-lg border border-[#D1D5DB] px-3 py-2">
+            <Search className="mr-3 w-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="공고명 검색 후 엔터"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              onKeyDown={handleKeyDown}
+              className="h-5 text-sm outline-0"
+            />
+          </div>
         </div>
-        <div className="flex h-9 w-[256px] items-center rounded-lg border border-[#D1D5DB] px-3 py-2">
-          <Search className="mr-3 w-4 text-gray-400" />
-          <input
-            type="text"
-            placeholder="공고명 검색 후 엔터"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-            onKeyDown={handleKeyDown}
-            className="h-5 text-sm outline-0"
-          />
+
+        <FilterSelect
+          className="mr-4"
+          key={status}
+          label="공고 상태"
+          labelClassName={LABEL_STYLE}
+          selectClassName="w-[256px] h-9 focus:ring-0 focus:border-gray-300"
+          options={[
+            { label: '모집중', value: 'false' },
+            { label: '마감', value: 'true' },
+          ]}
+          value={status}
+          onChange={setStatus}
+          placeholder="전체"
+        />
+
+        <div className="flex flex-col">
+          <div
+            className={
+              'mb-2 cursor-default text-sm font-medium text-[##374151]'
+            }
+          >
+            태그 필터
+          </div>
+          <div
+            onClick={openTagFilterModalModal}
+            className="flex h-9 w-[256px] cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-3 py-2"
+          >
+            <TagFilterPreview
+              tags={selectedTagsResult}
+              koreanLength={16}
+              englishLength={30}
+            />
+            <ListFilter className="w-4 text-[#9CA3AF]" />
+          </div>
         </div>
       </div>
-
-      <FilterSelect
-        className="mr-4"
-        key={status}
-        label="공고 상태"
-        labelClassName={LABEL_STYLE}
-        selectClassName="w-[256px] h-9 focus:ring-0 focus:border-gray-300"
-        options={[
-          { label: '모집중', value: 'false' },
-          { label: '마감', value: 'true' },
-        ]}
-        value={status}
-        onChange={setStatus}
-        placeholder="전체"
-      />
-
-      <div className="flex flex-col">
-        <div
-          className={'mb-2 cursor-default text-sm font-medium text-[##374151]'}
-        >
-          태그 필터
-        </div>
-        <div
-          onClick={openTagFilterModalModal}
-          className="flex h-9 w-[256px] cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-3 py-2"
-        >
-          <TagFilterPreview
-            tags={selectedTagsResult}
-            koreanLength={16}
-            englishLength={30}
-          />
-          <ListFilter className="w-4 text-[#9CA3AF]" />
-        </div>
-      </div>
-    </>
+    </div>
   )
 }

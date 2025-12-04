@@ -16,8 +16,9 @@ import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSea
 import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
 import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
+const PAGE_SIZE = 10
+
 export default function RecruitmentPage() {
-  const PAGE_SIZE = 10
   const { openDetailModal } = useDetailModalStore()
 
   // 1) 테이블용 상태
@@ -65,11 +66,7 @@ export default function RecruitmentPage() {
       <RecruitmentTagFilterModal />
       <RecruitmentDetailModal />
 
-      <div className="mb-6 space-y-4 rounded-lg bg-white p-6">
-        <div className="flex items-center">
-          <RecruitmentFilter />
-        </div>
-      </div>
+      <RecruitmentFilter />
 
       <Table
         columns={RecruitmentColumns}
