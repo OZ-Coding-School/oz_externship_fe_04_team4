@@ -3326,6 +3326,883 @@ export const mockRecruitmentDetail: RecruitmentDetail = {
     },
   ],
 }
+export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
+  1: {
+    id: 1,
+    uuid: 'b8dbd77f-cf73-4ef4-9914-4394d5ab366e',
+    title: 'Python 기초 온라인 스터디 모집',
+    content: `
+# 스터디 소개
+
+파이썬을 처음부터 다시 정리하고 싶은 분들을 위한 온라인 스터디입니다.
+
+## 이런 분과 함께해요
+
+- 파이썬 문법을 처음부터 다시 복습하고 싶은 분
+- 혼자 공부하다가 자꾸 흐지부지 끝났던 분
+- 온라인으로 가볍게 시작해보고 싶은 분
+
+## 진행 방식
+
+- 주 2회, 디스코드 음성 채널로 진행
+- 인프런 [파이썬 입문] 강의를 기반으로 학습
+- 매 스터디마다 과제 코드 리뷰 및 질의응답 진행
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/python-study.png',
+    expected_headcount: 5,
+    expected_payment_amount: 49000,
+    close_at: '2025-12-01T23:59:59+09:00',
+    is_closed: false,
+    views_count: 1231,
+    bookmark_count: 11,
+    created_at: '2025-11-20T10:00:00+09:00',
+    updated_at: '2025-11-20T10:05:00+09:00',
+    lectures: [
+      {
+        id: 43001,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+    ],
+    tags: [
+      { id: 1, name: 'python' },
+      { id: 2, name: '프로그래밍 기초' },
+      { id: 3, name: '온라인 스터디' },
+    ],
+    files: [
+      {
+        id: 1,
+        file_name: 'study-guide.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/study-guide.md',
+      },
+      {
+        id: 2,
+        file_name: 'schedule.pdf',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/schedule.pdf',
+      },
+    ],
+    applications: [
+      {
+        id: 1,
+        applicant: {
+          id: 1,
+          nickname: 'hong1',
+          email: 'user1@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:00:00+09:00',
+      },
+      {
+        id: 2,
+        applicant: {
+          id: 2,
+          nickname: 'young2',
+          email: 'user2@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T11:05:00+09:00',
+      },
+    ],
+  },
+
+  2: {
+    id: 2,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-111111111111',
+    title: 'JavaScript 기초 + DOM 완전 정복 스터디',
+    content: `
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/js-dom.png',
+    expected_headcount: 6,
+    expected_payment_amount: 39000,
+    close_at: '2025-12-03T23:59:59+09:00',
+    is_closed: false,
+    views_count: 980,
+    bookmark_count: 25,
+    created_at: '2025-11-20T10:10:00+09:00',
+    updated_at: '2025-11-20T10:15:00+09:00',
+    lectures: [
+      {
+        id: 43003,
+        title: 'React 완전정복',
+        instructor: '홍길동',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/react.png',
+        url_link: 'https://www.inflearn.com/course/react-master',
+      },
+    ],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 6, name: '자바스크립트' },
+      { id: 2, name: '프로그래밍 기초' },
+    ],
+    files: [
+      {
+        id: 3,
+        file_name: 'dom-study-plan.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/2/dom-study-plan.md',
+      },
+    ],
+    applications: [
+      {
+        id: 3,
+        applicant: {
+          id: 3,
+          nickname: 'chul3',
+          email: 'user3@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:20:00+09:00',
+      },
+      {
+        id: 4,
+        applicant: {
+          id: 4,
+          nickname: 'min4',
+          email: 'user4@example.com',
+        },
+        status: 'REJECTED',
+        created_at: '2025-11-20T11:25:00+09:00',
+      },
+    ],
+  },
+
+  3: {
+    id: 3,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-222222222222',
+    title: '타입스크립트 입문 + 타입 시스템 이해 스터디',
+    content: `
+# 스터디 소개
+
+자바스크립트에 타입을 더해주는 타입스크립트를 처음부터 차근차근 학습합니다.
+
+## 이런 분을 환영해요
+
+- any만 쓰고 있는 나 자신을 바꾸고 싶은 분
+- 리액트 프로젝에 TS를 도입해보고 싶은 분
+- 타입 설계 감각을 키우고 싶은 분
+
+## 진행 방식
+
+- 주 1회 온라인 라이브 + 주 1회 비동기 과제
+- 공식 핸드북과 인프런 강의를 병행하여 학습
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/ts-intro.png',
+    expected_headcount: 8,
+    expected_payment_amount: 59000,
+    close_at: '2025-12-05T23:59:59+09:00',
+    is_closed: false,
+    views_count: 754,
+    bookmark_count: 31,
+    created_at: '2025-11-20T10:20:00+09:00',
+    updated_at: '2025-11-20T10:25:00+09:00',
+    lectures: [
+      {
+        id: 43004,
+        title: '타입스크립트 입문',
+        instructor: '이타입',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/typescript.png',
+        url_link: 'https://www.inflearn.com/course/typescript-intro',
+      },
+    ],
+    tags: [
+      { id: 7, name: '타입스크립트' },
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 12, name: '취업 준비' },
+    ],
+    files: [
+      {
+        id: 4,
+        file_name: 'ts-checklist.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/3/ts-checklist.md',
+      },
+    ],
+    applications: [
+      {
+        id: 5,
+        applicant: {
+          id: 5,
+          nickname: 'suji5',
+          email: 'user5@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T11:40:00+09:00',
+      },
+      {
+        id: 6,
+        applicant: {
+          id: 6,
+          nickname: 'woo6',
+          email: 'user6@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:43:00+09:00',
+      },
+    ],
+  },
+
+  4: {
+    id: 4,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-333333333333',
+    title: 'React 훅스 기초와 상태 관리 스터디',
+    content: `
+# 스터디 소개
+
+리액트 훅스(useState, useEffect 등)를 제대로 이해하고 싶은 분들을 위한 스터디입니다.
+
+## 주요 학습 포인트
+
+- 함수형 컴포넌트와 훅스의 개념
+- 비동기 데이터 패칭 패턴 정리
+- 커스텀 훅 설계 연습
+
+## 진행 방식
+
+- 주 2회 온라인 실시간 코드 실습
+- 간단한 미니 프로젝트를 함께 만들며 적용
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/react-hooks.png',
+    expected_headcount: 6,
+    expected_payment_amount: 69000,
+    close_at: '2025-12-02T23:59:59+09:00',
+    is_closed: false,
+    views_count: 520,
+    bookmark_count: 18,
+    created_at: '2025-11-20T10:25:00+09:00',
+    updated_at: '2025-11-20T10:30:00+09:00',
+    lectures: [
+      {
+        id: 43003,
+        title: 'React 완전정복',
+        instructor: '홍길동',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/react.png',
+        url_link: 'https://www.inflearn.com/course/react-master',
+      },
+    ],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 6, name: '자바스크립트' },
+      { id: 12, name: '취업 준비' },
+    ],
+    files: [
+      {
+        id: 5,
+        file_name: 'hooks-outline.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/4/hooks-outline.md',
+      },
+    ],
+    applications: [
+      {
+        id: 7,
+        applicant: {
+          id: 7,
+          nickname: 'jimin7',
+          email: 'user7@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:50:00+09:00',
+      },
+    ],
+  },
+
+  5: {
+    id: 5,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-444444444444',
+    title: 'Next.js 기반 포트폴리오 사이트 만들기',
+    content: `
+# 스터디 소개
+
+Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성해보는 스터디입니다.
+
+## 목표
+
+- 라우팅, 데이터 패칭, 이미지 최적화 경험
+- 실제 배포까지 진행하여 링크로 공유 가능한 결과물 만들기
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/next-portfolio.png',
+    expected_headcount: 8,
+    expected_payment_amount: 79000,
+    close_at: '2025-12-07T23:59:59+09:00',
+    is_closed: false,
+    views_count: 812,
+    bookmark_count: 34,
+    created_at: '2025-11-20T10:30:00+09:00',
+    updated_at: '2025-11-20T10:35:00+09:00',
+    lectures: [
+      {
+        id: 43005,
+        title: 'Next.js 완전 정복',
+        instructor: '박넥스트',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/next.png',
+        url_link: 'https://www.inflearn.com/course/nextjs-full',
+      },
+    ],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 7, name: '타입스크립트' },
+      { id: 12, name: '취업 준비' },
+    ],
+    files: [
+      {
+        id: 6,
+        file_name: 'portfolio-wireframe.pdf',
+        file_url:
+          'https://example.com/uploads/files/recruitments/5/portfolio-wireframe.pdf',
+      },
+    ],
+    applications: [
+      {
+        id: 8,
+        applicant: {
+          id: 8,
+          nickname: 'sehun8',
+          email: 'user8@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T12:00:00+09:00',
+      },
+      {
+        id: 9,
+        applicant: {
+          id: 9,
+          nickname: 'nari9',
+          email: 'user9@example.com',
+        },
+        status: 'CANCELED',
+        created_at: '2025-11-20T12:10:00+09:00',
+      },
+    ],
+  },
+
+  6: {
+    id: 6,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-555555555555',
+    title: '알고리즘 기초 + 코딩 테스트 준비 스터디',
+    content: `
+# 스터디 소개
+
+코딩 테스트를 처음 준비하는 분들을 위한 알고리즘 기초 스터디입니다.
+
+- 배열, 문자열, 해시, 스택/큐 등 기본 유형 위주
+- 매주 백준/프로그래머스 문제 함께 풀이
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/algorithm-basic.png',
+    expected_headcount: 10,
+    expected_payment_amount: 0,
+    close_at: '2025-11-30T23:59:59+09:00',
+    is_closed: false,
+    views_count: 1120,
+    bookmark_count: 45,
+    created_at: '2025-11-20T10:35:00+09:00',
+    updated_at: '2025-11-20T10:40:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 4, name: '알고리즘' },
+      { id: 11, name: '알고리즘 테스트 대비' },
+      { id: 13, name: '코딩 테스트' },
+    ],
+    files: [],
+    applications: [
+      {
+        id: 10,
+        applicant: {
+          id: 10,
+          nickname: 'doyun10',
+          email: 'user10@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T12:20:00+09:00',
+      },
+    ],
+  },
+
+  7: {
+    id: 7,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-666666666666',
+    title: '데이터 분석을 위한 Python & Pandas 스터디',
+    content: `
+# 스터디 소개
+
+데이터 분석 입문자를 위한 파이썬 데이터 분석 스터디입니다.
+
+- Pandas, Matplotlib, 기초 EDA 진행
+- 간단한 데이터셋을 가지고 프로젝트 진행
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/python-data.png',
+    expected_headcount: 7,
+    expected_payment_amount: 69000,
+    close_at: '2025-12-04T23:59:59+09:00',
+    is_closed: false,
+    views_count: 630,
+    bookmark_count: 22,
+    created_at: '2025-11-20T10:40:00+09:00',
+    updated_at: '2025-11-20T10:45:00+09:00',
+    lectures: [
+      {
+        id: 43006,
+        title: '데이터 분석을 위한 파이썬',
+        instructor: '데이터박',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python-data.png',
+        url_link: 'https://www.inflearn.com/course/python-data-analysis',
+      },
+    ],
+    tags: [
+      { id: 1, name: 'python' },
+      { id: 14, name: '데이터 분석' },
+    ],
+    files: [],
+    applications: [
+      {
+        id: 11,
+        applicant: {
+          id: 11,
+          nickname: 'jiho11',
+          email: 'user11@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T12:30:00+09:00',
+      },
+    ],
+  },
+
+  8: {
+    id: 8,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-777777777777',
+    title: 'CS 기초 개념 함께 정리하는 스터디',
+    content: `
+# 스터디 소개
+
+운영체제, 네트워크, 자료구조 등 CS 기초를 함께 정리하는 스터디입니다.
+
+- 주제별로 나눠 발표 & 질의응답
+- 취준 면접 대비 위주로 정리
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/cs-basic.png',
+    expected_headcount: 6,
+    expected_payment_amount: 0,
+    close_at: '2025-12-10T23:59:59+09:00',
+    is_closed: false,
+    views_count: 410,
+    bookmark_count: 19,
+    created_at: '2025-11-20T10:45:00+09:00',
+    updated_at: '2025-11-20T10:50:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 9, name: '자료구조' },
+      { id: 10, name: 'CS기초' },
+      { id: 12, name: '취업 준비' },
+    ],
+    files: [],
+    applications: [
+      {
+        id: 12,
+        applicant: {
+          id: 12,
+          nickname: 'daeun12',
+          email: 'user12@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T12:40:00+09:00',
+      },
+    ],
+  },
+
+  9: {
+    id: 9,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-888888888888',
+    title: '온라인 프로젝트 협업 스터디 (깃 & 이슈 트래킹)',
+    content: `
+# 스터디 소개
+
+실제 팀 프로젝트처럼 Git 브랜치 전략, 이슈 트래킹, PR 리뷰를 경험해보는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/git-collab.png',
+    expected_headcount: 6,
+    expected_payment_amount: 0,
+    close_at: '2025-11-28T23:59:59+09:00',
+    is_closed: true,
+    views_count: 950,
+    bookmark_count: 40,
+    created_at: '2025-11-10T10:00:00+09:00',
+    updated_at: '2025-11-18T10:00:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 12, name: '취업 준비' },
+    ],
+    files: [],
+    applications: [
+      {
+        id: 13,
+        applicant: {
+          id: 13,
+          nickname: 'hae13',
+          email: 'user13@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-15T09:00:00+09:00',
+      },
+      {
+        id: 14,
+        applicant: {
+          id: 14,
+          nickname: 'bora14',
+          email: 'user14@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-15T09:10:00+09:00',
+      },
+    ],
+  },
+
+  10: {
+    id: 10,
+    uuid: 'f1c7b8c1-3c84-4c0e-91ab-999999999999',
+    title: '프론트엔드 면접 스터디 (자기소개 + 기술 질문)',
+    content: `
+# 스터디 소개
+
+프론트엔드 취준생을 위한 면접 대비 스터디입니다.
+
+- 1분 자기소개, 프로젝트 설명 연습
+- 예상 질문 리스트를 기반으로 모의 면접 진행
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/fe-interview.png',
+    expected_headcount: 5,
+    expected_payment_amount: 0,
+    close_at: '2025-11-27T23:59:59+09:00',
+    is_closed: true,
+    views_count: 1340,
+    bookmark_count: 57,
+    created_at: '2025-11-05T10:00:00+09:00',
+    updated_at: '2025-11-19T10:00:00+09:00',
+    lectures: [],
+    tags: [{ id: 12, name: '취업 준비' }],
+    files: [],
+    applications: [
+      {
+        id: 15,
+        applicant: {
+          id: 15,
+          nickname: 'tae15',
+          email: 'user15@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-10T10:00:00+09:00',
+      },
+    ],
+  },
+
+  11: {
+    id: 11,
+    uuid: '11111111-1111-1111-1111-aaaaaaaaaaaa',
+    title: 'Python 심화: 객체지향과 테스트 코드 스터디',
+    content: `
+# 스터디 소개
+
+파이썬으로 객체지향 설계와 테스트 코드를 연습하는 심화 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/python-oop.png',
+    expected_headcount: 5,
+    expected_payment_amount: 89000,
+    close_at: '2025-12-08T23:59:59+09:00',
+    is_closed: false,
+    views_count: 320,
+    bookmark_count: 15,
+    created_at: '2025-11-20T10:55:00+09:00',
+    updated_at: '2025-11-20T11:00:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 1, name: 'python' },
+      { id: 2, name: '프로그래밍 기초' },
+    ],
+    files: [],
+    applications: [],
+  },
+
+  12: {
+    id: 12,
+    uuid: '22222222-2222-2222-2222-bbbbbbbbbbbb',
+    title: '웹 접근성 기초 같이 공부하는 스터디',
+    content: `
+# 스터디 소개
+
+웹 접근성의 기본 원칙과 실무에서 적용하는 방법을 함께 공부하는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/web-a11y.png',
+    expected_headcount: 4,
+    expected_payment_amount: 0,
+    close_at: '2025-12-12T23:59:59+09:00',
+    is_closed: false,
+    views_count: 210,
+    bookmark_count: 9,
+    created_at: '2025-11-20T11:00:00+09:00',
+    updated_at: '2025-11-20T11:05:00+09:00',
+    lectures: [],
+    tags: [{ id: 5, name: '웹 프론트엔드' }],
+    files: [],
+    applications: [],
+  },
+
+  13: {
+    id: 13,
+    uuid: '33333333-3333-3333-3333-cccccccccccc',
+    title: 'UDEMY 강의 같이 듣는 React 스터디',
+    content: `
+# 스터디 소개
+
+유데미 리액트 강의를 함께 수강하며 실습 위주로 정리하는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/react-udemy.png',
+    expected_headcount: 10,
+    expected_payment_amount: 39000,
+    close_at: '2025-12-06T23:59:59+09:00',
+    is_closed: false,
+    views_count: 450,
+    bookmark_count: 17,
+    created_at: '2025-11-20T11:05:00+09:00',
+    updated_at: '2025-11-20T11:10:00+09:00',
+    lectures: [
+      {
+        id: 43020,
+        title: 'UDEMY React 강의',
+        instructor: 'Udemy Instructor',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/react-udemy.png',
+        url_link: 'https://www.udemy.com/course/react-complete-guide',
+      },
+    ],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 6, name: '자바스크립트' },
+    ],
+    files: [],
+    applications: [],
+  },
+
+  14: {
+    id: 14,
+    uuid: '44444444-4444-4444-4444-dddddddddddd',
+    title: 'HTML/CSS 레이아웃 클론 코딩 스터디',
+    content: `
+# 스터디 소개
+
+반응형 레이아웃과 그리드, 플렉스박스를 중심으로 여러 랜딩 페이지를 클론 코딩합니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/html-css.png',
+    expected_headcount: 8,
+    expected_payment_amount: 29000,
+    close_at: '2025-12-09T23:59:59+09:00',
+    is_closed: false,
+    views_count: 380,
+    bookmark_count: 14,
+    created_at: '2025-11-20T11:10:00+09:00',
+    updated_at: '2025-11-20T11:15:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 2, name: '프로그래밍 기초' },
+    ],
+    files: [],
+    applications: [],
+  },
+
+  15: {
+    id: 15,
+    uuid: '55555555-5555-5555-5555-eeeeeeeeeeee',
+    title: 'GitHub Actions로 CI/CD 맛보기 스터디',
+    content: `
+# 스터디 소개
+
+간단한 프론트엔드 프로젝트를 대상으로 GitHub Actions를 이용해 CI/CD 파이프라인을 구축해보는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/github-actions.png',
+    expected_headcount: 5,
+    expected_payment_amount: 0,
+    close_at: '2025-12-11T23:59:59+09:00',
+    is_closed: false,
+    views_count: 260,
+    bookmark_count: 12,
+    created_at: '2025-11-20T11:15:00+09:00',
+    updated_at: '2025-11-20T11:20:00+09:00',
+    lectures: [],
+    tags: [{ id: 12, name: '취업 준비' }],
+    files: [],
+    applications: [],
+  },
+
+  16: {
+    id: 16,
+    uuid: '66666666-6666-6666-6666-ffffffffffff',
+    title: 'REST API 이해와 Postman 실습 스터디',
+    content: `
+# 스터디 소개
+
+REST API의 기본 개념과 HTTP 메서드, 응답 코드 등을 정리하고 Postman으로 직접 호출해보는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/rest-api.png',
+    expected_headcount: 6,
+    expected_payment_amount: 0,
+    close_at: '2025-12-13T23:59:59+09:00',
+    is_closed: false,
+    views_count: 230,
+    bookmark_count: 10,
+    created_at: '2025-11-20T11:20:00+09:00',
+    updated_at: '2025-11-20T11:25:00+09:00',
+    lectures: [],
+    tags: [{ id: 8, name: '백엔드' }],
+    files: [],
+    applications: [],
+  },
+
+  17: {
+    id: 17,
+    uuid: '77777777-7777-7777-7777-aaaaaaaaaaa1',
+    title: '기초 알고리즘 + 파이썬 구현 스터디',
+    content: `
+# 스터디 소개
+
+파이썬으로 기본 알고리즘 문제를 함께 풀어보는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/py-algo.png',
+    expected_headcount: 7,
+    expected_payment_amount: 0,
+    close_at: '2025-12-02T23:59:59+09:00',
+    is_closed: false,
+    views_count: 310,
+    bookmark_count: 13,
+    created_at: '2025-11-20T11:25:00+09:00',
+    updated_at: '2025-11-20T11:30:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 1, name: 'python' },
+      { id: 4, name: '알고리즘' },
+    ],
+    files: [],
+    applications: [],
+  },
+
+  18: {
+    id: 18,
+    uuid: '88888888-8888-8888-8888-bbbbbbbbbb11',
+    title: '리액트 상태관리 맛보기 (Zustand, Redux 비교)',
+    content: `
+# 스터디 소개
+
+리액트에서 많이 사용하는 상태관리 라이브러리들을 가볍게 비교해보는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/state-management.png',
+    expected_headcount: 6,
+    expected_payment_amount: 0,
+    close_at: '2025-12-15T23:59:59+09:00',
+    is_closed: false,
+    views_count: 190,
+    bookmark_count: 8,
+    created_at: '2025-11-20T11:30:00+09:00',
+    updated_at: '2025-11-20T11:35:00+09:00',
+    lectures: [],
+    tags: [{ id: 5, name: '웹 프론트엔드' }],
+    files: [],
+    applications: [],
+  },
+
+  19: {
+    id: 19,
+    uuid: '99999999-9999-9999-9999-cccccccccc11',
+    title: '개인 블로그 만들기 (Next.js + Markdown)',
+    content: `
+# 스터디 소개
+
+Next.js와 Markdown 기반으로 개인 기술 블로그를 만드는 스터디입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/next-blog.png',
+    expected_headcount: 5,
+    expected_payment_amount: 59000,
+    close_at: '2025-12-20T23:59:59+09:00',
+    is_closed: false,
+    views_count: 270,
+    bookmark_count: 16,
+    created_at: '2025-11-20T11:35:00+09:00',
+    updated_at: '2025-11-20T11:40:00+09:00',
+    lectures: [],
+    tags: [
+      { id: 5, name: '웹 프론트엔드' },
+      { id: 7, name: '타입스크립트' },
+    ],
+    files: [],
+    applications: [],
+  },
+
+  20: {
+    id: 20,
+    uuid: 'aaaaaaaa-aaaa-aaaa-aaaa-dddddddddd11',
+    title: '스터디 운영자 모임 (운영 노하우 공유)',
+    content: `
+# 스터디 소개
+
+이미 스터디를 운영 중이거나 운영을 준비하는 분들이 모여 노하우를 공유하는 모임입니다.
+`,
+    thumbnail_img_url:
+      'https://example.com/uploads/recruitments/images/study-leader.png',
+    expected_headcount: 10,
+    expected_payment_amount: 0,
+    close_at: '2025-12-22T23:59:59+09:00',
+    is_closed: false,
+    views_count: 150,
+    bookmark_count: 6,
+    created_at: '2025-11-20T11:40:00+09:00',
+    updated_at: '2025-11-20T11:45:00+09:00',
+    lectures: [],
+    tags: [{ id: 3, name: '온라인 스터디' }],
+    files: [],
+    applications: [],
+  },
+}
 
 // api/v1/admin/applications
 // 모집공고 지원 내역 목록 조회

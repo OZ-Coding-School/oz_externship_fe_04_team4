@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import {
   Bookmark,
@@ -10,15 +11,16 @@ import type { ChangeEvent } from 'react'
 import { Link } from 'react-router'
 import { twMerge } from 'tailwind-merge'
 
+import { getAdminRecruitmentDetail } from '@/features/recruitment/api/getAdminRecruitmentDetail'
 import { markdownToHtml } from '@/lib/markdown'
-import { mockRecruitmentDetail } from '@/mocks/data/accounts'
+import { useDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { sliceDateTime } from '@/utils/format'
 
 const LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-4 cursor-default'
 const RIGHT_LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-6 cursor-default'
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
 
-const status = {
+const STATUS = {
   PENDING: (
     <div className="rounded-full bg-[#FEF9C3] px-2 py-1 text-[#854D0E]">
       검토중
@@ -42,8 +44,27 @@ const status = {
 }
 
 export default function RecruitmentDetailContent() {
-  const MD = mockRecruitmentDetail
+  const { selectedRecruitmentId } = useDetailModalStore()
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['adminRecruitmentDetail', selectedRecruitmentId],
+    queryFn: () => {
+      if (selectedRecruitmentId === null) {
+        throw new Error('선택한 공고가 없습니다.')
+      }
+      return getAdminRecruitmentDetail(selectedRecruitmentId)
+    },
+    enabled: selectedRecruitmentId != null,
+  })
+
+  if (isLoading) {
+    return <div className="p-6">불러오는 중...</div>
+  }
+  if (error) {
+    return (
+      <div className="p-6 text-red-600">상세 정보를 불러오지 못했습니다.</div>
+    )
+  }
   return (
     <div className="max-h-[676px] w-full overflow-scroll p-6">
       <div className="flex justify-between">
@@ -52,20 +73,20 @@ export default function RecruitmentDetailContent() {
           {/* 고유 ID */}
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>고유 ID</div>
-            <div className={TEXT_STYLE}>#{MD.id}</div>
+            <div className={TEXT_STYLE}>#{data?.id}</div>
           </div>
 
           {/* 고유 UUID */}
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>UUID</div>
-            <div className={TEXT_STYLE}>{MD.uuid}</div>
+            <div className={TEXT_STYLE}>{data?.uuid}</div>
           </div>
 
           {/* 공고 제목 */}
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>공고 제목</div>
             <div className="text-primary-black text-lg font-bold">
-              {MD.title}
+              {data?.title}
             </div>
           </div>
 
@@ -75,26 +96,32 @@ export default function RecruitmentDetailContent() {
               <div className={twMerge(clsx('w-[260px]', { TEXT_STYLE }))}>
                 예상 모집 인원
               </div>
-              <div className={TEXT_STYLE}>{MD.expected_headcount}</div>
+              <div className={TEXT_STYLE}>{data?.expected_headcount}</div>
             </div>
             <div className={LEFT_BOX_STYLE}>
               <div className={twMerge(clsx('w-[260px]', { TEXT_STYLE }))}>
                 예상 결제 비용
               </div>
-              <div className={TEXT_STYLE}>{MD.expected_payment_amount}원</div>
+              <div className={TEXT_STYLE}>
+                {data?.expected_payment_amount}원
+              </div>
             </div>
           </div>
 
           {/* 마감기한 */}
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>마감 기한</div>
-            <div className={TEXT_STYLE}>{sliceDateTime(MD.close_at, 10)}</div>
+            <div className={TEXT_STYLE}>
+              {sliceDateTime(data?.close_at, 10)}
+            </div>
           </div>
 
           {/* 공고 상태 */}
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>공고 상태</div>
-            <div className={TEXT_STYLE}>{MD.is_closed ? '마감' : '모집중'}</div>
+            <div className={TEXT_STYLE}>
+              {data?.is_closed ? '마감' : '모집중'}
+            </div>
           </div>
 
           {/* 조회수, 북마크 순 */}
@@ -107,7 +134,7 @@ export default function RecruitmentDetailContent() {
                 className={twMerge(clsx('flex items-center', { TEXT_STYLE }))}
               >
                 <Eye className="mr-1 w-4 text-[#9CA3AF]" />
-                {MD.views_count}
+                {data?.views_count}
               </div>
             </div>
             <div className={LEFT_BOX_STYLE}>
@@ -118,7 +145,7 @@ export default function RecruitmentDetailContent() {
                 className={twMerge(clsx('flex items-center', { TEXT_STYLE }))}
               >
                 <Bookmark className="mr-1 w-4 text-[#9CA3AF]" />
-                {MD.bookmark_count}
+                {data?.bookmark_count}
               </div>
             </div>
           </div>
@@ -130,7 +157,7 @@ export default function RecruitmentDetailContent() {
                 공고 등록일시
               </div>
               <div className={TEXT_STYLE}>
-                {sliceDateTime(MD.created_at, 16)}
+                {sliceDateTime(data?.created_at, 16)}
               </div>
             </div>
             <div className={LEFT_BOX_STYLE}>
@@ -138,7 +165,7 @@ export default function RecruitmentDetailContent() {
                 마지막 수정일시
               </div>
               <div className={TEXT_STYLE}>
-                {sliceDateTime(MD.updated_at, 16)}
+                {sliceDateTime(data?.updated_at, 16)}
               </div>
             </div>
           </div>
@@ -147,7 +174,7 @@ export default function RecruitmentDetailContent() {
           <div className={'mb-4 flex flex-col gap-3'}>
             <div className={TEXT_STYLE}>사용자 정의 태그</div>
             <div className="flex items-center">
-              {MD.tags.map((el) => (
+              {data?.tags.map((el) => (
                 <div
                   key={el.id}
                   className="mr-2 cursor-default rounded-full bg-[#FEF9C3] px-3 py-1 text-[#854D0E]"
@@ -162,7 +189,7 @@ export default function RecruitmentDetailContent() {
           <div className={'mb-4 flex flex-col gap-3'}>
             <div className={TEXT_STYLE}>사용자 정의 태그</div>
             <div className="flex flex-col">
-              {MD.files.map((el) => (
+              {data?.files.map((el) => (
                 <div
                   key={el.id}
                   className="mb-2 flex w-full cursor-default items-center rounded-lg bg-[#F9FAFB] p-3 text-[#2563EB]"
@@ -183,7 +210,9 @@ export default function RecruitmentDetailContent() {
             <div
               className="text-custom-gray-900 remove-focus-outline markdown-content min-h-[200px] w-full list-inside rounded-lg border-0 bg-[#F9FAFB] p-4"
               dangerouslySetInnerHTML={{
-                __html: markdownToHtml(MD.content.trim()),
+                __html: markdownToHtml(
+                  data ? data.content.trim() : '정보를 불러오지 못했습니다.'
+                ),
               }}
               style={{ listStyle: 'decimal' }}
             />
@@ -192,7 +221,7 @@ export default function RecruitmentDetailContent() {
           {/* 스터디 강의 목록 */}
           <div className={RIGHT_LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>스터디 강의 목록</div>
-            {MD.lectures.map((el) => (
+            {data?.lectures.map((el) => (
               <div key={el.id} className="rounded-lg bg-[#F9FAFB] p-4">
                 <div className="flex">
                   <img
@@ -205,7 +234,7 @@ export default function RecruitmentDetailContent() {
                       e.currentTarget.src = '/public/logo.png'
                     }}
                   />
-                  <div className="">
+                  <div>
                     <div className="text-primary-black mb-1 text-sm font-semibold">
                       {el.title}
                     </div>
@@ -228,9 +257,9 @@ export default function RecruitmentDetailContent() {
           <div className="w-[536px]">
             <div className={RIGHT_LEFT_BOX_STYLE}>
               <div className={TEXT_STYLE}>
-                지원 내역 ({MD.applications.length}명)
+                지원 내역 ({data?.applications.length}명)
               </div>
-              {MD.applications.map((el) => (
+              {data?.applications.map((el) => (
                 <div
                   key={el.id}
                   className="flex items-center justify-center rounded-lg bg-[#F9FAFB] p-4"
@@ -244,7 +273,7 @@ export default function RecruitmentDetailContent() {
                         </div>
                       </div>
 
-                      {status[el.status]}
+                      {STATUS[el.status]}
                     </div>
 
                     <div className="text-[12px] text-[#4B5563]">

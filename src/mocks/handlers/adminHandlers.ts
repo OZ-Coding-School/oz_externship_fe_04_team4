@@ -8,7 +8,7 @@ import {
   mockApplicationsList,
   mockLecturesDetailMap,
   mockLecturesList,
-  mockRecruitmentDetail,
+  mockRecruitmentDetailMap,
   mockRecruitmentList,
   mockRecruitmentTags,
   mockSignupTrendsMonthly,
@@ -905,7 +905,7 @@ export const getAdminRecruitmentDetailHandler = http.get(
     if (
       !recruitment_id ||
       Number.isNaN(id) ||
-      id !== mockRecruitmentDetail.id
+      id !== mockRecruitmentDetailMap[Number(id)].id
     ) {
       return HttpResponse.json(
         { error_detail: '해당 공고를 찾을 수 없습니다.' },
@@ -913,7 +913,7 @@ export const getAdminRecruitmentDetailHandler = http.get(
       )
     }
 
-    return HttpResponse.json(mockRecruitmentDetail, { status: 200 })
+    return HttpResponse.json(mockRecruitmentDetailMap[id], { status: 200 })
   }
 )
 
