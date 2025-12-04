@@ -1,11 +1,10 @@
 import clsx from 'clsx'
 import { Search } from 'lucide-react'
 
-import { useDeferredValue, useEffect, useRef, useState } from 'react'
-
 import { twMerge } from 'tailwind-merge'
 
 import type { SearchConfig } from '@/components/common/filter/types'
+import { useSearchInput } from '@/hooks/useSearchInput'
 
 export function SearchInput({
   className,
@@ -17,21 +16,7 @@ export function SearchInput({
   value,
   onChange,
 }: SearchConfig) {
-  const [localValue, setLocalValue] = useState(value)
-  const debounceValue = useDeferredValue(localValue)
-  const onChangeRef = useRef(onChange)
-
-  useEffect(() => {
-    onChangeRef.current = onChange
-  }, [onChange])
-
-  useEffect(() => {
-    setLocalValue(value)
-  }, [value])
-
-  useEffect(() => {
-    onChangeRef.current(debounceValue)
-  }, [debounceValue])
+  const [localValue, setLocalValue] = useSearchInput(value, onChange)
 
   return (
     <div className={twMerge(clsx('flex flex-col gap-1', className))}>
