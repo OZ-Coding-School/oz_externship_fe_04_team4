@@ -120,7 +120,15 @@ export default function RecruitmentDetailContent() {
           <div className={LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>공고 상태</div>
             <div className={TEXT_STYLE}>
-              {data?.is_closed ? '마감' : '모집중'}
+              {data?.is_closed ? (
+                <div className="inline-block rounded-full bg-[#F3F4F6] px-2 py-1 text-xs text-[#1F2937]">
+                  마감
+                </div>
+              ) : (
+                <div className="text-state-permission-txt inline-block rounded-full bg-[#DCFCE7] px-2 py-1 text-xs">
+                  모집중
+                </div>
+              )}
             </div>
           </div>
 
@@ -182,12 +190,17 @@ export default function RecruitmentDetailContent() {
                   {el.name}
                 </div>
               ))}
+              {data?.tags.length === 0 && (
+                <div className="mr-2 cursor-default rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-500">
+                  선택된 태그가 없습니다.
+                </div>
+              )}
             </div>
           </div>
 
           {/* 공고 첨부 파일 */}
           <div className={'mb-4 flex flex-col gap-3'}>
-            <div className={TEXT_STYLE}>사용자 정의 태그</div>
+            <div className={TEXT_STYLE}>공고 첨부 파일</div>
             <div className="flex flex-col">
               {data?.files.map((el) => (
                 <div
@@ -198,17 +211,22 @@ export default function RecruitmentDetailContent() {
                   <div className="cursor-pointer">{el.file_name}</div>
                 </div>
               ))}
+              {data?.files.length === 0 && (
+                <div className="flex w-full cursor-default items-center justify-center rounded-lg bg-[#F9FAFB] p-3 text-sm text-gray-500">
+                  첨부된 파일이 없습니다.
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* 오른쪽 */}
-        {/* 공고 내용 */}
         <div className="w-[536px]">
+          {/* 공고 내용 */}
           <div className={RIGHT_LEFT_BOX_STYLE}>
             <div className={TEXT_STYLE}>공고 내용</div>
             <div
-              className="text-custom-gray-900 remove-focus-outline markdown-content min-h-[200px] w-full list-inside rounded-lg border-0 bg-[#F9FAFB] p-4"
+              className="text-custom-gray-900 markdown-content max-h-64 w-full list-inside overflow-scroll rounded-lg border-0 bg-[#F9FAFB] p-4"
               dangerouslySetInnerHTML={{
                 __html: markdownToHtml(
                   data ? data.content.trim() : '정보를 불러오지 못했습니다.'
@@ -251,6 +269,11 @@ export default function RecruitmentDetailContent() {
                 </div>
               </div>
             ))}
+            {data?.lectures.length === 0 && (
+              <div className="flex items-center justify-center rounded-lg bg-[#F9FAFB] p-4 text-sm text-gray-500">
+                선택된 강의가 없습니다.
+              </div>
+            )}
           </div>
 
           {/* 지원 내역 */}
@@ -285,6 +308,11 @@ export default function RecruitmentDetailContent() {
                   </div>
                 </div>
               ))}
+              {data?.applications.length === 0 && (
+                <div className="flex items-center justify-center rounded-lg bg-[#F9FAFB] p-4">
+                  지원자가 없습니다.
+                </div>
+              )}
             </div>
           </div>
         </div>

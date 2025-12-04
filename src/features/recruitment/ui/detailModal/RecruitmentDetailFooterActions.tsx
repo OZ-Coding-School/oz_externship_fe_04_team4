@@ -4,7 +4,7 @@ export default function RecruitmentDetailFooterActions() {
   const { closeDetailModal } = useDetailModalStore()
 
   return (
-    <div className="flex h-[73px] w-full items-center justify-end px-6 py-4">
+    <div className="flex h-[73px] w-full items-center justify-end bg-[#F9FAFB] px-6 py-4">
       <div className="flex h-10 w-full items-center justify-between">
         <div
           onClick={closeDetailModal}

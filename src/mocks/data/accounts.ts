@@ -3431,6 +3431,102 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
 
 - 주 2회 구글 밋으로 진행
 - 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
+
+# 스터디 소개
+
+웹 개발의 기본이 되는 자바스크립트 기초와 DOM 조작을 집중적으로 다룹니다.
+
+## 커리큘럼
+
+- 1주차: 변수, 함수, 스코프 이해
+- 2주차: 배열, 객체, 고차 함수 맛보기
+- 3주차: DOM 조작 기초 (querySelector, 이벤트 핸들링)
+- 4주차: 간단한 To-do 리스트 프로젝트 완성
+
+## 진행 방식
+
+- 주 2회 구글 밋으로 진행
+- 매 회차 과제 코드 PR 후 코드 리뷰
 `,
     thumbnail_img_url:
       'https://example.com/uploads/recruitments/images/js-dom.png',
@@ -3442,51 +3538,10 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
     bookmark_count: 25,
     created_at: '2025-11-20T10:10:00+09:00',
     updated_at: '2025-11-20T10:15:00+09:00',
-    lectures: [
-      {
-        id: 43003,
-        title: 'React 완전정복',
-        instructor: '홍길동',
-        thumbnail_img_url:
-          'https://example.com/images/lecture/thumbnails/react.png',
-        url_link: 'https://www.inflearn.com/course/react-master',
-      },
-    ],
-    tags: [
-      { id: 5, name: '웹 프론트엔드' },
-      { id: 6, name: '자바스크립트' },
-      { id: 2, name: '프로그래밍 기초' },
-    ],
-    files: [
-      {
-        id: 3,
-        file_name: 'dom-study-plan.md',
-        file_url:
-          'https://example.com/uploads/files/recruitments/2/dom-study-plan.md',
-      },
-    ],
-    applications: [
-      {
-        id: 3,
-        applicant: {
-          id: 3,
-          nickname: 'chul3',
-          email: 'user3@example.com',
-        },
-        status: 'PENDING',
-        created_at: '2025-11-20T11:20:00+09:00',
-      },
-      {
-        id: 4,
-        applicant: {
-          id: 4,
-          nickname: 'min4',
-          email: 'user4@example.com',
-        },
-        status: 'REJECTED',
-        created_at: '2025-11-20T11:25:00+09:00',
-      },
-    ],
+    lectures: [],
+    tags: [],
+    files: [],
+    applications: [],
   },
 
   3: {
@@ -3721,7 +3776,7 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
     expected_headcount: 10,
     expected_payment_amount: 0,
     close_at: '2025-11-30T23:59:59+09:00',
-    is_closed: false,
+    is_closed: true,
     views_count: 1120,
     bookmark_count: 45,
     created_at: '2025-11-20T10:35:00+09:00',

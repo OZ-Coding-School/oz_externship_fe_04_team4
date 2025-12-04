@@ -15,7 +15,7 @@ export default function TagFilterActionButtons() {
   }
 
   return (
-    <div className="flex h-[73px] w-full items-center justify-end px-6 py-4">
+    <div className="flex h-[73px] w-full items-center justify-end bg-[#F9FAFB] px-6 py-4">
       <div className="flex h-10 w-auto items-center">
         <div
           onClick={closeTagFilterModalModal}
