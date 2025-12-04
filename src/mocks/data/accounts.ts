@@ -3343,6 +3343,8 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
 - 온라인으로 가볍게 시작해보고 싶은 분
 
 ## 진행 방식
+ <img width="1161" height="806" alt="스크린샷 2025-12-03 오후 2 38 12" src="https://cdn.imweb.me/upload/S20210807d1f68b7a970c2/e7b94b0c106a8.jpg" />
+ <img width="1161" height="806" alt="스크린샷 2025-12-03 오후 2 38 12" src="https://github.com/user-attachments/assets/2b85200f-63ed-4958-9de0-a51cc3da40fb" />
 
 - 주 2회, 디스코드 음성 채널로 진행
 - 인프런 [파이썬 입문] 강의를 기반으로 학습

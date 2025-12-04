@@ -15,6 +15,7 @@ import { getAdminRecruitmentDetail } from '@/features/recruitment/api/getAdminRe
 import { markdownToHtml } from '@/lib/markdown'
 import { useDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { sliceDateTime } from '@/utils/format'
+import { formatPrice } from '@/utils/price'
 
 const LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-4 cursor-default'
 const RIGHT_LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-6 cursor-default'
@@ -103,7 +104,7 @@ export default function RecruitmentDetailContent() {
                 예상 결제 비용
               </div>
               <div className={TEXT_STYLE}>
-                {data?.expected_payment_amount}원
+                {formatPrice(data?.expected_payment_amount)}원
               </div>
             </div>
           </div>
