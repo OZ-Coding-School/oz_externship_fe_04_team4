@@ -9,8 +9,8 @@ export const RecruitmentColumns = [
     key: 'tags',
     header: '태그',
     width: '100px',
-    render: (value: RecruitmentTag[]) => {
-      const tags = value
+    render: (row: RecruitmentTag[]) => {
+      const tags = row
 
       return (
         <div className="flex flex-wrap gap-1">
@@ -23,21 +23,21 @@ export const RecruitmentColumns = [
     key: 'close_at',
     header: '마감 기한',
     width: '100px',
-    render: (value: string) => sliceDateTime(value, 10),
+    render: (row: string) => sliceDateTime(row, 10),
   },
   {
     key: 'is_closed',
     header: '상태',
     width: '100px',
-    render: (value: string) => (
+    render: (row: string) => (
       <span
         className={`inline-block rounded-full px-2 py-1 text-xs ${
-          value
+          row
             ? 'bg-[#F3F4F6] text-[#1F2937]'
             : 'text-state-permission-txt bg-[#DCFCE7]'
         }`}
       >
-        {value ? '마감' : '모집중'}
+        {row ? '마감' : '모집중'}
       </span>
     ),
   },
@@ -56,12 +56,12 @@ export const RecruitmentColumns = [
     header: '생성일시',
     width: '100px',
     sortable: { asc: 'created_asc', desc: 'created_desc' },
-    render: (value: string) => sliceDateTime(value, 16),
+    render: (row: string) => sliceDateTime(row, 16),
   },
   {
     key: 'updated_at',
     header: '수정일시',
     width: '100px',
-    render: (value: string) => sliceDateTime(value, 16),
+    render: (row: string) => sliceDateTime(row, 16),
   },
 ]

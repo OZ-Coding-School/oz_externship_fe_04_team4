@@ -342,6 +342,29 @@ export type RecruitmentTags = {
   results: RecruitmentTag[]
 }
 
+// api/v1/admin/applications
+export type ApplicationsList = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: ApplicationsListResults[]
+}
+export type ApplicationsListResults = {
+  id: number
+  recruitment: {
+    id: number
+    title: string
+  }
+  applicant: {
+    id: number
+    nickname: string
+    email: string
+  }
+  status: ApplicationsStatus
+  created_at: string
+  updated_at: string
+}
+
 // api/v1/admin/recruitments/{recruitment_id}
 export type RecruitmentDetail = {
   id: number
@@ -383,28 +406,6 @@ export type RecruitmentDetailApplications = {
   }
   status: ApplicationsStatus
   created_at: string
-}
-
-export type ApplicationsListResults = {
-  id: number
-  recruitment: {
-    id: number
-    title: string
-  }
-  applicant: {
-    id: number
-    nickname: string
-    email: string
-  }
-  status: ApplicationsStatus
-  created_at: string
-  updated_at: string
-}
-export type ApplicationsList = {
-  count: number
-  next: string | null
-  previous: string | null
-  results: ApplicationsListResults[]
 }
 
 export type ApplicationsDetailLectures = {

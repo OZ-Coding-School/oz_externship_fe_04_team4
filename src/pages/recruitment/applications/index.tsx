@@ -1,17 +1,12 @@
 import { useState } from 'react'
 
-import { ApplicationStatusBadge } from '@/components/common/badge/ApplicationStatusBadge'
 import { FilterBar } from '@/components/common/filter'
-import {
-  Table,
-  type Column,
-  type PaginationResponse,
-} from '@/components/common/table'
+import { Table, type PaginationResponse } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
+import { ApplicationColumns } from '@/features/application/columns'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type { ApplicationsListResults } from '@/mocks/types/accounts'
 import { StudyGroupDetailModal } from '@/pages/study/groups/StudyGroupDetailModal'
-import { formatDateTime } from '@/utils'
 
 type Application = ApplicationsListResults
 export default function ApplicationManagementPage() {
@@ -45,51 +40,6 @@ export default function ApplicationManagementPage() {
     },
   })
 
-  const columns: Column<Application>[] = [
-    {
-      key: 'id',
-      header: 'ID',
-      width: '100px',
-    },
-    {
-      key: 'recruitment',
-      header: '공고명',
-      width: '300px',
-      render: (_, row) => row.recruitment?.title || '-',
-    },
-    {
-      key: 'applicant',
-      header: '지원자 정보',
-      width: '250px',
-      render: (_, row) => (
-        <div>
-          <p className="font-medium text-gray-900">
-            {row.applicant?.nickname || '-'}
-          </p>
-          <p className="text-sm text-gray-500">{row.applicant?.email || '-'}</p>
-        </div>
-      ),
-    },
-    {
-      key: 'status',
-      header: '지원 상태',
-      width: '100px',
-      render: (value: string) => <ApplicationStatusBadge status={value} />,
-    },
-    {
-      key: 'created_at',
-      header: '지원일시',
-      width: '180px',
-
-      render: (value: string) => formatDateTime(value),
-    },
-    {
-      key: 'updated_at',
-      header: '수정일시',
-      width: '180px',
-      render: (value: string) => formatDateTime(value),
-    },
-  ]
   const handleRowClick = (application: Application) => {
     setSelectedApplication(application.id)
     setIsModalOpen(true)
@@ -137,7 +87,7 @@ export default function ApplicationManagementPage() {
         />
       </div>
       <Table
-        columns={columns}
+        columns={ApplicationColumns}
         response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
         onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
