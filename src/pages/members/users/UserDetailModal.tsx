@@ -61,7 +61,6 @@ export function UserDetailModal({
     queryKey: ['user-detail', userId],
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId || 0),
     enabled: !!userId && isOpen,
-    refetchOnMount: 'always',
   })
   const queryClient = useQueryClient()
   const [isEditMode, setIsEditMode] = useState(false)
@@ -154,10 +153,6 @@ export function UserDetailModal({
       setIsEditMode(false)
       refetch()
       queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
-      queryClient.refetchQueries({
-        queryKey: ['users-list'],
-        type: 'active',
-      })
     },
   })
   const handleFormEditOk = () => {

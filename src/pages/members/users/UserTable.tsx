@@ -59,18 +59,17 @@ export default function UserTable() {
   useEffect(() => {
     setPage(1)
   }, [search, status, role])
-  const mappedStatus = status === 'withdraw' ? 'withdrew' : status
 
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<UserApiRawItem>
   >({
-    queryKey: ['users-list', page, search, mappedStatus, role],
+    queryKey: ['users-list', page, search, status, role],
     url: SERVICE_URLS.ACCOUNTS.LIST,
     params: {
       page,
       page_size: 10,
       search,
-      status: mappedStatus,
+      status,
       role,
     },
   })
