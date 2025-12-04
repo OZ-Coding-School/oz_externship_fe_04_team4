@@ -71,7 +71,7 @@ export default function RecruitmentPage() {
       </div>
 
       <Table
-        columns={RecruitmentColumns()}
+        columns={RecruitmentColumns}
         sortConfig={sortConfig}
         onSort={handleSort}
         currentPage={currentPage}
