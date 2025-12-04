@@ -181,7 +181,7 @@ export default function RecruitmentDetailContent() {
           {/* 사용자 정의 태그 */}
           <div className={'mb-4 flex flex-col gap-3'}>
             <div className={TEXT_STYLE}>사용자 정의 태그</div>
-            <div className="flex items-center">
+            <div className="flex flex-wrap items-center gap-1">
               {data?.tags.map((el) => (
                 <div
                   key={el.id}
@@ -309,7 +309,7 @@ export default function RecruitmentDetailContent() {
                 </div>
               ))}
               {data?.applications.length === 0 && (
-                <div className="flex items-center justify-center rounded-lg bg-[#F9FAFB] p-4">
+                <div className="flex items-center justify-center rounded-lg bg-[#F9FAFB] p-4 text-sm text-gray-500">
                   지원자가 없습니다.
                 </div>
               )}

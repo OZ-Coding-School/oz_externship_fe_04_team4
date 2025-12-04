@@ -3367,11 +3367,68 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
           'https://example.com/images/lecture/thumbnails/python1.png',
         url_link: 'https://www.inflearn.com/course/python-intro',
       },
+      {
+        id: 43002,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+      {
+        id: 43003,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+      {
+        id: 43004,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+      {
+        id: 43005,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+      {
+        id: 43006,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
+      {
+        id: 43007,
+        title: '파이썬 입문',
+        instructor: '김한영',
+        thumbnail_img_url:
+          'https://example.com/images/lecture/thumbnails/python1.png',
+        url_link: 'https://www.inflearn.com/course/python-intro',
+      },
     ],
     tags: [
       { id: 1, name: 'python' },
       { id: 2, name: '프로그래밍 기초' },
       { id: 3, name: '온라인 스터디' },
+      { id: 4, name: 'python' },
+      { id: 5, name: '프로그래밍 기초' },
+      { id: 6, name: '온라인 스터디' },
+      { id: 7, name: 'python' },
+      { id: 8, name: '프로그래밍 기초' },
+      { id: 9, name: '온라인 스터디' },
+      { id: 10, name: 'python' },
+      { id: 11, name: '프로그래밍 기초' },
+      { id: 12, name: '온라인 스터디' },
     ],
     files: [
       {
@@ -3382,6 +3439,30 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
       },
       {
         id: 2,
+        file_name: 'schedule.pdf',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/schedule.pdf',
+      },
+      {
+        id: 3,
+        file_name: 'study-guide.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/study-guide.md',
+      },
+      {
+        id: 4,
+        file_name: 'schedule.pdf',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/schedule.pdf',
+      },
+      {
+        id: 5,
+        file_name: 'study-guide.md',
+        file_url:
+          'https://example.com/uploads/files/recruitments/1/study-guide.md',
+      },
+      {
+        id: 6,
         file_name: 'schedule.pdf',
         file_url:
           'https://example.com/uploads/files/recruitments/1/schedule.pdf',
@@ -3400,6 +3481,46 @@ export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
       },
       {
         id: 2,
+        applicant: {
+          id: 2,
+          nickname: 'young2',
+          email: 'user2@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T11:05:00+09:00',
+      },
+      {
+        id: 3,
+        applicant: {
+          id: 1,
+          nickname: 'hong1',
+          email: 'user1@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:00:00+09:00',
+      },
+      {
+        id: 4,
+        applicant: {
+          id: 2,
+          nickname: 'young2',
+          email: 'user2@example.com',
+        },
+        status: 'ACCEPTED',
+        created_at: '2025-11-20T11:05:00+09:00',
+      },
+      {
+        id: 5,
+        applicant: {
+          id: 1,
+          nickname: 'hong1',
+          email: 'user1@example.com',
+        },
+        status: 'PENDING',
+        created_at: '2025-11-20T11:00:00+09:00',
+      },
+      {
+        id: 6,
         applicant: {
           id: 2,
           nickname: 'young2',
