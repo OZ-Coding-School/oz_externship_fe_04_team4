@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { ApplicationStatusStyle } from '@/features/application/lib/ApplicationStatusStyle'
+import { ApplicationStatusBadge } from '@/components/common/badge'
 
 type recruitmentRowType = {
   id: number
@@ -43,7 +43,7 @@ export const ApplicationColumns = [
     width: '100px',
     render: (row: ApplicationStatus) => (
       <div className="rounded-full px-2 py-1 text-xs">
-        {ApplicationStatusStyle[row]}
+        {ApplicationStatusBadge[row]}
       </div>
     ),
   },

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 
+import { RecruitmentStatusBadge } from '@/components/common/badge/RecruitmentStatusBadge'
 import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
 import type { RecruitmentTag } from '@/mocks/types/accounts'
 
@@ -31,17 +32,7 @@ export const RecruitmentColumns = [
     header: '상태',
     width: '100px',
     render: (row: boolean) => (
-      <div className="flex items-center">
-        {row ? (
-          <div className="rounded-full bg-[#F3F4F6] px-2 py-1 text-xs text-[#1F2937]">
-            마감
-          </div>
-        ) : (
-          <div className="text-state-permission-txt rounded-full bg-[#DCFCE7] px-2 py-1 text-xs">
-            모집중
-          </div>
-        )}
-      </div>
+      <RecruitmentStatusBadge is_closed={row} className="flex items-center" />
     ),
   },
   {
