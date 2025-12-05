@@ -55,7 +55,7 @@ export const mockAccountsList: AccountsList = {
       nickname: 'chul3',
       name: '이철수',
       birthday: '1992-07-09',
-      status: 'inactive',
+      status: 'active',
       role: 'staff',
       withdraw_at: '2025-11-04T14:05:20+09:00',
       created_at: '2025-10-30T10:10:20.505250+09:00',
