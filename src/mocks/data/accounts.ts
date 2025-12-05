@@ -1,6 +1,7 @@
 import type {
   AccountsDetail,
   AccountsList,
+  AccountsMe,
   ApplicationsDetail,
   ApplicationsList,
   LectureList,
@@ -19,6 +20,21 @@ import type {
   WithdrawalsList,
   WithdrawalsTrends,
 } from '@/mocks/types/accounts'
+
+// api/v1/accounts/me
+// 내 정보 조회
+export const mockAccountsMe: AccountsMe = {
+  id: 1,
+  email: 'admin@ozcoding.com',
+  nickname: 'admin',
+  name: 'admin',
+  phone_number: '01000000001',
+  birthday: '1998-08-29',
+  gender: 'M',
+  role: 'admin',
+  profile_img_url: 'https://example.com/images/profiles/image.png',
+  created_at: '2025-10-30T14:01:57.505250+09:00',
+}
 
 // api/v1/admin/accounts
 // 유저 목록 조회

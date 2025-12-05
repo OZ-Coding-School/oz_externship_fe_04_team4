@@ -4,6 +4,20 @@ export type ApplicationsStatus =
   | 'REJECTED'
   | 'CANCELED'
 
+// api/v1/accounts/me
+export type AccountsMe = {
+  id: number
+  email: string
+  nickname: string
+  name: string
+  phone_number: string
+  birthday: string
+  gender: 'M' | 'F'
+  role: 'user' | 'staff' | 'admin'
+  profile_img_url: string
+  created_at: string
+}
+
 // api/v1/admin/accounts
 export type AccountListItem = {
   id: number

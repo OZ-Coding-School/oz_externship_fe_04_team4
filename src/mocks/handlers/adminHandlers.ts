@@ -4,6 +4,7 @@ import { ADMIN_API_PREFIX, API_V1_PREFIX, BASE_URL } from '@/config/api'
 import {
   mockAccountDetailMap,
   mockAccountsList,
+  mockAccountsMe,
   mockApplicationsDetail,
   mockApplicationsList,
   mockLecturesDetailMap,
@@ -82,6 +83,25 @@ const paginate = <T>(items: T[], page: number, pageSize: number) => {
     hasPrev: page > 1,
   }
 }
+
+// api/v1/accounts/me
+// 내 정보 조회
+export const getAccountsMeHandler = http.get(
+  `${API_V1_PREFIX}/accounts/me`,
+  ({ request }) => {
+    const authorization = request.headers.get('Authorization')
+
+    // Authorization 헤더 없으면 401
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+      return HttpResponse.json(
+        { error_detail: '자격 인증 데이터가 제공되지 않았습니다.' },
+        { status: 401 }
+      )
+    }
+
+    return HttpResponse.json(mockAccountsMe, { status: 200 })
+  }
+)
 
 /* -------------------------------------------------------------------------- */
 /* 1. Accounts (회원)                                                         */
