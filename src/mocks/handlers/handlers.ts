@@ -30,6 +30,27 @@ const loginHandler = http.post(
       )
     }
 
+    if (body.email === 'user3@example.com' && body.password === 'staff123') {
+      return HttpResponse.json(
+        {
+          access_token: 'token_value_staff',
+          refresh_token: 'dummy_refresh_token_staff',
+          user: {
+            id: 3,
+            email: 'user3@example.com',
+            nickname: 'chul3',
+            name: '이철수',
+            birthday: '1992-07-09',
+            status: 'active',
+            role: 'staff',
+            withdraw_at: '2025-11-04T14:05:20+09:00',
+            created_at: '2025-10-30T10:10:20.505250+09:00',
+          },
+        },
+        { status: 200 }
+      )
+    }
+
     return HttpResponse.json(
       { error_detail: '이메일 또는 비밀번호가 올바르지 않습니다.' },
       { status: 401 }
