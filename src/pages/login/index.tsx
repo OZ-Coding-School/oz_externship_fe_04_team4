@@ -1,28 +1,37 @@
-import { useState, type FormEvent } from 'react'
+import { type FormEvent } from 'react'
 
 import { useNavigate } from 'react-router'
 
 import { useLoginMutation } from '@/api/auth/useLoginMutation'
 import Button from '@/components/common/Button'
+import { useAuthRole } from '@/hooks/useAuthRole'
 
 const INPUT_STYLE =
   'h-12 w-[328px] rounded-sm border border-[#BDBDBD] bg-white mb-3 placeholder-[#BDBDBD] py-3.5 px-4 outline-0'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
   const navigate = useNavigate()
   const { mutate, isPending, error } = useLoginMutation()
+  const { isUser } = useAuthRole()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     mutate(
       { email, password },
       {
         onSuccess: () => {
-          navigate('/members/users')
+          if (!isUser) {
+            navigate('/members/users')
+          } else {
+            alert(
+              '관리자 전용 페이지입니다. 관리자 계정으로 다시 로그인해주세요.'
+            )
+          }
         },
       }
     )
@@ -43,18 +52,18 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="flex flex-col">
             <input
+              name="email"
               type="email"
               required
               placeholder="아이디 (example@gmail.com)"
               className={INPUT_STYLE}
-              onChange={(e) => setEmail(e.target.value)}
             />
             <input
+              name="password"
               type="password"
               required
               placeholder="비밀번호 (6~15자의 영문 대소문자, 숫자, 특수문자 포함"
               className={INPUT_STYLE}
-              onChange={(e) => setPassword(e.target.value)}
             />
             {error && (
               <p className="mb-3 text-sm text-red-500">{error.message}</p>
