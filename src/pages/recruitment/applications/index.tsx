@@ -1,47 +1,42 @@
 import { useState } from 'react'
 
-import { Table, type PaginationResponse } from '@/components/common/table'
-import { SERVICE_URLS } from '@/config/serviceUrls'
-import { ApplicationColumns } from '@/features/application/columns'
 import ApplicationDetailModal from '@/features/application/ui/ApplicationDetailModal'
 import ApplicationFilter from '@/features/application/ui/ApplicationFilter'
-import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { ApplicationsListResults } from '@/mocks/types/accounts'
 
-type Application = ApplicationsListResults
+// type Application = ApplicationsListResults
 
 export default function ApplicationManagementPage() {
-  const [filters, setFilters] = useState<{
-    search: string
-    page: number
-    status: string
-    sort: string
-  }>({
-    search: '',
-    page: 1,
-    status: '',
-    sort: 'latest',
-  })
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { data, isLoading, error, refetch } = useFetchQuery<
-    PaginationResponse<Application>
-  >({
-    queryKey: ['applications', filters],
-    url: SERVICE_URLS.APPLICATIONS.LIST,
-    params: {
-      page_size: 10,
-      ...filters,
-    },
-  })
-
-  const handleRowClick = () => {
-    setIsModalOpen(true)
-  }
-
+  // const handleRowClick = () => {
+  //   setIsModalOpen(true)
+  // }
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
+
+  // const [filters, setFilters] = useState<{
+  //   search: string
+  //   page: number
+  //   status: string
+  //   sort: string
+  // }>({
+  //   search: '',
+  //   page: 1,
+  //   status: '',
+  //   sort: 'latest',
+  // })
+
+  // const { data, isLoading, error, refetch } = useFetchQuery<
+  //   PaginationResponse<Application>
+  // >({
+  //   queryKey: ['applications', filters],
+  //   url: SERVICE_URLS.APPLICATIONS.LIST,
+  //   params: {
+  //     page_size: 10,
+  //     ...filters,
+  //   },
+  // })
 
   return (
     <>
@@ -52,7 +47,7 @@ export default function ApplicationManagementPage() {
 
       <ApplicationFilter />
 
-      <Table
+      {/* <Table
         columns={ApplicationColumns}
         response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
@@ -61,7 +56,7 @@ export default function ApplicationManagementPage() {
         error={error?.message}
         onRetry={refetch}
         onRowClick={handleRowClick}
-      />
+      /> */}
     </>
   )
 }

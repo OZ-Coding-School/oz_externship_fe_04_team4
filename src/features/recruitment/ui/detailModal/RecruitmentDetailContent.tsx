@@ -12,6 +12,7 @@ import type { ChangeEvent } from 'react'
 import { Link } from 'react-router'
 import { twMerge } from 'tailwind-merge'
 
+import { ApplicationStatusBadge } from '@/components/common/badge'
 import { getAdminRecruitmentDetail } from '@/features/recruitment/api/getAdminRecruitmentDetail'
 import { markdownToHtml } from '@/lib/markdown'
 import { useDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
@@ -20,29 +21,6 @@ import { formatPrice } from '@/utils/price'
 const LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-4 cursor-default'
 const RIGHT_LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-6 cursor-default'
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
-
-const STATUS = {
-  PENDING: (
-    <div className="rounded-full bg-[#FEF9C3] px-2 py-1 text-[#854D0E]">
-      검토중
-    </div>
-  ),
-  ACCEPTED: (
-    <div className="text-state-permission-txt rounded-full bg-[#DCFCE7] px-2 py-1">
-      승인
-    </div>
-  ),
-  CANCELED: (
-    <div className="rounded-full bg-[#FEE2E2] px-2 py-1 text-[#991B1B]">
-      거절
-    </div>
-  ),
-  REJECTED: (
-    <div className="rounded-full bg-[#DBEAFE] px-2 py-1 text-[#1E40AF]">
-      대기
-    </div>
-  ),
-}
 
 export default function RecruitmentDetailContent() {
   const { selectedRecruitmentId } = useDetailModalStore()
@@ -297,7 +275,7 @@ export default function RecruitmentDetailContent() {
                         </div>
                       </div>
 
-                      {STATUS[el.status]}
+                      {ApplicationStatusBadge[el.status]}
                     </div>
 
                     <div className="text-[12px] text-[#4B5563]">
