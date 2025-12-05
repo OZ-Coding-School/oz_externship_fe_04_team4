@@ -1,2 +1,2 @@
 // utils
-export { formatDateTime } from './formatDateTime.ts'
+export * from './dateUtils.ts'
