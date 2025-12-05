@@ -30,6 +30,53 @@ export interface Lecture {
   created_at: string
   updated_at: string
 }
+const COLUMNS: Column<Lecture>[] = [
+  {
+    key: 'id',
+    header: 'ID',
+    width: '60px',
+  },
+  {
+    key: 'thumbnail_url',
+    header: '썸네일',
+    width: '100px',
+    render: (value: string) => (
+      <img
+        src={value || 'Loading . . . '}
+        alt="강의 썸네일"
+        className="h-12 w-16 rounded object-cover"
+      />
+    ),
+  },
+  {
+    key: 'title',
+    header: '강의명',
+    width: '350px',
+  },
+  {
+    key: 'instructor',
+    header: '강사명',
+    width: '120px',
+  },
+  {
+    key: 'platform',
+    header: '플랫폼',
+    width: '100px',
+    render: (value) => <PlatformBadge platform={value} />,
+  },
+  {
+    key: 'created_at',
+    header: '생성일시',
+    width: '150px',
+    render: (value: string) => formatDateTime(value),
+  },
+  {
+    key: 'updated_at',
+    header: '수정일시',
+    width: '150px',
+    render: (value: string) => formatDateTime(value),
+  },
+]
 export default function LectureManagementPage() {
   const [filters, setFilters] = useState<{ search: string; page: number }>({
     search: '',
@@ -49,53 +96,6 @@ export default function LectureManagementPage() {
     },
   })
 
-  const columns: Column<Lecture>[] = [
-    {
-      key: 'id',
-      header: 'ID',
-      width: '60px',
-    },
-    {
-      key: 'thumbnail_url',
-      header: '썸네일',
-      width: '100px',
-      render: (value: string) => (
-        <img
-          src={value || 'Loading . . . '}
-          alt="강의 썸네일"
-          className="h-12 w-16 rounded object-cover"
-        />
-      ),
-    },
-    {
-      key: 'title',
-      header: '강의명',
-      width: '350px',
-    },
-    {
-      key: 'instructor',
-      header: '강사명',
-      width: '120px',
-    },
-    {
-      key: 'platform',
-      header: '플랫폼',
-      width: '100px',
-      render: (value) => <PlatformBadge platform={value} />,
-    },
-    {
-      key: 'created_at',
-      header: '생성일시',
-      width: '150px',
-      render: (value: string) => formatDateTime(value),
-    },
-    {
-      key: 'updated_at',
-      header: '수정일시',
-      width: '150px',
-      render: (value: string) => formatDateTime(value),
-    },
-  ]
   const handleRowClick = (lecture: Lecture) => {
     setSelectedLecture(lecture.id)
     setIsModalOpen(true)
@@ -119,7 +119,7 @@ export default function LectureManagementPage() {
         />
       </div>
       <Table
-        columns={columns}
+        columns={COLUMNS}
         response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
         onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}

@@ -24,6 +24,63 @@ export interface StudyGroup {
   created_at: string
   updated_at: string
 }
+const COLUMNS: Column<StudyGroup>[] = [
+  {
+    key: 'profile_img_url',
+    header: '대표 이미지',
+    width: '100px',
+    render: (value: string) => (
+      <img
+        src={value || 'Loading . . . '}
+        alt="스터디 그룹"
+        className="h-12 w-16 rounded object-cover"
+      />
+    ),
+  },
+  {
+    key: 'name',
+    header: '그룹명',
+    width: '300px',
+    sortable: {
+      asc: 'name_asc',
+      desc: 'name_desc',
+    },
+  },
+  {
+    key: 'headcount',
+    header: '인원 현황',
+    width: '150px',
+    render: (_, row) => `${row.current_headcount} / ${row.max_headcount}명`,
+  },
+  {
+    key: 'duration',
+    header: '스터디 기간',
+    width: '150px',
+    render: (_, row) => `${row.start_at} / ${row.end_at}명`,
+  },
+  {
+    key: 'status',
+    header: '상태',
+    width: '100px',
+    render: (value) => <StudyGroupStatusBadge status={value} />,
+  },
+  {
+    key: 'created_at',
+    header: '생성일시',
+    width: '150px',
+    render: (value: string) => formatDateTime(value),
+    sortable: {
+      asc: 'oldest',
+      desc: 'latest',
+    },
+  },
+  {
+    key: 'updated_at',
+    header: '수정일시',
+    width: '150px',
+    render: (value: string) => formatDateTime(value),
+  },
+]
 export default function StudyGroupManagementPage() {
   const [filters, setFilters] = useState<{
     search: string
@@ -67,63 +124,6 @@ export default function StudyGroupManagementPage() {
     setSortConfig({ key, value: sortValue, direction })
   }
 
-  const columns: Column<StudyGroup>[] = [
-    {
-      key: 'profile_img_url',
-      header: '대표 이미지',
-      width: '100px',
-      render: (value: string) => (
-        <img
-          src={value || 'Loading . . . '}
-          alt="스터디 그룹"
-          className="h-12 w-16 rounded object-cover"
-        />
-      ),
-    },
-    {
-      key: 'name',
-      header: '그룹명',
-      width: '300px',
-      sortable: {
-        asc: 'name_asc',
-        desc: 'name_desc',
-      },
-    },
-    {
-      key: 'headcount',
-      header: '인원 현황',
-      width: '150px',
-      render: (_, row) => `${row.current_headcount} / ${row.max_headcount}명`,
-    },
-    {
-      key: 'duration',
-      header: '스터디 기간',
-      width: '150px',
-      render: (_, row) => `${row.start_at} / ${row.end_at}명`,
-    },
-    {
-      key: 'status',
-      header: '상태',
-      width: '100px',
-      render: (value) => <StudyGroupStatusBadge status={value} />,
-    },
-    {
-      key: 'created_at',
-      header: '생성일시',
-      width: '150px',
-      render: (value: string) => formatDateTime(value),
-      sortable: {
-        asc: 'oldest',
-        desc: 'latest',
-      },
-    },
-    {
-      key: 'updated_at',
-      header: '수정일시',
-      width: '150px',
-      render: (value: string) => formatDateTime(value),
-    },
-  ]
   const handleRowClick = (studyGroup: StudyGroup) => {
     setSelectedStudyGroupId(studyGroup.id)
     setIsModalOpen(true)
@@ -160,7 +160,7 @@ export default function StudyGroupManagementPage() {
         />
       </div>
       <Table
-        columns={columns}
+        columns={COLUMNS}
         response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
         onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
