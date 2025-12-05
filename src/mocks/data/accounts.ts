@@ -4712,60 +4712,48 @@ export const mockApplicationsList: ApplicationsList = {
 // 지원 내역 상세 조회
 export const mockApplicationsDetail: ApplicationsDetail = {
   id: 1,
-  self_introduction: '나는 홍길동입니다.',
-  motivation: '파이썬 독학으로 마스터해보고 싶어요.',
-  objective: '파이썬 라이브러리 컨트리뷰터가 되고싶어요.',
-  available_time: '10:00 ~ 11:00',
+  self_introduction:
+    '안녕하세요! 백엔드 개발 3년 차로 일하고 있으며, 프론트엔드 기술을 깊이 있게 배우고 싶어 지원하게 되었습니다.',
+  motivation: 'React를 체계적으로 학습하여 풀스택 개발자로 성장하고 싶습니다.',
+  objective:
+    '6개월 내에 React로 완성도 높은 프로젝트를 만들어보는 것을 목표로 하고 있습니다.',
+  available_time: '평일 저녁 7시~10시, 주말 오전',
   has_study_experience: true,
-  study_experience: 'DBA 자격증 스터디 경험 있습니다.',
-  status: 'PENDING',
+  study_experience:
+    '대학교 때 알고리즘 스터디와 자바 스터디에 참여한 경험이 있습니다.',
+  status: 'ACCEPTED',
   recruitment: {
-    // mockRecruitmentDetail / mockRecruitmentList의 첫 번째 공고와 연결
+    // 지원 내역 상세 화면의 스터디 구인 공고 정보와 매칭
     id: 1,
-    title: 'python 스터디 모집 공고 1',
-    expected_headcount: 5,
-    close_at: '2025-11-20T00:00:05.875842+09:00',
-    // mockLectureList에 있는 강의들 기반으로 여러 개 연결
+    title: 'React 마스터 스터디 모집',
+    expected_headcount: 6,
+    close_at: '2024-01-20T00:00:00+09:00',
     lectures: [
       {
         id: 43001,
-        title: '파이썬 입문',
-        instructor: '김한영',
+        title: '모던 리액트 Deep Dive',
+        instructor: '리액트봇',
       },
       {
-        id: 43003,
-        title: 'React 완전정복',
-        instructor: '홍길동',
-      },
-      {
-        id: 43012,
-        title: '3시간 완성 n8n',
-        instructor: 'SOLVIT team',
+        id: 43002,
+        title: 'React 18 완벽 가이드',
+        instructor: '박프론트',
       },
     ],
-    // 기존 태그 + 몇 개 확장
     tags: [
-      {
-        id: 1,
-        name: 'python',
-      },
-      {
-        id: 2,
-        name: '프로그래밍 기초',
-      },
-      {
-        id: 3,
-        name: '온라인 스터디',
-      },
+      { id: 1, name: 'React' },
+      { id: 2, name: 'JavaScript' },
+      { id: 3, name: 'Frontend' },
+      { id: 4, name: '프로젝트' },
     ],
   },
   applicant: {
-    // mockAccountDetail / mockAccountLists의 1번 유저와 연결
     id: 1,
-    nickname: 'hong1',
-    email: 'user1@example.com',
-    profile_img_url: 'https://example.com/images/profiles/user1.png',
+    nickname: '코딩러버',
+    email: 'coder@example.com',
+    gender: 'M',
+    profile_img_url: 'https://example.com/images/profiles/codinglover.png',
   },
-  created_at: '2025-11-20T00:00:05.875842+09:00',
-  updated_at: '2025-11-20T00:00:05.875845+09:00',
+  created_at: '2024-01-15T14:30:00+09:00',
+  updated_at: '2024-01-16T09:15:00+09:00',
 }

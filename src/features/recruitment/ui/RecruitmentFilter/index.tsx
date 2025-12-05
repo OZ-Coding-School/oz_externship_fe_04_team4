@@ -4,7 +4,7 @@ import { useState, type KeyboardEvent } from 'react'
 
 import { FilterSelect } from '@/components/common/filter'
 import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
-import { useTagFilterModalModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
 import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
 import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
@@ -12,7 +12,7 @@ import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTa
 const LABEL_STYLE = 'text-sm text-[#374151]'
 
 export default function RecruitmentFilter() {
-  const { openTagFilterModalModal } = useTagFilterModalModalStore()
+  const { openTagFilterModalModal } = useTagFilterModalStore()
 
   const [search, setSearch] = useState('')
   const { setKeyword } = useRecruitmentSearchStore()

@@ -16,24 +16,24 @@ type DetailModalState = {
   toggleDetailModal: () => void
 }
 
-export const useTagFilterModalModalStore = create<TagFilterModalState>(
-  (set) => ({
-    isTagFilterModalOpen: false,
+export const useTagFilterModalStore = create<TagFilterModalState>((set) => ({
+  isTagFilterModalOpen: false,
 
-    openTagFilterModalModal: () => set({ isTagFilterModalOpen: true }),
-    closeTagFilterModalModal: () => set({ isTagFilterModalOpen: false }),
-    toggleTagFilterModalModal: () =>
-      set((state) => ({ isTagFilterModalOpen: !state.isTagFilterModalOpen })),
+  openTagFilterModalModal: () => set({ isTagFilterModalOpen: true }),
+  closeTagFilterModalModal: () => set({ isTagFilterModalOpen: false }),
+  toggleTagFilterModalModal: () =>
+    set((state) => ({ isTagFilterModalOpen: !state.isTagFilterModalOpen })),
+}))
+
+export const useRecruitmentDetailModalStore = create<DetailModalState>(
+  (set) => ({
+    isDetailModalOpen: false,
+    selectedRecruitmentId: null,
+
+    openDetailModal: (id) =>
+      set({ isDetailModalOpen: true, selectedRecruitmentId: id }),
+    closeDetailModal: () => set({ isDetailModalOpen: false }),
+    toggleDetailModal: () =>
+      set((state) => ({ isDetailModalOpen: !state.isDetailModalOpen })),
   })
 )
-
-export const useDetailModalStore = create<DetailModalState>((set) => ({
-  isDetailModalOpen: false,
-  selectedRecruitmentId: null,
-
-  openDetailModal: (id) =>
-    set({ isDetailModalOpen: true, selectedRecruitmentId: id }),
-  closeDetailModal: () => set({ isDetailModalOpen: false }),
-  toggleDetailModal: () =>
-    set((state) => ({ isDetailModalOpen: !state.isDetailModalOpen })),
-}))

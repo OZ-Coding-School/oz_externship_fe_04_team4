@@ -1,7 +1,7 @@
-import { useDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 
 export default function RecruitmentDetailFooterActions() {
-  const { closeDetailModal } = useDetailModalStore()
+  const { closeDetailModal } = useRecruitmentDetailModalStore()
 
   return (
     <div className="flex h-[73px] w-full items-center justify-end bg-[#F9FAFB] px-6 py-4">

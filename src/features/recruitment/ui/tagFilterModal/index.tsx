@@ -6,12 +6,12 @@ import SelectedTagList from '@/features/recruitment/ui/tagFilterModal/SelectedTa
 import TagFilterActionButtons from '@/features/recruitment/ui/tagFilterModal/TagFilterActionButtons'
 import TagOptionList from '@/features/recruitment/ui/tagFilterModal/TagOptionList'
 import TagSearchInput from '@/features/recruitment/ui/tagFilterModal/TagSearchInput'
-import { useTagFilterModalModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentTagsStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function RecruitmentTagFilterModal() {
   const { isTagFilterModalOpen, closeTagFilterModalModal } =
-    useTagFilterModalModalStore()
+    useTagFilterModalStore()
 
   const [inputSearch, setInputSearch] = useState('')
   const [keywordSearch, setKeywordSearch] = useState('')

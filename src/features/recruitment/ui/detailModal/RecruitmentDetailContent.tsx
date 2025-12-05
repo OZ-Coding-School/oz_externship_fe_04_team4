@@ -15,7 +15,7 @@ import { twMerge } from 'tailwind-merge'
 import { ApplicationStatusBadge } from '@/components/common/badge'
 import { getAdminRecruitmentDetail } from '@/features/recruitment/api/getAdminRecruitmentDetail'
 import { markdownToHtml } from '@/lib/markdown'
-import { useDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { formatPrice } from '@/utils/price'
 
 const LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-4 cursor-default'
@@ -23,7 +23,7 @@ const RIGHT_LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-6 cursor-default'
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
 
 export default function RecruitmentDetailContent() {
-  const { selectedRecruitmentId } = useDetailModalStore()
+  const { selectedRecruitmentId } = useRecruitmentDetailModalStore()
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['adminRecruitmentDetail', selectedRecruitmentId],

@@ -1,11 +1,11 @@
-import { useTagFilterModalModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import {
   useRecruitmentTagListStore,
   useRecruitmentTagsStore,
 } from '@/store/recruitment/useRecruitmentTagsStore'
 
 export default function TagFilterActionButtons() {
-  const { closeTagFilterModalModal } = useTagFilterModalModalStore()
+  const { closeTagFilterModalModal } = useTagFilterModalStore()
   const { selectedTags } = useRecruitmentTagsStore()
   const { setSelectedTagsResult } = useRecruitmentTagListStore()
 

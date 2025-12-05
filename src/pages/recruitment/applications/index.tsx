@@ -9,19 +9,16 @@ import {
   getAdminApplication,
   type GetAdminApplicationParams,
 } from '@/features/recruitment/api/getAdminApplication'
-import type { ApplicationsList } from '@/mocks/types/accounts'
+import type {
+  ApplicationsList,
+  ApplicationsListResults,
+} from '@/mocks/types/accounts'
+import { useApplicationDetailModalStore } from '@/store/application/useApplicationModalStore'
 
 const PAGE_SIZE = 10
 
 export default function ApplicationManagementPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleRowClick = () => {
-    setIsModalOpen(true)
-  }
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
+  const { openDetailModal } = useApplicationDetailModalStore()
 
   const [queryParams, setQueryParams] = useState<GetAdminApplicationParams>({
     search: '',
@@ -38,10 +35,7 @@ export default function ApplicationManagementPage() {
 
   return (
     <>
-      <ApplicationDetailModal
-        isModalOpen={isModalOpen}
-        handleCloseModal={handleCloseModal}
-      />
+      <ApplicationDetailModal />
 
       <ApplicationFilter
         setQueryParams={setQueryParams}
@@ -63,7 +57,7 @@ export default function ApplicationManagementPage() {
         isLoading={isLoading}
         error={error?.message}
         onRetry={refetch}
-        onRowClick={handleRowClick}
+        onRowClick={(row: ApplicationsListResults) => openDetailModal(row.id)}
       />
     </>
   )
