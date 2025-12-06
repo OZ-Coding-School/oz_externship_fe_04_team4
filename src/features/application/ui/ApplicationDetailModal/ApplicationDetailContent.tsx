@@ -75,6 +75,11 @@ export default function ApplicationDetailContent() {
           {/* 강의 목록 */}
           <div className={WRAPPER_BOX}>
             <div className={TEXT_STYLE}>강의 목록</div>
+            {data?.recruitment.lectures.length === 0 && (
+              <div className={twMerge(clsx(TEXT_BOX, 'text-gray-400'))}>
+                현재 이 스터디와 연동된 강의가 없습니다.{' '}
+              </div>
+            )}
             {data.recruitment.lectures.map((e) => (
               <div key={e.id} className={TEXT_BOX}>
                 <div className="font-medium">{e.title}</div>
@@ -88,7 +93,12 @@ export default function ApplicationDetailContent() {
           {/* 사용자 정의 태그 */}
           <div className={WRAPPER_BOX}>
             <div className={TEXT_STYLE}>사용자 정의 태그</div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {data?.recruitment.tags.length === 0 && (
+                <div className="cursor-default rounded-full bg-[#F9FAFB] px-3 py-1 text-gray-400">
+                  이 스터디에 설정된 태그가 없습니다.
+                </div>
+              )}
               {data.recruitment.tags.map((e) => (
                 <div
                   key={e.id}
