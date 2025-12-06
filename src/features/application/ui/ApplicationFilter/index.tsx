@@ -15,7 +15,7 @@ export default function ApplicationFilter({
 }: ApplicationFilterProps) {
   const searchConfig = {
     label: '검색',
-    placeholder: '공고명, 지원자 닉네임, 이메일 검색...',
+    placeholder: '공고명, 지원자 닉네임, 이메일 검색 후 엔터',
     value: queryParams.search,
     onChange: (value: string) =>
       setQueryParams((prev) => ({ ...prev, search: value })),

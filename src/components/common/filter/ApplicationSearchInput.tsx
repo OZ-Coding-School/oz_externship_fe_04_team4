@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { Search } from 'lucide-react'
 
-import { useDeferredValue, useEffect, useRef, useState } from 'react'
-
+import { useState, type KeyboardEvent } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import type { SearchConfig } from '@/components/common/filter/types'
@@ -14,24 +13,19 @@ export function ApplicationSearchInput({
   searchClassName,
   inputClassName,
   placeholder,
-  value,
   onChange,
 }: SearchConfig) {
-  const [localValue, setLocalValue] = useState(value)
-  const debounceValue = useDeferredValue(localValue)
-  const onChangeRef = useRef(onChange)
+  const [search, setSearch] = useState('')
 
-  useEffect(() => {
-    onChangeRef.current = onChange
-  }, [onChange])
-
-  useEffect(() => {
-    setLocalValue(value)
-  }, [value])
-
-  useEffect(() => {
-    onChangeRef.current(debounceValue)
-  }, [debounceValue])
+  const handleSearchSubmit = () => {
+    onChange(search.trim())
+  }
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSearchSubmit()
+    }
+  }
 
   return (
     <div className={twMerge(clsx('flex flex-col gap-2', className))}>
@@ -54,8 +48,9 @@ export function ApplicationSearchInput({
         <input
           type="text"
           placeholder={placeholder}
-          value={localValue}
-          onChange={(e) => setLocalValue(e.target.value)}
+          value={search}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setSearch(e.target.value)}
           className={twMerge(clsx('w-full text-sm outline-0', inputClassName))}
         />
       </div>
