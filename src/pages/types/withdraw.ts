@@ -17,6 +17,7 @@ export interface WithDrawDetailInfo {
   status: string
   profile_img_url: string
   created_at: string
+  birthday: string
   phone_number: string
 }
 

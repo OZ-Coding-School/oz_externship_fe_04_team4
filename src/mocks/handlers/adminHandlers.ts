@@ -370,8 +370,41 @@ export const getAdminWithdrawalsHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
+    const url = new URL(request.url)
+    const sort = url.searchParams.get('sort') || null
+
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockWithdrawalsList.results
+    const baseItems = [...mockWithdrawalsList.results]
+
+    // 정렬 적용
+    if (sort) {
+      switch (sort) {
+        case 'name_asc':
+          baseItems.sort((a, b) => a.name.localeCompare(b.name))
+          break
+
+        case 'name_desc':
+          baseItems.sort((a, b) => b.name.localeCompare(a.name))
+          break
+
+        case 'withdrawn_asc':
+          baseItems.sort(
+            (a, b) =>
+              new Date(a.withdrawn_at).getTime() -
+              new Date(b.withdrawn_at).getTime()
+          )
+          break
+
+        case 'withdrawn_desc':
+          baseItems.sort(
+            (a, b) =>
+              new Date(b.withdrawn_at).getTime() -
+              new Date(a.withdrawn_at).getTime()
+          )
+          break
+      }
+    }
+
     const { total, pageItems, hasNext, hasPrev } = paginate(
       baseItems,
       page,

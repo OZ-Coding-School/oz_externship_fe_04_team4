@@ -1,10 +1,11 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { FilterBar } from '@/components/common/filter'
 import type { PaginationResponse } from '@/components/common/table'
 import { Table } from '@/components/common/table/Table'
+import { REASON_LABEL, type ReasonKey } from '@/config/reason'
 import { type RoleType } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
@@ -19,12 +20,11 @@ export interface WithdrawalsApiRawItem {
   name: string
   role: RoleType
   birthday: string
-  reason_detail: string
-  withdraw_at: string
+  reason: string
+  withdrawn_at: string
 }
 
 export default function WithdrawalTable() {
-  const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,9 +36,7 @@ export default function WithdrawalTable() {
     status: '',
     sort: '',
   })
-  useEffect(() => {
-    setPage(1)
-  }, [search, status, role])
+
   const [sortConfig, setSortConfig] = useState<{
     key: string
     value: string
@@ -79,7 +77,7 @@ export default function WithdrawalTable() {
     {
       key: 'name',
       header: '이름',
-      width: '90px',
+      width: '80px',
       sortable: { asc: 'name_asc', desc: 'name_desc' },
     },
     {
@@ -94,11 +92,18 @@ export default function WithdrawalTable() {
       width: '100px',
     },
     {
-      key: 'withdraw_at',
+      key: 'reason',
+      header: '탈퇴사유',
+      width: '180px',
+      render: (value: ReasonKey) => REASON_LABEL[value],
+    },
+    {
+      key: 'withdrawn_at',
       header: '탈퇴일시',
-      width: '170px',
+      width: '180px',
       render: (value: string) =>
         dayjs(value).locale('ko').format('YYYY. M. D. A h:mm:ss'),
+      sortable: { asc: 'withdrawn_asc', desc: 'withdrawn_desc' },
     },
   ]
 
@@ -156,14 +161,14 @@ export default function WithdrawalTable() {
       <Table
         columns={columns}
         response={data || { count: 0, results: [], next: null, previous: null }}
+        currentPage={filters.page}
+        onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
         isLoading={isLoading}
-        error={typeof error === 'string' ? error : error?.message}
+        error={error?.message}
         onRetry={refetch}
         onRowClick={handleRowClick}
         sortConfig={sortConfig}
         onSort={handleSort}
-        currentPage={filters.page}
-        onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
       />
       <UserDetailModal
         isOpen={isModalOpen}
