@@ -12,25 +12,25 @@ import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 import { UserDetailFooter } from '@/pages/members/users/UserDetailFooter'
 import { UserDetailForm } from '@/pages/members/users/UserDetailForm'
+import type { UserFormType } from '@/pages/types/users'
 import type {
-  UserDetailModalProps,
-  UserDetailUser,
-  UserFormType,
-} from '@/pages/types/users'
+  WithDrawDetailInfo,
+  WithDrawDetailModalProps,
+} from '@/pages/types/withdraw'
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
-export function UserDetailModal({
+export function WithdrawalDetailModal({
   isOpen,
   onClose,
   userId,
-}: UserDetailModalProps) {
+}: WithDrawDetailModalProps) {
   const {
     data: user,
     isLoading,
     error,
     refetch,
-  } = useFetchQuery<UserDetailUser>({
-    queryKey: ['user-detail', userId],
-    url: SERVICE_URLS.ACCOUNTS.DETAIL(userId || 0),
+  } = useFetchQuery<WithDrawDetailInfo>({
+    queryKey: ['withdrawal-detail', userId],
+    url: SERVICE_URLS.WITHDRAWALS.DETAIL(userId || 0),
     enabled: !!userId && isOpen,
   })
   const queryClient = useQueryClient()
