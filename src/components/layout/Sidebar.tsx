@@ -23,7 +23,7 @@ const LINK_BASE_STYLE =
 const ICON_STYLE =
   'group-hover:stroke-[#854D0E] group-active:scale-[1.2] aria-[current=true]:stroke-[#854D0E]'
 
-export default function Sidebar() {
+export default function SideBar() {
   const [userToggle, setUserToggle] = useState(false)
   const [studyToggle, setStudyToggle] = useState(false)
   const [recruitmentToggle, setRecruitmentToggle] = useState(false)
@@ -161,54 +161,56 @@ export default function Sidebar() {
             </Link>
           </div>
         </div>
+      </div>
 
-        <div className="flex w-[223px] flex-col">
-          <div
-            className={TITLE_BASE_STYLE}
-            onClick={() => setRecruitmentToggle(!recruitmentToggle)}
-          >
-            <div className="flex items-center">
-              <Megaphone color="#374151" size={20} />
-              <div className="ml-3">스터디 구인 공고 관리</div>
-            </div>
-            {recruitmentToggle ? (
-              <ChevronRight size={16} color="#374151" />
-            ) : (
-              <ChevronDown size={16} color="#374151" />
-            )}
+      <div className="flex w-[223px] flex-col">
+        <div
+          className={TITLE_BASE_STYLE}
+          onClick={() => setRecruitmentToggle(!recruitmentToggle)}
+        >
+          <div className="flex items-center">
+            <Megaphone color="#374151" size={20} />
+            <div className="ml-3">스터디 구인 공고 관리</div>
           </div>
+          {recruitmentToggle ? (
+            <ChevronRight size={16} color="#374151" />
+          ) : (
+            <ChevronDown size={16} color="#374151" />
+          )}
+        </div>
 
-          <div
-            className={`grid transition-all duration-200 ease-out ${recruitmentToggle ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'} `}
-          >
-            <div className="flex flex-col items-end overflow-hidden">
-              <Link
-                to={'/recruitment/applications'}
-                className={LINK_BASE_STYLE}
+        <div
+          className={`grid transition-all duration-200 ease-out ${recruitmentToggle ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'} `}
+        >
+          <div className="flex flex-col items-end overflow-hidden">
+            <Link
+              to={'/recruitment/recruitment'}
+              onClick={() => setRecruitmentToggle(true)}
+              className={LINK_BASE_STYLE}
+              aria-current={pathname === '/recruitment/recruitment'}
+            >
+              <ReceiptText
+                size={16}
+                color="#4B5563"
+                className={ICON_STYLE}
+                aria-current={pathname === '/recruitment/recruitment'}
+              />
+              <div className="ml-3">공고 관리</div>
+            </Link>
+            <Link
+              to={'/recruitment/applications'}
+              onClick={() => setRecruitmentToggle(true)}
+              className={LINK_BASE_STYLE}
+              aria-current={pathname === '/recruitment/applications'}
+            >
+              <UserRoundPlus
+                size={16}
+                color="#4B5563"
+                className={ICON_STYLE}
                 aria-current={pathname === '/recruitment/applications'}
-              >
-                <ReceiptText
-                  size={16}
-                  color="#4B5563"
-                  className={ICON_STYLE}
-                  aria-current={pathname === '/recruitment/applications'}
-                />
-                <div className="ml-3">공고 관리</div>
-              </Link>
-              <Link
-                to={'/recruitment/posts'}
-                className={LINK_BASE_STYLE}
-                aria-current={pathname === '/recruitment/posts'}
-              >
-                <UserRoundPlus
-                  size={16}
-                  color="#4B5563"
-                  className={ICON_STYLE}
-                  aria-current={pathname === '/recruitment/posts'}
-                />
-                <div className="ml-3">지원 내역 관리</div>
-              </Link>
-            </div>
+              />
+              <div className="ml-3">지원 내역 관리</div>
+            </Link>
           </div>
         </div>
       </div>

@@ -4,12 +4,14 @@ import { useState, type KeyboardEvent } from 'react'
 
 import { FilterSelect } from '@/components/common/filter'
 import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
+import { tM } from '@/lib/twMerge'
 import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
 import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
 import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
 
 const LABEL_STYLE = 'text-sm text-[#374151]'
+const BOX_BASE_STYLE = 'h-[38px] w-[256px]'
 
 export default function RecruitmentFilter() {
   const { openTagFilterModalModal } = useTagFilterModalStore()
@@ -40,7 +42,12 @@ export default function RecruitmentFilter() {
           >
             검색
           </div>
-          <div className="flex h-9 w-[256px] items-center rounded-lg border border-[#D1D5DB] px-3 py-2">
+          <div
+            className={tM(
+              BOX_BASE_STYLE,
+              'flex items-center rounded-lg border border-[#D1D5DB] px-3 py-2'
+            )}
+          >
             <Search className="mr-3 w-4 text-gray-400" />
             <input
               type="text"
@@ -54,11 +61,14 @@ export default function RecruitmentFilter() {
         </div>
 
         <FilterSelect
-          className="mr-4"
+          className="mr-4 flex flex-col gap-2"
           key={status}
           label="공고 상태"
           labelClassName={LABEL_STYLE}
-          selectClassName="w-[256px] h-[38px] focus:ring-0 focus:border-gray-300"
+          selectClassName={tM(
+            BOX_BASE_STYLE,
+            'focus:ring-0 focus:border-gray-300'
+          )}
           options={[
             { label: '모집중', value: 'false' },
             { label: '마감', value: 'true' },
@@ -78,7 +88,10 @@ export default function RecruitmentFilter() {
           </div>
           <div
             onClick={openTagFilterModalModal}
-            className="flex h-9 w-[256px] cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-3 py-2"
+            className={tM(
+              BOX_BASE_STYLE,
+              'flex cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-3 py-2'
+            )}
           >
             <TagFilterPreview
               tags={selectedTagsResult}

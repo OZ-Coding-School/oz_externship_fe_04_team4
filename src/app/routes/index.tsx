@@ -6,7 +6,7 @@ import Login from '@/pages/login'
 import AdminDashboardPage from '@/pages/members/dashboard'
 import AdminUserManagementPage from '@/pages/members/users'
 import AdminWithdrawalManagementPage from '@/pages/members/withdrawals'
-import RecruitmentPostManagementPage from '@/pages/recruitment/applications'
+import ApplicationManagementPage from '@/pages/recruitment/applications'
 import RecruitmentPage from '@/pages/recruitment/recruitment'
 import LectureManagementPage from '@/pages/study/courses'
 import StudyGroupManagementPage from '@/pages/study/groups'
@@ -68,10 +68,10 @@ export default function AppRouter() {
         />
 
         <Route
-          path="/recruitment/posts"
+          path="/recruitment/recruitment"
           element={
             <ProtectedRoute>
-              <RecruitmentPostManagementPage />
+              <RecruitmentPage />
             </ProtectedRoute>
           }
         />
@@ -79,7 +79,7 @@ export default function AppRouter() {
           path="/recruitment/applications"
           element={
             <ProtectedRoute>
-              <RecruitmentPage />
+              <ApplicationManagementPage />
             </ProtectedRoute>
           }
         />
