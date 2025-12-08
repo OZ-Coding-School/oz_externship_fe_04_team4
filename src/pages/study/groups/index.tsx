@@ -6,6 +6,7 @@ import {
   Table,
   type Column,
   type PaginationResponse,
+  type SortConfig,
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
@@ -97,11 +98,7 @@ export default function StudyGroupManagementPage() {
     number | null
   >(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [sortConfig, setSortConfig] = useState<{
-    key: string
-    value: string
-    direction: 'asc' | 'desc'
-  } | null>(null)
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<StudyGroup>
   >({
