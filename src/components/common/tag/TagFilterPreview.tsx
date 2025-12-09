@@ -1,138 +1,84 @@
+import { useLayoutEffect, useRef, useState } from 'react'
+
 import type { TagType } from '@/mocks/types/accounts'
 
-const WRAPPER_STYLE = 'flex gap-0.5 truncate text-sm text-[#374151]'
+const WRAPPER_STYLE = 'flex truncate text-sm text-[#374151] w-[180px]'
 
 type Props = {
   tags: TagType[]
-  englishLength: number
-  koreanLength: number
 }
 
-export default function TagFilterPreview({
-  tags,
-  englishLength,
-  koreanLength,
-}: Props) {
-  const tagNames = tags.map((el) => el.name)
-  const joined = tagNames.join('')
-  const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(tagNames.join(''))
-  const hasTags = tags.length > 0
-  const isMultiTag = tags.length > 1
+export default function TagFilterPreview({ tags }: Props) {
+  const measureRef = useRef<HTMLDivElement | null>(null)
+  const [visibleCount, setVisibleCount] = useState(0)
 
-  if (!hasTags) {
-    return (
-      <div className={WRAPPER_STYLE}>
-        {tags.length
-          ? tags.map((el) => (
-              <div
-                key={el.id}
-                className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
-              >
-                {el.name}
-              </div>
-            ))
-          : '태그 입력'}
-      </div>
-    )
-  }
-  if (!isKorean) {
-    const isLong = joined.length > englishLength
-    if (isLong && isMultiTag) {
-      const englishVisible = tagNames
-        .join('&^')
-        .slice(0, englishLength - 5)
-        .split('&^')
+  useLayoutEffect(() => {
+    const parent = measureRef.current
+    if (!parent) return
 
-      const restCount = tags.length - englishVisible.length
+    const children = Array.from(parent.children) as HTMLDivElement[]
 
-      return (
-        <div className={WRAPPER_STYLE}>
-          {englishVisible.map((el) => (
-            <div
-              key={el}
-              className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
-            >
-              {el}
-            </div>
-          ))}
-          {restCount > 0 && (
-            <div className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
-              {`+ ${restCount}`}
-            </div>
-          )}
-        </div>
-      )
-    } // (2) 한 개만 있고 길이 김 → 한 개만 길이 제한해서 보여주기
-    if (isLong && !isMultiTag) {
-      return (
-        <div className={WRAPPER_STYLE}>
-          {tags.map((el) => (
-            <div
-              key={el.id}
-              className="max-w-[210px] truncate rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
-            >
-              {el.name}
-            </div>
-          ))}
-        </div>
-      )
+    const parentWidth = parent.getBoundingClientRect().width
+    let widthSum = 0
+    let count = 0
+
+    for (const child of children) {
+      const rect = child.getBoundingClientRect()
+      const style = window.getComputedStyle(child)
+
+      const childWidth = rect.width
+      const marginRight = parseFloat(style.marginRight || '0')
+
+      const totalChildWidth = childWidth + marginRight
+
+      if (widthSum + totalChildWidth > parentWidth) break
+
+      widthSum += totalChildWidth
+      count += 1
     }
 
-    // (3) 길이도 안 김 → 전부 그대로 노출
-    return (
-      <div className={WRAPPER_STYLE}>
+    setVisibleCount(count || tags.length)
+  }, [tags])
+
+  return (
+    <div className="relative flex items-center overflow-hidden">
+      {/* 1) 측정용: 전체 태그 렌더 (보이지 않게) */}
+      <div
+        ref={measureRef}
+        className={`${WRAPPER_STYLE} pointer-events-none invisible absolute top-0 left-0`}
+        aria-hidden
+      >
         {tags.map((el) => (
           <div
             key={el.id}
-            className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
+            className="mr-0.5 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
           >
             {el.name}
           </div>
         ))}
       </div>
-    )
-  }
 
-  // -----------------------------
-  // 2) 한글이 포함된 경우
-  // -----------------------------
-  const isLongKorean = joined.length > koreanLength
-
-  if (isLongKorean) {
-    const koreanVisible = tagNames.join('&^').slice(0, koreanLength).split('&^')
-
-    const restCount = tags.length - koreanVisible.length
-
-    return (
-      <div className={WRAPPER_STYLE}>
-        {koreanVisible.map((el) => (
-          <div
-            key={el}
-            className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
-          >
-            {el}
-          </div>
-        ))}
-        {restCount > 0 && (
-          <div className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
-            {`+ ${restCount}`}
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  // (한글인데 전체 길이는 안 김) → 그대로 노출
-  return (
-    <div className={WRAPPER_STYLE}>
-      {tags.map((el) => (
-        <div
-          key={el.id}
-          className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
-        >
-          {el.name}
+      {/* 2) 실제 화면에 보이는 영역 */}
+      {visibleCount === 0 ? (
+        <div className={WRAPPER_STYLE}>태그 입력</div>
+      ) : (
+        <div className={WRAPPER_STYLE}>
+          {tags.slice(0, visibleCount).map((el) => (
+            <div
+              key={el.id}
+              className="mr-0.5 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700"
+            >
+              {el.name}
+            </div>
+          ))}
         </div>
-      ))}
+      )}
+
+      {tags.length > visibleCount && (
+        <div className="ml-1 w-[30px] rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
+          +{tags.length - visibleCount}
+        </div>
+      )}
     </div>
   )
 }

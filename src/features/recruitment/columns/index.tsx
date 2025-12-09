@@ -10,13 +10,13 @@ export const RecruitmentColumns = [
   {
     key: 'tags',
     header: '태그',
-    width: '100px',
+    width: '210px',
     render: (row: TagType[]) => {
       const tags = row
 
       return (
         <div className="flex flex-wrap gap-1">
-          <TagFilterPreview tags={tags} koreanLength={16} englishLength={30} />
+          <TagFilterPreview tags={tags} />
         </div>
       )
     },
