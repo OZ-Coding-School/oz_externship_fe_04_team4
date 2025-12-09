@@ -9,7 +9,7 @@ interface UserDetailFooterProps {
   setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   handleUserDelete: () => void
   setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>
-  canEditRole: boolean | null
+  isAdmin: boolean | null
 }
 export function UserDetailFooter({
   setIsRoleModalOpen,
@@ -19,11 +19,11 @@ export function UserDetailFooter({
   setIsDeleteModalOpen,
   handleUserDelete,
   setIsEditMode,
-  canEditRole,
+  isAdmin,
 }: UserDetailFooterProps) {
   return (
     <div className="flex w-full items-center justify-between">
-      {canEditRole && (
+      {isAdmin && (
         <Button
           variant="custom"
           className="bg-primary-green text-white"
@@ -52,15 +52,18 @@ export function UserDetailFooter({
             수정하기
           </Button>
         )}
-
-        <Button variant="delete" onClick={() => setIsDeleteModalOpen(true)}>
-          삭제하기
-        </Button>
-        <UserDetailMemberDelete
-          isDeleteModalOpen={isDeleteModalOpen}
-          setIsDeleteModalOpen={setIsDeleteModalOpen}
-          handleUserDelete={handleUserDelete}
-        />
+        {isAdmin && (
+          <>
+            <Button variant="delete" onClick={() => setIsDeleteModalOpen(true)}>
+              삭제하기
+            </Button>
+            <UserDetailMemberDelete
+              isDeleteModalOpen={isDeleteModalOpen}
+              setIsDeleteModalOpen={setIsDeleteModalOpen}
+              handleUserDelete={handleUserDelete}
+            />
+          </>
+        )}
       </div>
     </div>
   )

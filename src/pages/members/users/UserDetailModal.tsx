@@ -1,10 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ko'
 import { useEffect, useRef, useState } from 'react'
 
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { STATUS_LABEL } from '@/config/status'
+import { useAuthRole } from '@/hooks/useAuthRole'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 import { UserDetailFooter } from '@/pages/members/users/UserDetailFooter'
@@ -14,10 +17,7 @@ import type {
   UserDetailUser,
   UserFormType,
 } from '@/pages/types/users'
-import { useAuthStore } from '@/store/authStore'
-import { formatDataTimeForUserDetail } from '@/utils/formatDataTimeForUserDetail'
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
-
 export function UserDetailModal({
   isOpen,
   onClose,
@@ -33,7 +33,6 @@ export function UserDetailModal({
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId || 0),
     enabled: !!userId && isOpen,
   })
-  const { isLoggedIn, user: authUser } = useAuthStore()
   const queryClient = useQueryClient()
   const [isEditMode, setIsEditMode] = useState(false)
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false)
@@ -67,8 +66,9 @@ export function UserDetailModal({
       gender: user.gender,
       birthday: user.birthday,
       role: ROLE_LABEL[user.role as keyof typeof ROLE_LABEL] ?? '',
+      //joinDateTime: user.created_at ? formatDataTimeForUserDetail(user.created_at) : '',
       joinDateTime: user.created_at
-        ? formatDataTimeForUserDetail(user.created_at)
+        ? dayjs(user.created_at).locale('ko').format('YYYY. M. D. A h:mm:ss')
         : '',
     })
   }, [user])
@@ -76,6 +76,8 @@ export function UserDetailModal({
   useEffect(() => {
     if (!isOpen) {
       setIsEditMode(false)
+      setProfileImg('')
+      setFile(null)
     }
     if (!isRoleModalOpen) {
       setRole('')
@@ -142,6 +144,7 @@ export function UserDetailModal({
     onSuccess: () => {
       alert('회원 정보가 수정되었습니다.')
       setIsEditMode(false)
+      setFile(null)
       refetch()
       queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
     },
@@ -170,9 +173,8 @@ export function UserDetailModal({
       profile_img: file ?? undefined,
     })
   }
-  const canEditRole = isLoggedIn && authUser && user?.role === 'admin'
 
-  console.log('회원정보 data', user)
+  const { isAdmin } = useAuthRole()
 
   if (!isOpen || !userId) return null
   if (isLoading) return <div>회원 정보를 로딩 중입니다...</div>
@@ -196,7 +198,7 @@ export function UserDetailModal({
           handleUserDelete={handleUserDelete}
           setIsEditMode={setIsEditMode}
           isDeleteModalOpen={isDeleteModalOpen}
-          canEditRole={canEditRole}
+          isAdmin={isAdmin}
         />
       }
     >
