@@ -9,8 +9,8 @@ import { REASON_LABEL, type ReasonKey } from '@/config/reason'
 import { type RoleType } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import { UserDetailModal } from '@/pages/members/users/UserDetailModal'
 import { getRole } from '@/pages/members/withdrawals/utils/getRole'
+import { WithdrawalDetailModal } from '@/pages/members/withdrawals/WithdrawalDetailModal'
 import type { filtersProps } from '@/pages/types/withdraw'
 import 'dayjs/locale/ko'
 
@@ -35,6 +35,7 @@ export default function WithdrawalTable() {
     page: 1,
     status: '',
     sort: '',
+    role: '',
   })
 
   const [sortConfig, setSortConfig] = useState<{
@@ -69,8 +70,6 @@ export default function WithdrawalTable() {
     setSortConfig({ key, value: sortValue, direction })
   }
 
-  console.log('📌 API 응답:', data)
-
   const columns = [
     { key: 'id', header: '탈퇴요청 ID', width: '100px' },
     { key: 'email', header: '이메일', width: '160px' },
@@ -89,18 +88,18 @@ export default function WithdrawalTable() {
     {
       key: 'birthday',
       header: '생년월일',
-      width: '100px',
+      width: '110px',
     },
     {
       key: 'reason',
       header: '탈퇴사유',
-      width: '180px',
+      width: '160px',
       render: (value: ReasonKey) => REASON_LABEL[value],
     },
     {
       key: 'withdrawn_at',
       header: '탈퇴일시',
-      width: '180px',
+      width: '200px',
       render: (value: string) =>
         dayjs(value).locale('ko').format('YYYY. M. D. A h:mm:ss'),
       sortable: { asc: 'withdrawn_asc', desc: 'withdrawn_desc' },
@@ -170,7 +169,7 @@ export default function WithdrawalTable() {
         sortConfig={sortConfig}
         onSort={handleSort}
       />
-      <UserDetailModal
+      <WithdrawalDetailModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         userId={selectedUser}

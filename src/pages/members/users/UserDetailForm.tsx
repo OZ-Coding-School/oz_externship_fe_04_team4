@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios'
 import { ChevronDown } from 'lucide-react'
 
 import React from 'react'
@@ -6,6 +7,7 @@ import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
+import { useCheckNickname } from '@/hooks/useCheckNickname'
 import type { UserDetailUser, UserFormType } from '@/pages/types/users'
 
 interface UserDetailFormProps {
@@ -38,6 +40,12 @@ function UserDetailFormComponent({
   handleFormChange,
   handleImgChange,
 }: UserDetailFormProps) {
+  const {
+    data: nicknameRes,
+    isLoading: isNicknameLoading,
+    isError: isNicknameError,
+    error: nicknameError,
+  } = useCheckNickname(isEditMode ? form.nickname : '')
   return (
     <div>
       <div className="flex items-center justify-start gap-4">
@@ -90,6 +98,40 @@ function UserDetailFormComponent({
             editable={isEditMode}
             onChange={handleFormChange}
           />
+          {isEditMode && form.nickname.trim().length > 0 && (
+            <div className="mt-1 text-sm">
+              {isNicknameLoading && (
+                <span className="text-gray-500">닉네임 검사 중...</span>
+              )}
+
+              {isNicknameError &&
+                (() => {
+                  const status = (nicknameError as AxiosError)?.response?.status
+
+                  if (status === 400) {
+                    return (
+                      <span className="text-red-500">
+                        닉네임은 필수 입력입니다.
+                      </span>
+                    )
+                  }
+                  if (status === 409) {
+                    return (
+                      <span className="text-red-500">
+                        이미 사용 중인 닉네임입니다.
+                      </span>
+                    )
+                  }
+                  return (
+                    <span className="text-red-500">오류가 발생했습니다.</span>
+                  )
+                })()}
+
+              {nicknameRes && (
+                <span className="text-green-600">{nicknameRes.detail}</span>
+              )}
+            </div>
+          )}
           <Input
             label="연락처"
             name="phone"

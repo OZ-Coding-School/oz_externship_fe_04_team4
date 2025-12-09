@@ -5,6 +5,7 @@ export interface filtersProps {
   page: number
   status: string
   sort: string
+  role: string
 }
 
 export interface WithDrawDetailInfo {
@@ -17,7 +18,6 @@ export interface WithDrawDetailInfo {
   status: string
   profile_img_url: string
   created_at: string
-  birthday: string
   phone_number: string
 }
 
@@ -47,4 +47,16 @@ export interface WithDrawDetailModalProps {
   onClose: () => void
   userId: number | null
   footer?: ReactNode
+}
+
+export interface WithDrawwDetailFormType {
+  id: number | string
+  email: string
+  name: string
+  nickname: string
+  gender: string
+  status: string
+  created_at: string
+  role: string
+  profile_img_url: string
 }
