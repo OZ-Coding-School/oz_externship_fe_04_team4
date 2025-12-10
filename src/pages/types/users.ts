@@ -1,7 +1,20 @@
 import type { AxiosError } from 'axios'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
+import type { RoleType } from '@/config/role'
 import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
+
+export interface UserApiRawItem {
+  id: number
+  email: string
+  nickname: string
+  name: string
+  birthday: string
+  status: string
+  role: string
+  withdraw_at: string
+  created_at: string
+}
 
 export interface UserDetailModalProps {
   isOpen: boolean
@@ -81,3 +94,13 @@ export interface UserDetailMemberDeleteProps {
 }
 
 export type Interval = 'monthly' | 'yearly'
+
+export interface WithdrawalsApiRawItem {
+  id: number
+  email: string
+  name: string
+  role: RoleType
+  birthday: string
+  reason: string
+  withdrawn_at: string
+}

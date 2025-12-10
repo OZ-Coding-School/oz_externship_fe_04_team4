@@ -416,6 +416,13 @@ export const getAdminWithdrawalsHandler = http.get(
     // 정렬 적용
     if (sort) {
       switch (sort) {
+        case 'id_asc':
+          baseItems.sort((a, b) => a.id - b.id)
+          break
+
+        case 'id_desc':
+          baseItems.sort((a, b) => b.id - a.id)
+          break
         case 'name_asc':
           baseItems.sort((a, b) => a.name.localeCompare(b.name))
           break

@@ -3,46 +3,80 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import { FilterBar } from '@/components/common/filter'
-import type { PaginationResponse } from '@/components/common/table'
+import type { Column, PaginationResponse } from '@/components/common/table'
 import { Table } from '@/components/common/table/Table'
 import { REASON_LABEL, type ReasonKey } from '@/config/reason'
 import { type RoleType } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
+import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { getRole } from '@/pages/members/withdrawals/utils/getRole'
 import { WithdrawalDetailModal } from '@/pages/members/withdrawals/WithdrawalDetailModal'
-import type { filtersProps } from '@/pages/types/withdraw'
+import type { WithdrawalsApiRawItem } from '@/pages/types/users'
 import 'dayjs/locale/ko'
 
-export interface WithdrawalsApiRawItem {
-  id: number
-  email: string
-  name: string
-  role: RoleType
-  birthday: string
-  reason: string
-  withdrawn_at: string
-}
+const COLUMNS: Column<WithdrawalsApiRawItem>[] = [
+  {
+    key: 'id',
+    header: '탈퇴요청 ID',
+    width: '130px',
+    sortable: { asc: 'id_asc', desc: 'id_desc' },
+  },
+  { key: 'email', header: '이메일', width: '160px' },
+  {
+    key: 'name',
+    header: '이름',
+    width: '80px',
+    sortable: { asc: 'name_asc', desc: 'name_desc' },
+  },
+  {
+    key: 'role',
+    header: '권한',
+    width: '100px',
+    render: (value: RoleType) => getRole(value),
+  },
+  {
+    key: 'birthday',
+    header: '생년월일',
+    width: '110px',
+  },
+  {
+    key: 'reason',
+    header: '탈퇴사유',
+    width: '160px',
+    render: (value: ReasonKey) => REASON_LABEL[value],
+  },
+  {
+    key: 'withdrawn_at',
+    header: '탈퇴일시',
+    width: '200px',
+    render: (value: string) =>
+      dayjs(value).locale('ko').format('YYYY. M. D. A h:mm:ss'),
+    sortable: { asc: 'withdrawn_asc', desc: 'withdrawn_desc' },
+  },
+]
 
 export default function WithdrawalTable() {
-  const [search, setSearch] = useState('')
-  const [status, setStatus] = useState('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<number | null>(null)
-  const [role, setRole] = useState('')
-  const [filters, setFilters] = useState<filtersProps>({
-    search: '',
-    page: 1,
-    status: '',
-    sort: '',
-    role: '',
+  const {
+    filters,
+    sortConfig,
+    updateSearch,
+    updateFilter,
+    updatePage,
+    handleSort,
+  } = useTableFilters({
+    initialFilters: {
+      search: '',
+      page: 1,
+      status: '',
+      role: '',
+      reason: '',
+      sort: 'id_asc',
+    },
   })
 
-  const [sortConfig, setSortConfig] = useState<{
-    key: string
-    value: string
-    direction: 'asc' | 'desc'
-  } | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<number | null>(null)
 
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<WithdrawalsApiRawItem>
@@ -54,57 +88,11 @@ export default function WithdrawalTable() {
       page_size: 10,
       search: filters.search,
       status: filters.status,
+      role: filters.role,
+      reason: filters.reason,
       sort: filters.sort,
     },
-    staleTime: 60 * 1000,
-    gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
   })
-
-  const handleSort = (
-    sortValue: string,
-    direction: 'asc' | 'desc',
-    key: string
-  ) => {
-    setFilters((prev) => ({ ...prev, sort: sortValue, page: 1 }))
-    setSortConfig({ key, value: sortValue, direction })
-  }
-
-  const columns = [
-    { key: 'id', header: '탈퇴요청 ID', width: '100px' },
-    { key: 'email', header: '이메일', width: '160px' },
-    {
-      key: 'name',
-      header: '이름',
-      width: '80px',
-      sortable: { asc: 'name_asc', desc: 'name_desc' },
-    },
-    {
-      key: 'role',
-      header: '권한',
-      width: '90px',
-      render: (value: RoleType) => getRole(value),
-    },
-    {
-      key: 'birthday',
-      header: '생년월일',
-      width: '110px',
-    },
-    {
-      key: 'reason',
-      header: '탈퇴사유',
-      width: '160px',
-      render: (value: ReasonKey) => REASON_LABEL[value],
-    },
-    {
-      key: 'withdrawn_at',
-      header: '탈퇴일시',
-      width: '200px',
-      render: (value: string) =>
-        dayjs(value).locale('ko').format('YYYY. M. D. A h:mm:ss'),
-      sortable: { asc: 'withdrawn_asc', desc: 'withdrawn_desc' },
-    },
-  ]
 
   const handleRowClick = (user: WithdrawalsApiRawItem) => {
     setSelectedUser(user.id)
@@ -113,13 +101,16 @@ export default function WithdrawalTable() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
-    setSelectedUser(0)
+    setSelectedUser(null)
   }
 
   if (isLoading) return <div>Loading</div>
   if (axios.isAxiosError(error)) {
+    // eslint-disable-next-line no-console
     console.log(error.response?.status)
+    // eslint-disable-next-line no-console
     console.log(error.response?.data)
+    // eslint-disable-next-line no-console
     console.log(error.message)
   }
   return (
@@ -127,41 +118,47 @@ export default function WithdrawalTable() {
       <FilterBar
         searchConfig={{
           label: '검색',
-          value: search,
-          onChange: setSearch,
-          placeholder: '이메일, 닉네임, 이름, ID 검색...',
+          value: filters.search,
+          onChange: updateSearch,
+          placeholder: '탈퇴요청 ID,이메일,이름 검색...',
         }}
         filters={[
           {
-            label: '상태',
-            options: [
-              { label: '활성', value: 'active' },
-              { label: '비활성', value: 'inactive' },
-              { label: '탈퇴요청', value: 'withdrew' },
-            ],
-            value: status,
-            onChange: setStatus,
-            placeholder: '상태',
-          },
-          {
             label: '권한',
             options: [
-              { label: '관리자', value: 'admin' },
-              { label: '스태프', value: 'staff' },
               { label: '일반회원', value: 'user' },
+              { label: '스태프', value: 'staff' },
+              { label: '관리자', value: 'admin' },
             ],
-            value: role,
-            onChange: setRole,
-            placeholder: '권한',
+            value: filters.role,
+            onChange: (value) => updateFilter('role', value),
+            placeholder: '권한 선택',
+          },
+          {
+            label: '탈퇴사유',
+            options: [
+              { label: '더 이상 필요하지 않음', value: 'NO_LONGER_NEEDED' },
+              { label: '흥미 감소', value: 'LACK_OF_INTEREST' },
+              { label: '사용이 너무 어려움', value: 'TOO_DIFFICULT' },
+              { label: '더 좋은 서비스 발견', value: 'FOUND_BETTER_SERVICE' },
+              { label: '개인정보 우려', value: 'PRIVACY_CONCERNS' },
+              { label: '서비스 품질 불만', value: 'POOR_SERVICE_QUALITY' },
+              { label: '기술적 문제', value: 'TECHNICAL_ISSUES' },
+              { label: '콘텐츠 부족', value: 'LACK_OF_CONTENT' },
+              { label: '기타', value: 'OTHER' },
+            ],
+            value: filters.reason,
+            onChange: (value) => updateFilter('reason', value),
+            placeholder: '탈퇴사유 선택',
           },
         ]}
       />
       <div className="border-t border-gray-200" />
       <Table
-        columns={columns}
+        columns={COLUMNS}
         response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
-        onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
+        onPageChange={updatePage}
         isLoading={isLoading}
         error={error?.message}
         onRetry={refetch}
