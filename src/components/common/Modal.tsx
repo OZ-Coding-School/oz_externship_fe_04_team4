@@ -54,6 +54,7 @@ export default function Modal({
         <Dialog.Content
           role="dialog"
           aria-modal="true"
+          aria-describedby={undefined}
           style={{ zIndex: baseZ + 1 }}
           className={twMerge(
             clsx(
