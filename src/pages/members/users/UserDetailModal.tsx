@@ -82,9 +82,15 @@ export function UserDetailModal({
   }, [user])
   const nicknameChanged = form.nickname !== originalNickname
   const hasNickname = form.nickname.trim().length > 0
+
+  // Zod 검증을 먼저 확인
+  const nicknameRegex = /^[A-Za-z가-힣0-9]{1,10}$/
+  const isNicknameValid = nicknameRegex.test(form.nickname)
+
   let nicknameToCheck = ''
 
-  if (isEditMode && hasNickname && nicknameChanged) {
+  // 닉네임이 변경되고, 유효한 형식일 때만 중복 검사 실행
+  if (isEditMode && hasNickname && nicknameChanged && isNicknameValid) {
     nicknameToCheck = form.nickname
   }
   useEffect(() => {
@@ -202,6 +208,20 @@ export function UserDetailModal({
   })
   const handleFormEditOk = () => {
     if (!isEditMode) return
+
+    // 닉네임 변경 시 중복 검사 확인
+    if (nicknameChanged) {
+      if (isNicknameLoading) {
+        alert('닉네임 중복 검사 중입니다. 잠시 후 다시 시도해주세요.')
+        return
+      }
+
+      if (isNicknameError) {
+        alert('닉네임을 사용할 수 없습니다. 다른 닉네임을 입력해주세요.')
+        return
+      }
+    }
+
     const normalizeRole = (role: string) => {
       if (ROLE_LABEL[role as keyof typeof ROLE_LABEL]) return role
 
