@@ -117,9 +117,34 @@ export const getAdminAccountsHandler = http.get(
     }
 
     const { page, pageSize } = parsePagination(request)
-    const baseItems = mockAccountsList.results
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search') || ''
+    const status = url.searchParams.get('status') || ''
+    const role = url.searchParams.get('role') || ''
+
+    let filteredItems = [...mockAccountsList.results]
+
+    if (search) {
+      const keyword = search.toLowerCase()
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.name.toLowerCase().includes(keyword) ||
+          item.nickname.toLowerCase().includes(keyword) ||
+          item.email.toLowerCase().includes(keyword) ||
+          String(item.id).includes(keyword)
+      )
+    }
+
+    if (status) {
+      filteredItems = filteredItems.filter((item) => item.status === status)
+    }
+
+    if (role) {
+      filteredItems = filteredItems.filter((item) => item.role === role)
+    }
+
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )
@@ -407,32 +432,57 @@ export const getAdminWithdrawalsHandler = http.get(
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
-    const url = new URL(request.url)
-    const sort = url.searchParams.get('sort') || null
-
     const { page, pageSize } = parsePagination(request)
-    const baseItems = [...mockWithdrawalsList.results]
+    const url = new URL(request.url)
+    const search = url.searchParams.get('search') || ''
+    const status = url.searchParams.get('status') || ''
+    const sort = url.searchParams.get('sort') || ''
+    const role = url.searchParams.get('role') || ''
+    const reason = url.searchParams.get('reason') || ''
+    let filteredItems = [...mockWithdrawalsList.results]
+
+    if (search) {
+      const keyword = search.toLowerCase()
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.name.toLowerCase().includes(keyword) ||
+          item.email.toLowerCase().includes(keyword) ||
+          String(item.id).includes(keyword)
+      )
+    }
+
+    if (status) {
+      filteredItems = filteredItems.filter((item) => item.status === status)
+    }
+
+    if (role) {
+      filteredItems = filteredItems.filter((item) => item.role === role)
+    }
+
+    if (reason) {
+      filteredItems = filteredItems.filter((item) => item.reason === reason)
+    }
 
     // 정렬 적용
     if (sort) {
       switch (sort) {
         case 'id_asc':
-          baseItems.sort((a, b) => a.id - b.id)
+          filteredItems.sort((a, b) => a.id - b.id)
           break
 
         case 'id_desc':
-          baseItems.sort((a, b) => b.id - a.id)
+          filteredItems.sort((a, b) => b.id - a.id)
           break
         case 'name_asc':
-          baseItems.sort((a, b) => a.name.localeCompare(b.name))
+          filteredItems.sort((a, b) => a.name.localeCompare(b.name))
           break
 
         case 'name_desc':
-          baseItems.sort((a, b) => b.name.localeCompare(a.name))
+          filteredItems.sort((a, b) => b.name.localeCompare(a.name))
           break
 
         case 'withdrawn_asc':
-          baseItems.sort(
+          filteredItems.sort(
             (a, b) =>
               new Date(a.withdrawn_at).getTime() -
               new Date(b.withdrawn_at).getTime()
@@ -440,7 +490,7 @@ export const getAdminWithdrawalsHandler = http.get(
           break
 
         case 'withdrawn_desc':
-          baseItems.sort(
+          filteredItems.sort(
             (a, b) =>
               new Date(b.withdrawn_at).getTime() -
               new Date(a.withdrawn_at).getTime()
@@ -450,7 +500,7 @@ export const getAdminWithdrawalsHandler = http.get(
     }
 
     const { total, pageItems, hasNext, hasPrev } = paginate(
-      baseItems,
+      filteredItems,
       page,
       pageSize
     )
