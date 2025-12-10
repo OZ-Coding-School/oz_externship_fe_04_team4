@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import AnalyzingDistributionOfReasonsForWithdrawalGraph from '@/pages/members/dashboard/graphs/AnalyzingDistributionOfReasonsForWithdrawalGraph'
-import AnalyzingWithdrawalsReasonsGraph from '@/pages/members/dashboard/graphs/AnalyzingWithdrawalsReasonsGraph'
+import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 
 const REASON_LIST = [
   'NO_LONGER_NEEDED',
@@ -35,12 +35,11 @@ const isReasonType = (value: string): value is ReasonType => {
 
 export function DashboardAnalyzingwithdrawalReasons() {
   const [reason, setReason] = useState<ReasonType>('OTHER')
-
   return (
     <div>
       <div className="flex h-auto w-full max-w-[1120px] flex-col rounded-xl bg-white p-6 shadow">
         <AnalyzingDistributionOfReasonsForWithdrawalGraph
-          apiUrl="/api/v1/admin/analytics/withdrawal-reasons/percentage"
+          apiUrl="/analytics/withdrawal-reasons/percentage"
           title="탈퇴 사유 비율 분석"
           height={360} // 원하는 높이
           isAnimationActive
@@ -50,7 +49,7 @@ export function DashboardAnalyzingwithdrawalReasons() {
         <div className="absolute top-5 right-6 flex justify-end">
           <select
             value={reason}
-            className="mt-1 block w-23 rounded-lg border border-[#D1D5DB] bg-[#EFEFEF] px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-60 rounded-lg border border-[#D1D5DB] bg-[#EFEFEF] px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             onChange={(e) => {
               const selectedReason = e.currentTarget.value
               if (isReasonType(selectedReason)) {
@@ -65,8 +64,8 @@ export function DashboardAnalyzingwithdrawalReasons() {
             ))}
           </select>
         </div>
-        <AnalyzingWithdrawalsReasonsGraph
-          apiUrl={`/api/v1/admin/analytics/withdrawal-reasons/stats/monthly?reason=${reason}`}
+        <AnalyzingTrendsBarGraph
+          apiUrl={`/analytics/withdrawal-reasons/stats/monthly?reason=${reason}`}
           title="탈퇴 사유별 월별 추세"
           barColor="#FACC15"
           height={320}

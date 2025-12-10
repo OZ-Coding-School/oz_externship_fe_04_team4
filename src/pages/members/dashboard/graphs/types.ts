@@ -40,7 +40,7 @@ export interface PieApiResponse {
 export interface PieApiItem {
   label: string
   value: number
-  [key: string]: string | number
+  count: number
 }
 
 export interface PieApiLegend {

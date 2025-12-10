@@ -1,6 +1,3 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-
 import {
   Cell,
   Legend,
@@ -12,10 +9,10 @@ import {
 
 import type { Payload } from 'recharts/types/component/DefaultTooltipContent'
 
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type {
   CustomLegendItem,
   CustomLegendProps,
-  PieApiItem,
   PieApiResponse,
   PieChartProps,
 } from '@/pages/members/dashboard/graphs/types'
@@ -57,11 +54,6 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
   title,
   height = 320,
 }: PieChartProps) {
-  const [data, setData] = useState<PieApiItem[]>([])
-  const [_rawData, setRawData] = useState<PieApiResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
   function isLegendItemPayload(payload: unknown): payload is CustomLegendItem {
     if (typeof payload !== 'object' || payload === null) return false
 
@@ -73,35 +65,30 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
       typeof p.count === 'number'
     )
   }
-  useEffect(() => {
-    setLoading(true)
-    setErrorMessage(null)
-    axios
-      .get<PieApiResponse>(apiUrl, {
-        headers: {
-          Authorization: 'Bearer token_value',
-        },
-      })
-      .then((res) => {
-        const mapped = res.data.items.map((item) => ({
-          label: item.reason_label,
-          value: item.percentage,
-          count: item.count,
-        }))
 
-        setRawData(res.data)
-        setData(mapped)
-      })
-      .catch((error) => {
-        console.error(error)
-        setErrorMessage('데이터를 불러오는 중 오류가 발생했습니다.')
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [apiUrl])
+  const {
+    data: rawData,
+    isLoading,
+    error,
+  } = useFetchQuery<PieApiResponse>({
+    queryKey: ['withdrawal-reasons', apiUrl],
+    url: apiUrl,
+  })
 
-  if (loading) {
+  const mappedData: CustomLegendItem[] = rawData?.items
+    ? rawData.items.map((item) => ({
+        label: item.reason_label,
+        value: item.percentage,
+        count: item.count,
+      }))
+    : []
+
+  const pieData = mappedData.map((item) => ({
+    name: item.label,
+    value: item.value,
+  }))
+
+  if (isLoading) {
     return (
       <div
         className="flex w-full items-center justify-center"
@@ -111,19 +98,19 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
       </div>
     )
   }
-
-  if (errorMessage) {
+  if (error) {
     return (
       <div
         className="flex w-full items-center justify-center"
         style={{ height }}
       >
-        <p className="text-sm text-red-500">{errorMessage}</p>
+        <p className="text-sm text-red-500">
+          데이터를 불러오는 중 오류가 발생했습니다.
+        </p>
       </div>
     )
   }
-
-  if (!data.length) {
+  if (!mappedData.length) {
     return (
       <div
         className="flex w-full items-center justify-center"
@@ -144,7 +131,7 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={data}
+              data={pieData}
               dataKey="value"
               nameKey="label"
               cx="50%"
@@ -156,7 +143,7 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
               isAnimationActive={isAnimationActive}
               paddingAngle={4}
             >
-              {data.map((_, index) => (
+              {pieData.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -168,27 +155,9 @@ export default function AnalyzingDistributionOfReasonsForWithdrawalGraph({
               layout="vertical"
               verticalAlign="middle"
               iconType="circle"
-              content={(props) => {
-                console.log('payload:', props.payload)
-                console.log(
-                  'mapped:',
-                  props.payload?.map((p) => p.payload)
-                )
-                console.log(
-                  'filtered:',
-                  props.payload
-                    ?.map((p) => p.payload)
-                    .filter(isLegendItemPayload)
-                )
-                return (
-                  <CustomLegend
-                    items={(props.payload ?? [])
-                      .map((p) => p.payload)
-                      .filter(isLegendItemPayload)}
-                    colors={COLORS}
-                  />
-                )
-              }}
+              content={() => (
+                <CustomLegend items={mappedData} colors={COLORS} />
+              )}
             />
             <Tooltip
               formatter={(
