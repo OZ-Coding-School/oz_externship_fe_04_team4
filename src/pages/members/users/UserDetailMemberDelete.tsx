@@ -1,13 +1,7 @@
-import type { Dispatch, SetStateAction } from 'react'
-
 import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
+import type { UserDetailMemberDeleteProps } from '@/pages/types/users'
 
-export interface UserDetailMemberDeleteProps {
-  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>
-  isDeleteModalOpen: boolean
-  handleUserDelete: () => void
-}
 export function UserDetailMemberDelete({
   setIsDeleteModalOpen,
   isDeleteModalOpen,

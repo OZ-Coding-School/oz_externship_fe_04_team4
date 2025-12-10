@@ -3,13 +3,16 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import { useEffect, useRef, useState } from 'react'
 
+import type { ZodError } from 'zod'
+
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
-import { STATUS_LABEL } from '@/config/status'
 import { useAuthRole } from '@/hooks/useAuthRole'
+import { useCheckNickname } from '@/hooks/useCheckNickname'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
+import { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import { UserDetailFooter } from '@/pages/members/users/UserDetailFooter'
 import { UserDetailForm } from '@/pages/members/users/UserDetailForm'
 import type {
@@ -17,7 +20,6 @@ import type {
   UserDetailUser,
   UserFormType,
 } from '@/pages/types/users'
-import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 export function UserDetailModal({
   isOpen,
   onClose,
@@ -40,6 +42,7 @@ export function UserDetailModal({
   const [profileImg, setProfileImg] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
   const fileInput = useRef<HTMLInputElement | null>(null)
+  const [originalNickname, setOriginalNickname] = useState('')
   const [role, setRole] = useState('')
   const [form, setForm] = useState<UserFormType>({
     id: userId ?? 0,
@@ -60,19 +63,30 @@ export function UserDetailModal({
       id: user.id,
       name: user.name,
       nickname: user.nickname,
-      phone: user.phone_number ? formatPhoneNumber(user.phone_number) : '',
-      status: STATUS_LABEL[user.status as keyof typeof STATUS_LABEL] ?? '',
+      phone: user.phone_number ? user.phone_number.replace(/\D/g, '') : '',
+      status: user.status,
       email: user.email,
       gender: user.gender,
       birthday: user.birthday,
       role: ROLE_LABEL[user.role as keyof typeof ROLE_LABEL] ?? '',
-      //joinDateTime: user.created_at ? formatDataTimeForUserDetail(user.created_at) : '',
       joinDateTime: user.created_at
         ? dayjs(user.created_at).locale('ko').format('YYYY. M. D. A h:mm:ss')
         : '',
     })
   }, [user])
 
+  useEffect(() => {
+    if (user) {
+      setOriginalNickname(user.nickname)
+    }
+  }, [user])
+  const nicknameChanged = form.nickname !== originalNickname
+  const hasNickname = form.nickname.trim().length > 0
+  let nicknameToCheck = ''
+
+  if (isEditMode && hasNickname && nicknameChanged) {
+    nicknameToCheck = form.nickname
+  }
   useEffect(() => {
     if (!isOpen) {
       setIsEditMode(false)
@@ -105,22 +119,59 @@ export function UserDetailModal({
       [name]: value,
     }))
   }
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onlyNumbers = e.target.value.replace(/\D/g, '')
+
+    setForm((prev) => ({ ...prev, phone: onlyNumbers }))
+  }
 
   const handlePhoneBlur = () => {
+    const raw = form.phone.replace(/\D/g, '')
+
+    validateField('phone_number', raw)
+
     setForm((prev) => ({
       ...prev,
-      phone: formatPhoneNumber(prev.phone),
+      phone: raw, // form 내부 값은 raw 숫자 유지!
     }))
   }
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const validateField = <T extends keyof typeof userUpdateSchema.shape>(
+    field: T,
+    value: unknown
+  ) => {
+    const fieldSchema = userUpdateSchema.shape[field]
+    if (!fieldSchema) return
+
+    const result = fieldSchema.safeParse(value)
+
+    setErrors((prev) => ({
+      ...prev,
+      [field]: result.success ? '' : result.error.issues[0].message,
+    }))
+  }
+  const MAX_FILE_SIZE = 10 * 1024 * 1024
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0]
     if (!file) return
-
+    if (file.size > MAX_FILE_SIZE) {
+      setErrors((prev) => ({
+        ...prev,
+        profile_img: '프로필 사진은 10MB 이하만 업로드 가능합니다.',
+      }))
+      e.target.value = ''
+      return
+    }
+    setErrors((prev) => ({
+      ...prev,
+      profile_img: '',
+    }))
     setFile(file)
 
     const previewUrl = URL.createObjectURL(file)
     setProfileImg(previewUrl)
+    validateField('profile_img', file)
   }
 
   const handleUserDelete = () => {
@@ -150,11 +201,7 @@ export function UserDetailModal({
     },
   })
   const handleFormEditOk = () => {
-    const statusMap: Record<string, string> = {
-      활성: 'active',
-      비활성: 'inactive',
-      탈퇴: 'withdraw',
-    }
+    if (!isEditMode) return
     const normalizeRole = (role: string) => {
       if (ROLE_LABEL[role as keyof typeof ROLE_LABEL]) return role
 
@@ -163,17 +210,33 @@ export function UserDetailModal({
       )
       return key
     }
-    updateUserMutation.mutate({
+
+    const parsed = userUpdateSchema.safeParse({
       name: form.name,
+      gender: form.gender,
       nickname: form.nickname,
       phone_number: form.phone,
-      gender: form.gender,
-      status: statusMap[form.status],
-      role: normalizeRole(form.role),
+      status: form.status,
       profile_img: file ?? undefined,
     })
-  }
 
+    if (!parsed.success) {
+      const zodError = parsed.error as ZodError
+      const messages = zodError.issues.map((issue) => issue.message)
+      alert(messages.join('\n'))
+      return
+    }
+    updateUserMutation.mutate({
+      ...parsed.data,
+      role: normalizeRole(form.role),
+    })
+  }
+  const {
+    data: nicknameRes,
+    isLoading: isNicknameLoading,
+    isError: isNicknameError,
+    error: nicknameError,
+  } = useCheckNickname(nicknameToCheck)
   const { isAdmin } = useAuthRole()
 
   if (!isOpen || !userId) return null
@@ -217,6 +280,13 @@ export function UserDetailModal({
           handleFormChange={handleFormChange}
           handlePhoneBlur={handlePhoneBlur}
           handleImgChange={handleImgChange}
+          nicknameRes={nicknameRes}
+          isNicknameLoading={isNicknameLoading}
+          isNicknameError={isNicknameError}
+          nicknameError={nicknameError}
+          errors={errors}
+          validateField={validateField}
+          handlePhoneChange={handlePhoneChange}
         />
       )}
     </Modal>

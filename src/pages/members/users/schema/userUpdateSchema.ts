@@ -8,7 +8,7 @@ export const userUpdateSchema = z.object({
     .string()
     .regex(nameRegex, '이름은 2~8자의 한글 또는 영문만 가능합니다.'),
 
-  gender: z.enum(['M', 'F']).refine((v) => v === 'M' || v === 'F', {
+  gender: z.enum(['M', 'F'], {
     message: '성별은 남성 또는 여성을 선택해주세요.',
   }),
 
@@ -22,7 +22,12 @@ export const userUpdateSchema = z.object({
 
   status: z.enum(['active', 'inactive', 'withdraw']),
 
-  profile_img: z.instanceof(File).optional(),
+  profile_img: z
+    .instanceof(File)
+    .refine((file) => file.size <= 10 * 1024 * 1024, {
+      message: '프로필 사진은 10MB 이하만 업로드 가능합니다.',
+    })
+    .optional(),
 })
 
 export type UserUpdateSchema = z.infer<typeof userUpdateSchema>

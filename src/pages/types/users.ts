@@ -1,4 +1,7 @@
-import type { ReactNode } from 'react'
+import type { AxiosError } from 'axios'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
+
+import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 
 export interface UserDetailModalProps {
   isOpen: boolean
@@ -33,3 +36,48 @@ export interface UserFormType {
   role: string
   joinDateTime: string
 }
+
+export interface UserDetailFormProps {
+  profileImg: string
+  isEditMode: boolean
+  user: UserDetailUser
+  form: UserFormType
+  setForm: React.Dispatch<React.SetStateAction<UserFormType>>
+  fileInput: React.RefObject<HTMLInputElement | null>
+  isRoleModalOpen: boolean
+  setIsRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  handleImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setRole: React.Dispatch<React.SetStateAction<string>>
+  role: string
+  handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  nicknameRes: { detail: string } | null
+  isNicknameLoading: boolean
+  isNicknameError: boolean
+  nicknameError: AxiosError | unknown
+  errors: Record<string, string>
+  validateField: <T extends keyof typeof userUpdateSchema.shape>(
+    field: T,
+    value: unknown
+  ) => void
+  handlePhoneBlur: () => void
+  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface UserDetailFooterProps {
+  setIsRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isEditMode: boolean
+  isDeleteModalOpen: boolean
+  handleFormEditOk: () => void
+  setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  handleUserDelete: () => void
+  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>
+  isAdmin: boolean | null
+}
+
+export interface UserDetailMemberDeleteProps {
+  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>
+  isDeleteModalOpen: boolean
+  handleUserDelete: () => void
+}
+
+export type Interval = 'monthly' | 'yearly'

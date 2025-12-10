@@ -1,16 +1,7 @@
 import Button from '@/components/common/Button'
 import { UserDetailMemberDelete } from '@/pages/members/users/UserDetailMemberDelete'
+import type { UserDetailFooterProps } from '@/pages/types/users'
 
-interface UserDetailFooterProps {
-  setIsRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  isEditMode: boolean
-  isDeleteModalOpen: boolean
-  handleFormEditOk: () => void
-  setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  handleUserDelete: () => void
-  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>
-  isAdmin: boolean | null
-}
 export function UserDetailFooter({
   setIsRoleModalOpen,
   isEditMode,

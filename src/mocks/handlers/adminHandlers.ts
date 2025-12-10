@@ -144,6 +144,43 @@ export const getAdminAccountsHandler = http.get(
   }
 )
 
+// GET /api/v1/admin/accounts/check-nickname - 닉네임 중복 검사
+export const checkNicknameHandler = http.get(
+  `${ADMIN_API_PREFIX}/accounts/check-nickname`,
+  ({ request }) => {
+    const authError = requireAdminAuth(request)
+    if (authError) {
+      return HttpResponse.json(authError.body, { status: authError.status })
+    }
+
+    const url = new URL(request.url)
+    const nickname = url.searchParams.get('nickname')
+
+    if (!nickname) {
+      return HttpResponse.json(
+        { detail: '닉네임은 필수 입력입니다.' },
+        { status: 400 }
+      )
+    }
+
+    //  mock DB에서 실제 닉네임 목록 추출
+    const allNicknames = mockAccountsList.results.map((user) => user.nickname)
+
+    // 중복 검사
+    if (allNicknames.includes(nickname)) {
+      return HttpResponse.json(
+        { detail: '이미 사용 중인 닉네임입니다.' },
+        { status: 409 }
+      )
+    }
+
+    return HttpResponse.json(
+      { detail: '사용 가능한 닉네임입니다.' },
+      { status: 200 }
+    )
+  }
+)
+
 // GET /api/v1/admin/accounts/{account_id} - 회원 상세 조회
 export const getAdminAccountDetailHandler = http.get(
   `${ADMIN_API_PREFIX}/accounts/:account_id`,
@@ -1157,6 +1194,7 @@ export const catchAllAdminHandler = http.all(
 
 export const adminHandlers = [
   // accounts
+  checkNicknameHandler,
   getAccountsMeHandler,
   getAdminAccountsHandler,
   getAdminAccountDetailHandler,

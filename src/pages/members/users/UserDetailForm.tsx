@@ -6,25 +6,12 @@ import React from 'react'
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
 import Modal from '@/components/common/Modal'
+import { GENDER_LABEL } from '@/config/gender'
 import { ROLE_LABEL } from '@/config/role'
-import { useCheckNickname } from '@/hooks/useCheckNickname'
-import type { UserDetailUser, UserFormType } from '@/pages/types/users'
+import { STATUS_LABEL } from '@/config/status'
+import type { UserDetailFormProps } from '@/pages/types/users'
+import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 
-interface UserDetailFormProps {
-  profileImg: string
-  isEditMode: boolean
-  user: UserDetailUser
-  form: UserFormType
-  setForm: React.Dispatch<React.SetStateAction<UserFormType>>
-  fileInput: React.RefObject<HTMLInputElement | null>
-  isRoleModalOpen: boolean
-  setIsRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  handleImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  setRole: React.Dispatch<React.SetStateAction<string>>
-  handlePhoneBlur: () => void
-  role: string
-  handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
 function UserDetailFormComponent({
   profileImg,
   isEditMode,
@@ -36,16 +23,17 @@ function UserDetailFormComponent({
   isRoleModalOpen,
   setIsRoleModalOpen,
   handlePhoneBlur,
+  handlePhoneChange,
   role,
   handleFormChange,
   handleImgChange,
+  nicknameRes,
+  isNicknameLoading,
+  isNicknameError,
+  nicknameError,
+  errors,
+  validateField,
 }: UserDetailFormProps) {
-  const {
-    data: nicknameRes,
-    isLoading: isNicknameLoading,
-    isError: isNicknameError,
-    error: nicknameError,
-  } = useCheckNickname(isEditMode ? form.nickname : '')
   return (
     <div>
       <div className="flex items-center justify-start gap-4">
@@ -55,6 +43,9 @@ function UserDetailFormComponent({
               src={profileImg || user.profile_img_url}
               alt="회원 프로필 사진"
               className="h-20 w-20 rounded-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = 'https://placehold.co/80'
+              }}
             />
           </label>
           {isEditMode && (
@@ -81,6 +72,9 @@ function UserDetailFormComponent({
           <span className="text-base">{user.email}</span>
         </div>
       </div>
+      {isEditMode && errors.profile_img && (
+        <span className="text-sm text-red-500">{errors.profile_img}</span>
+      )}
       <div className="flex justify-between pt-6">
         <div className="flex flex-col gap-6">
           <Input label="회원ID" name="id" value={form.id} />
@@ -90,16 +84,24 @@ function UserDetailFormComponent({
             value={form.name}
             editable={isEditMode}
             onChange={handleFormChange}
+            onBlur={() => validateField('name', form.name)}
           />
+          {errors.name && (
+            <span className="text-sm text-red-500">{errors.name}</span>
+          )}
           <Input
             label="닉네임"
             name="nickname"
             value={form.nickname}
             editable={isEditMode}
             onChange={handleFormChange}
+            onBlur={() => validateField('nickname', form.nickname)}
           />
+          {isEditMode && errors.nickname && (
+            <span className="text-sm text-red-500">{errors.nickname}</span>
+          )}
           {isEditMode && form.nickname.trim().length > 0 && (
-            <div className="mt-1 text-sm">
+            <>
               {isNicknameLoading && (
                 <span className="text-gray-500">닉네임 검사 중...</span>
               )}
@@ -130,22 +132,38 @@ function UserDetailFormComponent({
               {nicknameRes && (
                 <span className="text-green-600">{nicknameRes.detail}</span>
               )}
-            </div>
+            </>
           )}
           <Input
             label="연락처"
             name="phone"
-            value={form.phone}
+            value={
+              isEditMode
+                ? formatPhoneNumber(form.phone)
+                : formatPhoneNumber(form.phone)
+            }
             editable={isEditMode}
-            onChange={handleFormChange}
+            onChange={handlePhoneChange}
             onBlur={handlePhoneBlur}
           />
+          {errors.phone_number && (
+            <span className="text-sm text-red-500">{errors.phone_number}</span>
+          )}
           {isEditMode ? (
             <label className="flex flex-col gap-2">
               <span className="text-sm font-medium text-[#374151]">상태</span>
               <div className="relative">
                 <select
                   className={`h-9 w-full appearance-none rounded-lg bg-[#F9FAFB] px-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none`}
+                  value={form.status}
+                  onChange={(e) => {
+                    const eng = e.target.value
+                    setForm((prev) => ({
+                      ...prev,
+                      status: eng,
+                    }))
+                    validateField('status', eng)
+                  }}
                 >
                   <option value="active">활성</option>
                   <option value="inactive">비활성</option>
@@ -161,14 +179,50 @@ function UserDetailFormComponent({
               label="상태"
               name="status"
               onChange={handleFormChange}
-              value={form.status}
+              value={STATUS_LABEL[form.status as keyof typeof STATUS_LABEL]}
               editable={false}
             />
           )}
         </div>
         <div className="flex flex-col gap-6">
           <Input label="이메일" name="email" value={form.email} />
-          <Input label="성별" value={form.gender} />
+          {isEditMode ? (
+            <label className="flex flex-col gap-2">
+              <span className="text-sm font-medium text-[#374151]">성별</span>
+              <div className="relative">
+                <select
+                  className="h-9 w-full appearance-none rounded-lg bg-[#F9FAFB] px-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                  value={form.gender}
+                  onChange={(e) => {
+                    setForm((prev) => ({
+                      ...prev,
+                      gender: e.target.value,
+                    }))
+                    validateField('gender', e.target.value)
+                  }}
+                >
+                  <option value="M">남성</option>
+                  <option value="F">여성</option>
+                </select>
+                <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-400">
+                  <ChevronDown size={12} />
+                </span>
+              </div>
+              {errors.gender && (
+                <span className="text-sm text-red-500">{errors.gender}</span>
+              )}
+            </label>
+          ) : (
+            <Input
+              label="성별"
+              name="gender"
+              value={GENDER_LABEL[form.gender as 'M' | 'F']}
+              editable={false}
+            />
+          )}
+          {errors.gender && (
+            <span className="text-sm text-red-500">{errors.gender}</span>
+          )}
           <Input label="생년월일" name="birthday" value={form.birthday} />
           <Input
             label="권한"

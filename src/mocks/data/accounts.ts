@@ -1174,7 +1174,7 @@ export const mockSignupTrendsYearly: SignupTrends = {
   to_date: '2025-11-30',
   total: 1135,
   items: [
-    { period: '2024-12', count: 60 },
+    { period: '2024-12', count: 120 },
     { period: '2025-01', count: 30 },
     { period: '2025-02', count: 105 },
     { period: '2025-03', count: 100 },
@@ -1197,8 +1197,8 @@ export const mockWithdrawalsTrendsMonthly: WithdrawalsTrends = {
   to_date: '2025-11-30',
   total: 1105,
   items: [
-    { period: '2024-12', count: 60 },
-    { period: '2025-01', count: 70 },
+    { period: '2024-12', count: 120 },
+    { period: '2025-01', count: 100 },
     { period: '2025-02', count: 75 },
     { period: '2025-03', count: 80 },
     { period: '2025-04', count: 85 },

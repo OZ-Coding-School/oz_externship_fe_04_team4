@@ -1,5 +1,3 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
 import {
   Bar,
   CartesianGrid,
@@ -10,6 +8,7 @@ import {
   YAxis,
 } from 'recharts'
 
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type {
   ApiItem,
   ApiResponse,
@@ -17,48 +16,29 @@ import type {
 } from '@/pages/members/dashboard/graphs/types'
 import { formatperiodToMonth } from '@/utils/formatperiodToMonth'
 
-export default function AnalyzingSignupTrendsGraph({
+export default function AnalyzingTrendsBarGraph({
   apiUrl,
   title,
   barColor = '#6366f1',
   height = 320,
 }: BarChartProps) {
-  const [data, setData] = useState<ApiItem[]>([])
-  const [_rawData, setRawData] = useState<ApiResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const {
+    data: rawData,
+    isLoading,
+    error,
+  } = useFetchQuery<ApiResponse>({
+    queryKey: ['signup-trends', apiUrl],
+    url: apiUrl,
+  })
 
-  useEffect(() => {
-    setLoading(true)
-    setErrorMessage(null)
+  const mappedData: ApiItem[] = rawData?.items
+    ? rawData.items.map((item) => ({
+        label: formatperiodToMonth(item.period),
+        value: item.count,
+      }))
+    : []
 
-    axios
-      .get<ApiResponse>(apiUrl, {
-        headers: {
-          Authorization: 'Bearer token_value',
-        },
-      })
-      .then((res) => {
-        const mapped = Array.isArray(res?.data?.items)
-          ? res.data.items.map((item) => ({
-              label: formatperiodToMonth(item.period),
-              value: item.count,
-            }))
-          : []
-
-        setRawData(res.data)
-        setData(mapped)
-      })
-      .catch((error) => {
-        console.error(error)
-        setErrorMessage('데이터를 불러오는 중 오류가 발생했습니다.')
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [apiUrl])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div
         className="flex w-full items-center justify-center"
@@ -68,19 +48,19 @@ export default function AnalyzingSignupTrendsGraph({
       </div>
     )
   }
-
-  if (errorMessage) {
+  if (error) {
     return (
       <div
         className="flex w-full items-center justify-center"
         style={{ height }}
       >
-        <p className="text-sm text-red-500">{errorMessage}</p>
+        <p className="text-sm text-red-500">
+          데이터를 불러오는 중 오류가 발생했습니다.
+        </p>
       </div>
     )
   }
-
-  if (!data.length) {
+  if (!mappedData.length) {
     return (
       <div
         className="flex w-full items-center justify-center"
@@ -90,7 +70,6 @@ export default function AnalyzingSignupTrendsGraph({
       </div>
     )
   }
-
   return (
     <div className="border-box mx-auto flex w-full flex-col">
       {title && (
@@ -100,7 +79,7 @@ export default function AnalyzingSignupTrendsGraph({
       <div style={{ width: '100%', height }}>
         <ResponsiveContainer width="100%" height="100%">
           <ReBarChart
-            data={data}
+            data={mappedData}
             margin={{ top: 10, right: 20, left: 0, bottom: 20 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
