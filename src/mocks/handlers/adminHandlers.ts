@@ -470,29 +470,9 @@ export const getAdminWithdrawalsHandler = http.get(
 
     const { page, pageSize } = parsePagination(request)
     const url = new URL(request.url)
-    const search = url.searchParams.get('search') || ''
-    const sort = url.searchParams.get('sort') || ''
-    const role = url.searchParams.get('role') || ''
-    const reason = url.searchParams.get('reason') || ''
-    let filteredItems = [...mockWithdrawalsList.results]
+    const sort = url.searchParams.get('sort') || null
 
-    if (search) {
-      const keyword = search.toLowerCase()
-      filteredItems = filteredItems.filter(
-        (item) =>
-          item.name.toLowerCase().includes(keyword) ||
-          item.email.toLowerCase().includes(keyword) ||
-          String(item.id).includes(keyword)
-      )
-    }
-
-    if (role) {
-      filteredItems = filteredItems.filter((item) => item.role === role)
-    }
-
-    if (reason) {
-      filteredItems = filteredItems.filter((item) => item.reason === reason)
-    }
+    const filteredItems = [...mockWithdrawalsList.results]
 
     // 정렬 적용
     if (sort) {
