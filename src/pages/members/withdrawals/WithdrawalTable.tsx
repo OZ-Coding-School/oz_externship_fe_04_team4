@@ -169,7 +169,7 @@ export default function WithdrawalTable() {
       <WithdrawalDetailModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        userId={selectedUser}
+        withdrawalId={selectedUser}
       />
     </div>
   )

@@ -31,6 +31,8 @@ export interface WithDrawDetailInfoUser {
   status: string
   profile_img_url: string
   created_at: string
+  reason: string
+  reason_detail: string
 }
 
 export interface WithDrawDetailInfo {
@@ -45,7 +47,7 @@ export interface WithDrawDetailInfo {
 export interface WithDrawDetailModalProps {
   isOpen: boolean
   onClose: () => void
-  userId: number | null
+  withdrawalId: number | null
   footer?: ReactNode
 }
 
@@ -59,4 +61,6 @@ export interface WithDrawwDetailFormType {
   created_at: string
   role: string
   profile_img_url: string
+  reason: string
+  reason_detail: string
 }

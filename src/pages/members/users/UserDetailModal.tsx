@@ -23,7 +23,7 @@ import type {
 export function UserDetailModal({
   isOpen,
   onClose,
-  userId,
+  withdrawalId,
 }: UserDetailModalProps) {
   const queryClient = useQueryClient()
   const {
@@ -32,9 +32,9 @@ export function UserDetailModal({
     error,
     refetch,
   } = useFetchQuery<UserDetailUser>({
-    queryKey: ['user-detail', userId],
-    url: SERVICE_URLS.ACCOUNTS.DETAIL(userId || 0),
-    enabled: !!userId && isOpen,
+    queryKey: ['user-detail', withdrawalId],
+    url: SERVICE_URLS.ACCOUNTS.DETAIL(withdrawalId || 0),
+    enabled: !!withdrawalId && isOpen,
   })
   const fileInput = useRef<HTMLInputElement | null>(null)
 

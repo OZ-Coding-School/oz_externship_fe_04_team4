@@ -17,7 +17,7 @@ import type {
 export function WithdrawalDetailModal({
   isOpen,
   onClose,
-  userId,
+  withdrawalId,
 }: WithDrawDetailModalProps) {
   const {
     data: user,
@@ -25,9 +25,9 @@ export function WithdrawalDetailModal({
     error,
     // refetch,
   } = useFetchQuery<WithDrawDetailInfo>({
-    queryKey: ['withdrawal-detail', userId],
-    url: SERVICE_URLS.WITHDRAWALS.DETAIL(userId || 0),
-    enabled: !!userId && isOpen,
+    queryKey: ['withdrawal-detail', withdrawalId],
+    url: SERVICE_URLS.WITHDRAWALS.DETAIL(withdrawalId || 0),
+    enabled: !!withdrawalId && isOpen,
     staleTime: 60 * 1000,
     gcTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
@@ -37,7 +37,7 @@ export function WithdrawalDetailModal({
 
   // const queryClient = useQueryClient()
   const [form, setForm] = useState<WithDrawwDetailFormType>({
-    id: userId ?? 0,
+    id: withdrawalId ?? 0,
     email: '',
     nickname: '',
     name: '',
@@ -46,23 +46,27 @@ export function WithdrawalDetailModal({
     created_at: '',
     status: '',
     profile_img_url: '',
+    reason: '',
+    reason_detail: '',
   })
 
   useEffect(() => {
     if (!user) return
-    const u = user.user
+    const member = user.user
     setForm({
-      id: u.id,
-      email: u.email,
-      nickname: u.nickname,
-      name: u.name,
-      gender: u.gender,
-      role: ROLE_LABEL[u.role as keyof typeof ROLE_LABEL] ?? '',
-      created_at: u.created_at
-        ? dayjs(u.created_at).locale('ko').format('YYYY. M. D. A h:mm:ss')
+      id: member.id,
+      email: member.email,
+      nickname: member.nickname,
+      name: member.name,
+      gender: member.gender,
+      role: ROLE_LABEL[member.role as keyof typeof ROLE_LABEL] ?? '',
+      created_at: member.created_at
+        ? dayjs(member.created_at).locale('ko').format('YYYY. M. D. A h:mm:ss')
         : '',
-      status: STATUS_LABEL[u.status as keyof typeof STATUS_LABEL] ?? '',
-      profile_img_url: u.profile_img_url,
+      status: STATUS_LABEL[member.status as keyof typeof STATUS_LABEL] ?? '',
+      profile_img_url: member.profile_img_url,
+      reason: user.reason,
+      reason_detail: user.reason_detail,
     })
   }, [user])
 
@@ -109,7 +113,7 @@ export function WithdrawalDetailModal({
 
   // const { isAdmin } = useAuthRole()
 
-  if (!isOpen || !userId) return null
+  if (!isOpen || !withdrawalId) return null
   if (isLoading) return <div>회원 정보를 로딩 중입니다...</div>
   if (error) return <div>에러가 났습니다</div>
 
@@ -126,8 +130,6 @@ export function WithdrawalDetailModal({
     >
       {user && (
         <WithdrawalDetailForm
-          user={user}
-          setForm={setForm}
           form={form}
           // handleFormChange={handleFormChange}
         />
