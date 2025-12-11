@@ -274,7 +274,6 @@ export default function RecruitmentDetailContent() {
                           {el.applicant.nickname}
                         </div>
                       </div>
-
                       {ApplicationStatusBadge[el.status]}
                     </div>
 

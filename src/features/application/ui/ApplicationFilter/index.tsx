@@ -2,7 +2,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import { ApplicationFilterSelect } from '@/components/common/filter/ApplicationFilterSelect'
 import { ApplicationSearchInput } from '@/components/common/filter/ApplicationSearchInput'
-import type { GetAdminApplicationParams } from '@/features/recruitment/api/getAdminApplication'
+import type { GetAdminApplicationParams } from '@/features/application/api/getAdminApplication'
 
 type ApplicationFilterProps = {
   setQueryParams: Dispatch<SetStateAction<GetAdminApplicationParams>>

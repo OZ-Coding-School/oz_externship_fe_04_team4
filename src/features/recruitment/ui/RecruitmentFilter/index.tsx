@@ -3,7 +3,7 @@ import { ListFilter, Search } from 'lucide-react'
 import { useState, type KeyboardEvent } from 'react'
 
 import { FilterSelect } from '@/components/common/filter'
-import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
+import TagFilterPreview from '@/features/recruitment/ui/TagFilterPreview/TagFilterPreview'
 import { tM } from '@/lib/twMerge'
 import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'

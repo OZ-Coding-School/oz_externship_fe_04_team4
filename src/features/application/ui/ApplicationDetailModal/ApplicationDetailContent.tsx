@@ -7,11 +7,9 @@ import type { ChangeEvent } from 'react'
 
 import { twMerge } from 'tailwind-merge'
 
-import {
-  ApplicationStatusMediumBadge,
-  GenderBadge,
-} from '@/components/common/badge'
-import { getAdminApplicationDetail } from '@/features/recruitment/api/getAdminApplicationDetail'
+import { ApplicationStatusMediumBadge } from '@/components/common/badge'
+import { GENDER_LABEL } from '@/config/gender'
+import { getAdminApplicationDetail } from '@/features/application/api/getAdminApplicationDetail'
 import { useApplicationDetailModalStore } from '@/store/application/useApplicationModalStore'
 
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
@@ -135,7 +133,7 @@ export default function ApplicationDetailContent() {
               </div>
               <div className="text-[#4B5563]">{data.applicant.email}</div>
               <div className="text-[#4B5563]">
-                {GenderBadge[data.applicant.gender]}
+                {GENDER_LABEL[data.applicant.gender]}
               </div>
             </div>
           </div>

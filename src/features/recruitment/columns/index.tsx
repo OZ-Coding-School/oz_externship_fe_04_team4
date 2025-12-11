@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 import { RecruitmentStatusBadge } from '@/components/common/badge/RecruitmentStatusBadge'
-import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
+import TagFilterPreview from '@/features/recruitment/ui/TagFilterPreview/TagFilterPreview'
 import type { TagType } from '@/mocks/types/accounts'
 
 export const RecruitmentColumns = [
