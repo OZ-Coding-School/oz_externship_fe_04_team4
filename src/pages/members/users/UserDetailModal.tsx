@@ -198,7 +198,7 @@ export function UserDetailModal({
 
   const updateUserMutation = useMutateQuery({
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId!),
-    method: 'postForm',
+    method: 'patchForm',
     onSuccess: () => {
       alert('회원 정보가 수정되었습니다.')
       setIsEditMode(false)

@@ -2,7 +2,7 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 
 import { axiosInstance } from '@/api/axios'
 
-type HttpMethod = 'post' | 'patch' | 'put' | 'delete' | 'postForm'
+type HttpMethod = 'post' | 'patch' | 'put' | 'delete' | 'patchForm'
 
 interface UseMutateQueryParams<TData, TVariables, TError = Error> extends Omit<
   UseMutationOptions<TData, TError, TVariables>,
@@ -36,8 +36,8 @@ export function useMutateQuery<TData, TVariables = unknown>({
             })
           ).data
 
-        case 'postForm':
-          return (await axiosInstance.postForm<TData>(url, variables)).data
+        case 'patchForm':
+          return (await axiosInstance.patchForm<TData>(url, variables)).data
 
         default:
           throw new Error(`Unsupported method: ${method}`)
