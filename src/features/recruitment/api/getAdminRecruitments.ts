@@ -1,5 +1,5 @@
 import { authFetch } from '@/api/client'
-import { ADMIN_TEXT } from '@/config/api'
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import type { GetAdminRecruitmentsParams } from '@/types/recrument.types'
 
 export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
@@ -27,7 +27,7 @@ export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
   }
 
   const res = await authFetch(
-    `${ADMIN_TEXT}/recruitments?${searchParams.toString()}`
+    `${SERVICE_URLS.RECRUITMENTS.LIST}?${searchParams.toString()}`
   )
 
   if (!res.ok) {

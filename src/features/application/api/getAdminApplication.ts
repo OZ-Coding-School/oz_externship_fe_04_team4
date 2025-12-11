@@ -1,5 +1,5 @@
 import { authFetch } from '@/api/client'
-import { ADMIN_TEXT } from '@/config/api'
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import type { GetAdminApplicationParams } from '@/types'
 
 export async function getAdminApplication(params: GetAdminApplicationParams) {
@@ -21,7 +21,7 @@ export async function getAdminApplication(params: GetAdminApplicationParams) {
   }
 
   const res = await authFetch(
-    `${ADMIN_TEXT}/applications?${searchParams.toString()}`
+    `${SERVICE_URLS.APPLICATIONS.LIST}?${searchParams.toString()}`
   )
 
   if (!res.ok) {

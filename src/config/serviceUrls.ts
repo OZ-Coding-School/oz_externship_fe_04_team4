@@ -1,8 +1,10 @@
-import { ADMIN_API_URL } from '@/config/api'
+import { ADMIN_API_URL, API_URL } from '@/config/api'
 
 export const SERVICE_URLS = {
   // 회원 관리
   ACCOUNTS: {
+    LOGIN: `${API_URL}/accounts/login`,
+    ME: `${API_URL}/accounts/me`,
     LIST: `${ADMIN_API_URL}/accounts`,
     DETAIL: (accountId: number) => `${ADMIN_API_URL}/accounts/${accountId}`,
     UPDATE: (accountId: number) => `${ADMIN_API_URL}/accounts/${accountId}`,
@@ -55,6 +57,10 @@ export const SERVICE_URLS = {
       `${ADMIN_API_URL}/recruitments/${recruitmentId}`,
     DELETE: (recruitmentId: number) =>
       `${ADMIN_API_URL}/recruitments/${recruitmentId}`,
+  },
+
+  TAGS: {
+    LIST: `${API_URL}/recruitment-tags`,
   },
 
   // 지원 내역 관리

@@ -1,4 +1,5 @@
 import { authFetch } from '@/api/client'
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import type { RecruitmentTags } from '@/types/api'
 
 type fetchRecruitmentTagsParams = {
@@ -21,9 +22,7 @@ export async function fetchRecruitmentTags({
     params.set('search', search.trim())
   }
 
-  const res = await authFetch(`/recruitment-tags?${params.toString()}`, {
-    method: 'GET',
-  })
+  const res = await authFetch(`${SERVICE_URLS.TAGS.LIST}?${params.toString()}`)
 
   if (!res.ok) {
     const errorBody = await res.json().catch(() => ({}))
