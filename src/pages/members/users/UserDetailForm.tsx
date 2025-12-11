@@ -33,6 +33,7 @@ function UserDetailFormComponent({
   nicknameError,
   errors,
   validateField,
+  setIsEditMode,
 }: UserDetailFormProps) {
   return (
     <div>
@@ -246,6 +247,7 @@ function UserDetailFormComponent({
                       ...prev,
                       role: ROLE_LABEL[role as keyof typeof ROLE_LABEL],
                     }))
+                    setIsEditMode(true)
                     setIsRoleModalOpen(false)
                   }}
                 >

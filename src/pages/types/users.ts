@@ -74,6 +74,7 @@ export interface UserDetailFormProps {
   ) => void
   handlePhoneBlur: () => void
   handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setIsEditMode: Dispatch<SetStateAction<boolean>>
 }
 
 export interface UserDetailFooterProps {
