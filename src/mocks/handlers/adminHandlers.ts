@@ -24,10 +24,9 @@ import {
   mockWithdrawalsList,
   mockWithdrawalsTrendsMonthly,
   mockWithdrawalsTrendsYearly,
-  type WithdrawalReason,
 } from '@/mocks/data/accounts'
 import { parseRequestBody } from '@/mocks/handlers/parseRequestBody'
-import type { RecruitmentTags } from '@/mocks/types/accounts'
+import type { ReasonStatus, RecruitmentTags } from '@/types/api'
 
 /**
  * 공통 admin 인증 체크
@@ -630,16 +629,16 @@ export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
     const raw = url.searchParams.get('reason')
 
     // reason 변수 선언 + 기본값
-    let reason: WithdrawalReason = 'OTHER'
+    let reason: ReasonStatus = 'OTHER'
 
     // valid reasons 목록 (map 기반)
-    const validReasons: WithdrawalReason[] = Object.keys(
+    const validReasons: ReasonStatus[] = Object.keys(
       mockWithdrawalReasonsStatsMonthlyMap
-    ) as WithdrawalReason[]
+    ) as ReasonStatus[]
 
     // raw가 유효한 reason이면 교체
-    if (raw && validReasons.includes(raw as WithdrawalReason)) {
-      reason = raw as WithdrawalReason
+    if (raw && validReasons.includes(raw as ReasonStatus)) {
+      reason = raw as ReasonStatus
     }
 
     // 타입 안전하게 매핑

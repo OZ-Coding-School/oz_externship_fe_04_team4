@@ -1,6 +1,6 @@
 import { authFetch } from '@/api/client'
 import { ADMIN_TEXT } from '@/config/api'
-import type { ApplicationsDetail } from '@/mocks/types/accounts'
+import type { ApplicationsDetail } from '@/types/api'
 
 export async function getAdminApplicationDetail(
   id: number

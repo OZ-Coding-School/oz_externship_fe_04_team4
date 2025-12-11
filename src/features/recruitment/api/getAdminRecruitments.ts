@@ -1,6 +1,6 @@
 import { authFetch } from '@/api/client'
 import { ADMIN_TEXT } from '@/config/api'
-import type { TagType } from '@/mocks/types/accounts'
+import type { TagType } from '@/types/api'
 
 // 타입 예시, 실제로는 서버 스키마에 맞게 정의해줘
 export type GetAdminRecruitmentsParams = {

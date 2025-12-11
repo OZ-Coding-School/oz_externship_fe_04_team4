@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 import { ApplicationStatusBadge } from '@/components/common/badge'
-import type { ApplicationsStatus } from '@/mocks/types/accounts'
+import type { ApplicationsStatus } from '@/types/api'
 
 type recruitmentRowType = {
   id: number

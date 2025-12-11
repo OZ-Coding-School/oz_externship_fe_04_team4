@@ -10,10 +10,10 @@ import { RecruitmentColumns } from '@/features/recruitment/columns'
 import RecruitmentDetailModal from '@/features/recruitment/ui/detailModal'
 import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
 import RecruitmentTagFilterModal from '@/features/recruitment/ui/tagFilterModal'
-import type { RecruitmentListResults } from '@/mocks/types/accounts'
 import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
 import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagListStore'
 import type { statusType } from '@/types'
+import type { RecruitmentListResults } from '@/types/api'
 
 const PAGE_SIZE = 10
 

@@ -9,11 +9,8 @@ import {
 import { ApplicationColumns } from '@/features/application/columns'
 import ApplicationDetailModal from '@/features/application/ui/ApplicationDetailModal'
 import ApplicationFilter from '@/features/application/ui/ApplicationFilter'
-import type {
-  ApplicationsList,
-  ApplicationsListResults,
-} from '@/mocks/types/accounts'
 import { useApplicationDetailModalStore } from '@/store/application/useApplicationModalStore'
+import type { ApplicationsList, ApplicationsListResults } from '@/types/api'
 
 export default function ApplicationManagementPage() {
   const { openDetailModal } = useApplicationDetailModalStore()

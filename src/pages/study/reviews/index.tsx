@@ -10,8 +10,8 @@ import {
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { StudyReviewListResults } from '@/mocks/types/accounts'
 import { ReviewDetailModal } from '@/pages/study/reviews/ReviewDetailModal'
+import type { StudyReviewListResults } from '@/types/api'
 import { formatDateTime } from '@/utils'
 
 type ReviewProps = StudyReviewListResults
