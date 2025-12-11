@@ -25,6 +25,7 @@ export function UserDetailModal({
   onClose,
   userId,
 }: UserDetailModalProps) {
+  const queryClient = useQueryClient()
   const {
     data: user,
     isLoading,
@@ -35,13 +36,13 @@ export function UserDetailModal({
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId || 0),
     enabled: !!userId && isOpen,
   })
-  const queryClient = useQueryClient()
+  const fileInput = useRef<HTMLInputElement | null>(null)
+
   const [isEditMode, setIsEditMode] = useState(false)
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [profileImg, setProfileImg] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
-  const fileInput = useRef<HTMLInputElement | null>(null)
   const [originalNickname, setOriginalNickname] = useState('')
   const [role, setRole] = useState('')
   const [form, setForm] = useState<UserFormType>({
@@ -56,7 +57,7 @@ export function UserDetailModal({
     role: '',
     joinDateTime: '',
   })
-
+  const [errors, setErrors] = useState<Record<string, string>>({})
   useEffect(() => {
     if (!user) return
     setForm({
@@ -142,7 +143,6 @@ export function UserDetailModal({
     }))
   }
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
   const validateField = <T extends keyof typeof userUpdateSchema.shape>(
     field: T,
     value: unknown
@@ -182,6 +182,7 @@ export function UserDetailModal({
 
   const handleUserDelete = () => {
     deleteUserMutation.mutate({})
+    setIsDeleteModalOpen(false)
   }
 
   const deleteUserMutation = useMutateQuery({
@@ -279,9 +280,9 @@ export function UserDetailModal({
           handleFormEditOk={handleFormEditOk}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           handleUserDelete={handleUserDelete}
-          setIsEditMode={setIsEditMode}
           isDeleteModalOpen={isDeleteModalOpen}
           isAdmin={isAdmin}
+          setIsEditMode={setIsEditMode}
         />
       }
     >
@@ -307,6 +308,7 @@ export function UserDetailModal({
           errors={errors}
           validateField={validateField}
           handlePhoneChange={handlePhoneChange}
+          setIsEditMode={setIsEditMode}
         />
       )}
     </Modal>
