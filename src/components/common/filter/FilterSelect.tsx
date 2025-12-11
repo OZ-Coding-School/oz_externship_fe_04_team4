@@ -1,9 +1,7 @@
-import clsx from 'clsx'
 import { ChevronDown } from 'lucide-react'
 
-import { twMerge } from 'tailwind-merge'
-
 import type { FilterOption } from '@/components/common/filter/types'
+import { tM } from '@/lib/twMerge'
 
 interface FilterSelectProps {
   className?: string
@@ -27,12 +25,10 @@ export function FilterSelect({
   placeholder = '전체',
 }: FilterSelectProps) {
   return (
-    <div className={twMerge(clsx('flex flex-col gap-1', className))}>
+    <div className={tM('flex flex-col gap-1', className)}>
       {label && (
         <label
-          className={twMerge(
-            clsx('text-xs font-medium text-gray-700', labelClassName)
-          )}
+          className={tM('text-xs font-medium text-gray-700', labelClassName)}
         >
           {label}
         </label>
@@ -41,11 +37,9 @@ export function FilterSelect({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={twMerge(
-            clsx(
-              'w-full appearance-none rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-4 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none',
-              selectClassName
-            )
+          className={tM(
+            'w-full appearance-none rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-4 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none',
+            selectClassName
           )}
         >
           <option value="">{placeholder}</option>

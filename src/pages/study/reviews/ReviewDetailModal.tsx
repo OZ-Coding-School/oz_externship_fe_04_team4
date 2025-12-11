@@ -2,7 +2,7 @@ import Modal from '@/components/common/Modal'
 import ReviewRating from '@/components/common/ReviewRating'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { StudyReviewDetail } from '@/mocks/types/accounts'
+import type { StudyReviewDetail } from '@/types/api'
 import { formatDateTime } from '@/utils'
 
 interface ReviewDetailModalProps {

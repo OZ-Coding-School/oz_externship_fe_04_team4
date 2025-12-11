@@ -1,5 +1,5 @@
 import { useAuthRole } from '@/hooks/useAuthRole'
-import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentDetailModalStore } from '@/store/recruitment'
 
 export default function RecruitmentDetailFooterActions() {
   const { closeDetailModal } = useRecruitmentDetailModalStore()

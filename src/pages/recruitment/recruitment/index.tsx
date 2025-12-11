@@ -2,19 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Table, type SortConfig } from '@/components/common/table'
-import {
-  getAdminRecruitments,
-  type GetAdminRecruitmentsParams,
-} from '@/features/recruitment/api/getAdminRecruitments'
-import { RecruitmentColumns } from '@/features/recruitment/columns'
+import { getAdminRecruitments } from '@/features/recruitment/api'
+import RecruitmentColumns from '@/features/recruitment/columns'
 import RecruitmentDetailModal from '@/features/recruitment/ui/detailModal'
 import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
 import RecruitmentTagFilterModal from '@/features/recruitment/ui/tagFilterModal'
-import type { RecruitmentListResults } from '@/mocks/types/accounts'
-import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
-import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
-import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
-import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
+import {
+  useRecruitmentDetailModalStore,
+  useRecruitmentTagListStore,
+} from '@/store/recruitment'
+import type { GetAdminRecruitmentsParams, statusType } from '@/types'
+import type { RecruitmentListResults } from '@/types/api'
 
 const PAGE_SIZE = 10
 
@@ -25,9 +23,8 @@ export default function RecruitmentPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
 
-  // 2) 필터 상태 (zustand)
-  const { keyword } = useRecruitmentSearchStore()
-  const { status } = ueeRecruitmentStatusStore()
+  const [keyword, setKeyword] = useState('')
+  const [status, setStatus] = useState<statusType>('all')
   const { selectedTagsResult } = useRecruitmentTagListStore()
 
   const queryParams: GetAdminRecruitmentsParams = {
@@ -66,7 +63,11 @@ export default function RecruitmentPage() {
       <RecruitmentTagFilterModal />
       <RecruitmentDetailModal />
 
-      <RecruitmentFilter />
+      <RecruitmentFilter
+        setKeyword={setKeyword}
+        status={status}
+        setStatus={setStatus}
+      />
 
       <Table
         columns={RecruitmentColumns}

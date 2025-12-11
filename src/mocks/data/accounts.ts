@@ -1,3 +1,5 @@
+// api/v1/accounts/me
+
 import type {
   AccountsDetail,
   AccountsList,
@@ -6,6 +8,7 @@ import type {
   ApplicationsList,
   LectureList,
   LecturesDetail,
+  ReasonStatus,
   RecruitmentDetail,
   RecruitmentList,
   RecruitmentTags,
@@ -19,9 +22,8 @@ import type {
   WithdrawalsDetail,
   WithdrawalsList,
   WithdrawalsTrends,
-} from '@/mocks/types/accounts'
+} from '@/types/api'
 
-// api/v1/accounts/me
 // 내 정보 조회
 export const mockAccountsMe: AccountsMe = {
   id: 1,
@@ -1322,19 +1324,9 @@ export const mockWithdrawalReasonsStatsMonthly: WithdrawalReasonsStatsMonthly =
       { period: '2025-11', count: 225 },
     ],
   }
-export type WithdrawalReason =
-  | 'NO_LONGER_NEEDED'
-  | 'LACK_OF_INTEREST'
-  | 'TOO_DIFFICULT'
-  | 'FOUND_BETTER_SERVICE'
-  | 'PRIVACY_CONCERNS'
-  | 'POOR_SERVICE_QUALITY'
-  | 'TECHNICAL_ISSUES'
-  | 'LACK_OF_CONTENT'
-  | 'OTHER'
 
 export const mockWithdrawalReasonsStatsMonthlyMap: Record<
-  WithdrawalReason,
+  ReasonStatus,
   WithdrawalReasonsStatsMonthly
 > = {
   NO_LONGER_NEEDED: {

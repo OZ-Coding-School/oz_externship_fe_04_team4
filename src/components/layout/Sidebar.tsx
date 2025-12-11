@@ -16,6 +16,8 @@ import {
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router'
 
+import { ROUTE_PATHS } from '@/app/router/routePaths'
+
 const TITLE_BASE_STYLE =
   'flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-3'
 const LINK_BASE_STYLE =
@@ -23,7 +25,7 @@ const LINK_BASE_STYLE =
 const ICON_STYLE =
   'group-hover:stroke-[#854D0E] group-active:scale-[1.2] aria-[current=true]:stroke-[#854D0E]'
 
-export default function SideBar() {
+export default function Sidebar() {
   const [userToggle, setUserToggle] = useState(false)
   const [studyToggle, setStudyToggle] = useState(false)
   const [recruitmentToggle, setRecruitmentToggle] = useState(false)
@@ -58,41 +60,41 @@ export default function SideBar() {
         >
           <div className="flex flex-col items-end overflow-hidden">
             <Link
-              to={'/members/users'}
+              to={ROUTE_PATHS.MEMBERS.USERS}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/members/users'}
+              aria-current={pathname === ROUTE_PATHS.MEMBERS.USERS}
             >
               <User
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/members/users'}
+                aria-current={pathname === ROUTE_PATHS.MEMBERS.USERS}
               />
               <div className="ml-3">유저 관리</div>
             </Link>
             <Link
-              to={'/members/withdrawals'}
+              to={ROUTE_PATHS.MEMBERS.WITHDRAWALS}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/members/withdrawals'}
+              aria-current={pathname === ROUTE_PATHS.MEMBERS.WITHDRAWALS}
             >
               <UserRoundX
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/members/withdrawals'}
+                aria-current={pathname === ROUTE_PATHS.MEMBERS.WITHDRAWALS}
               />
               <div className="ml-3">탈퇴 관리</div>
             </Link>
             <Link
-              to={'/members/dashboard'}
+              to={ROUTE_PATHS.MEMBERS.DASHBOARD}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/members/dashboard'}
+              aria-current={pathname === ROUTE_PATHS.MEMBERS.DASHBOARD}
             >
               <LayoutDashboard
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/members/dashboard'}
+                aria-current={pathname === ROUTE_PATHS.MEMBERS.DASHBOARD}
               />
               <div className="ml-3">대시보드</div>
             </Link>
@@ -121,41 +123,41 @@ export default function SideBar() {
         >
           <div className="flex flex-col items-end overflow-hidden">
             <Link
-              to={'/study/courses'}
+              to={ROUTE_PATHS.STUDY.COURSES}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/study/courses'}
+              aria-current={pathname === ROUTE_PATHS.STUDY.COURSES}
             >
               <GraduationCap
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/study/courses'}
+                aria-current={pathname === ROUTE_PATHS.STUDY.COURSES}
               />
               <div className="ml-3">강의 관리</div>
             </Link>
             <Link
-              to={'/study/groups'}
+              to={ROUTE_PATHS.STUDY.GROUPS}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/study/groups'}
+              aria-current={pathname === ROUTE_PATHS.STUDY.GROUPS}
             >
               <Users
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/study/groups'}
+                aria-current={pathname === ROUTE_PATHS.STUDY.GROUPS}
               />
               <div className="ml-3">스터디 그룹 관리</div>
             </Link>
             <Link
-              to={'/study/reviews'}
+              to={ROUTE_PATHS.STUDY.REVIEWS}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/study/reviews'}
+              aria-current={pathname === ROUTE_PATHS.STUDY.REVIEWS}
             >
               <Star
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/study/reviews'}
+                aria-current={pathname === ROUTE_PATHS.STUDY.REVIEWS}
               />
               <div className="ml-3">리뷰 관리</div>
             </Link>
@@ -184,30 +186,30 @@ export default function SideBar() {
         >
           <div className="flex flex-col items-end overflow-hidden">
             <Link
-              to={'/recruitment/recruitment'}
+              to={ROUTE_PATHS.RECRUITMENT.LIST}
               onClick={() => setRecruitmentToggle(true)}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/recruitment/recruitment'}
+              aria-current={pathname === ROUTE_PATHS.RECRUITMENT.LIST}
             >
               <ReceiptText
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/recruitment/recruitment'}
+                aria-current={pathname === ROUTE_PATHS.RECRUITMENT.LIST}
               />
               <div className="ml-3">공고 관리</div>
             </Link>
             <Link
-              to={'/recruitment/applications'}
+              to={ROUTE_PATHS.RECRUITMENT.APPLICATIONS}
               onClick={() => setRecruitmentToggle(true)}
               className={LINK_BASE_STYLE}
-              aria-current={pathname === '/recruitment/applications'}
+              aria-current={pathname === ROUTE_PATHS.RECRUITMENT.APPLICATIONS}
             >
               <UserRoundPlus
                 size={16}
                 color="#4B5563"
                 className={ICON_STYLE}
-                aria-current={pathname === '/recruitment/applications'}
+                aria-current={pathname === ROUTE_PATHS.RECRUITMENT.APPLICATIONS}
               />
               <div className="ml-3">지원 내역 관리</div>
             </Link>

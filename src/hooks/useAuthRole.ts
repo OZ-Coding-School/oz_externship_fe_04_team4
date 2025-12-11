@@ -1,5 +1,5 @@
-import { useAccountsMeQuery } from '@/api/accounts/useAccountsMeQuery'
-import type { AccountsMe } from '@/mocks/types/accounts'
+import { useAccountsMeQuery } from '@/hooks/model'
+import type { AccountsMe } from '@/types/api'
 
 type Role = AccountsMe['role']
 

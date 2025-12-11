@@ -1,17 +1,11 @@
 import dayjs from 'dayjs'
 
 import { ApplicationStatusBadge } from '@/components/common/badge'
-import type { ApplicationsStatus } from '@/mocks/types/accounts'
-
-type recruitmentRowType = {
-  id: number
-  title: string
-}
-type applicantRowType = {
-  id: number
-  nickname: string
-  email: string
-}
+import type {
+  ApplicationApplicant,
+  ApplicationRecruitment,
+  ApplicationsStatus,
+} from '@/types/api'
 
 export const ApplicationColumns = [
   {
@@ -23,13 +17,13 @@ export const ApplicationColumns = [
     key: 'recruitment',
     header: '공고명',
     width: '420px',
-    render: (row: recruitmentRowType) => row.title,
+    render: (row: ApplicationRecruitment) => row.title,
   },
   {
     key: 'applicant',
     header: '지원자 정보',
     width: '260px',
-    render: (row: applicantRowType) => (
+    render: (row: ApplicationApplicant) => (
       <div className="flex flex-col">
         <p className="text-sm font-medium text-gray-900">{row?.nickname}</p>
         <p className="text-xs text-gray-500">{row?.email}</p>

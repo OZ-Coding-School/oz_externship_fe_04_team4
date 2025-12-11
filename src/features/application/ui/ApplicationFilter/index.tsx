@@ -1,8 +1,10 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { ApplicationFilterSelect } from '@/components/common/filter/ApplicationFilterSelect'
-import { ApplicationSearchInput } from '@/components/common/filter/ApplicationSearchInput'
-import type { GetAdminApplicationParams } from '@/features/recruitment/api/getAdminApplication'
+import {
+  ApplicationSearchInput,
+  FilterSelect,
+} from '@/components/common/filter'
+import type { GetAdminApplicationParams } from '@/types'
 
 type ApplicationFilterProps = {
   setQueryParams: Dispatch<SetStateAction<GetAdminApplicationParams>>
@@ -31,10 +33,7 @@ export default function ApplicationFilter({
     ],
     value: queryParams.status,
     onChange: (value: string) =>
-      setQueryParams((prev) => ({
-        ...prev,
-        status: value,
-      })),
+      setQueryParams((prev) => ({ ...prev, status: value })),
   }
   const sort = {
     label: '정렬',
@@ -44,10 +43,7 @@ export default function ApplicationFilter({
     ],
     value: queryParams.sort,
     onChange: (value: string) =>
-      setQueryParams((prev) => ({
-        ...prev,
-        sort: value,
-      })),
+      setQueryParams((prev) => ({ ...prev, sort: value })),
   }
 
   return (
@@ -62,19 +58,21 @@ export default function ApplicationFilter({
           inputClassName="text-sm"
         />
 
-        <ApplicationFilterSelect
-          key={application.label}
+        <FilterSelect
           label={application.label}
-          labelClassName="font-medium"
+          className="flex flex-col gap-2"
+          labelClassName="font-medium text-sm text-[#374151]"
+          selectClassName="h-[38px] w-full appearance-none rounded-lg border border-[#D1D5DB] px-3 py-2 outline-0"
           options={application.options}
           value={application.value}
           onChange={application.onChange}
           placeholder="전체"
         />
-        <ApplicationFilterSelect
-          key={sort.label}
+        <FilterSelect
           label={sort.label}
-          labelClassName="font-medium"
+          className="flex flex-col gap-2"
+          labelClassName="font-medium text-sm text-[#374151]"
+          selectClassName="h-[38px] w-full appearance-none rounded-lg border border-[#D1D5DB] px-3 py-2 outline-0"
           options={sort.options}
           value={sort.value}
           onChange={sort.onChange}

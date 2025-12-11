@@ -1,6 +1,6 @@
 import { authFetch } from '@/api/client'
 import { ADMIN_TEXT } from '@/config/api'
-import type { RecruitmentDetail } from '@/mocks/types/accounts'
+import type { RecruitmentDetail } from '@/types/api'
 
 export async function getAdminRecruitmentDetail(
   id: number

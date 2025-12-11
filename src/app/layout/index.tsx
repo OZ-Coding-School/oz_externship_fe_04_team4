@@ -2,30 +2,29 @@ import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router'
 
-import SideBar from '@/components/layout/Sidebar'
+import { ROUTE_PATHS } from '@/app/router/routePaths'
+import Sidebar from '@/components/layout/Sidebar'
 
 type Props = { children: ReactNode }
 
 const PATHNAME_TITLE_MAP: Record<string, string> = {
-  '/members/users': '유저 관리',
-  '/members/withdrawals': '탈퇴 관리',
-  '/members/dashboard': '대시 보드',
-  '/study/courses': '강의 관리',
-  '/study/groups': '스터디 그룹 관리',
-  '/study/reviews': '리뷰 관리',
-  '/recruitment/recruitment': '스터디 구인 공고 관리',
-  '/recruitment/applications': '지원 내역 관리',
+  [ROUTE_PATHS.MEMBERS.USERS]: '유저 관리',
+  [ROUTE_PATHS.MEMBERS.WITHDRAWALS]: '탈퇴 관리',
+  [ROUTE_PATHS.MEMBERS.DASHBOARD]: '대시 보드',
+  [ROUTE_PATHS.STUDY.COURSES]: '강의 관리',
+  [ROUTE_PATHS.STUDY.GROUPS]: '스터디 그룹 관리',
+  [ROUTE_PATHS.STUDY.REVIEWS]: '리뷰 관리',
+  [ROUTE_PATHS.RECRUITMENT.LIST]: '스터디 구인 공고 관리',
+  [ROUTE_PATHS.RECRUITMENT.APPLICATIONS]: '지원 내역 관리',
 }
 
-const getPageTitle = (pathname: string): string => {
-  return PATHNAME_TITLE_MAP[pathname]
-}
+const getPageTitle = (pathname: string): string => PATHNAME_TITLE_MAP[pathname]
 
-const Layout = ({ children }: Props) => {
+export default function Layout({ children }: Props) {
   const { pathname } = useLocation()
   const [isClose, setIsClose] = useState(false)
 
-  if (pathname === '/')
+  if (pathname === ROUTE_PATHS.LOGIN)
     return <div className="flex-1 bg-gray-50">{children}</div>
 
   return (
@@ -42,7 +41,7 @@ const Layout = ({ children }: Props) => {
         </div>
       ) : (
         <>
-          <SideBar />
+          <Sidebar />
           <div className="group absolute inline-block">
             <PanelLeftClose
               className="absolute top-1 left-[245px] cursor-pointer hover:scale-105"
@@ -64,5 +63,3 @@ const Layout = ({ children }: Props) => {
     </div>
   )
 }
-
-export default Layout

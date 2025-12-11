@@ -1,5 +1,5 @@
 type RecruitmentStatusBadgeProps = {
-  is_closed: boolean | undefined
+  is_closed: boolean
   className: string
 }
 

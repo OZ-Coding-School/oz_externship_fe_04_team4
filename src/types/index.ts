@@ -1,1 +1,1 @@
-// types
+export * from './recrument.types'

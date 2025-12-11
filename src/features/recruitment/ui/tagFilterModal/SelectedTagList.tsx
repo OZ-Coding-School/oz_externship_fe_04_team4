@@ -1,6 +1,6 @@
 import { X } from 'lucide-react'
 
-import { useRecruitmentTagsStore } from '@/store/recruitment/useRecruitmentTagsStore'
+import { useRecruitmentTagsStore } from '@/store/recruitment'
 
 export default function SelectedTagList() {
   const { selectedTags, resetSelectedTags, deleteSelectedTag } =

@@ -1,16 +1,6 @@
 import { authFetch } from '@/api/client'
 import { ADMIN_TEXT } from '@/config/api'
-import type { TagType } from '@/mocks/types/accounts'
-
-// 타입 예시, 실제로는 서버 스키마에 맞게 정의해줘
-export type GetAdminRecruitmentsParams = {
-  page: number
-  page_size: number
-  search?: string
-  status?: 'all' | 'true' | 'false' | string
-  tags?: TagType[]
-  sort?: string
-}
+import type { GetAdminRecruitmentsParams } from '@/types/recrument.types'
 
 export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
   const searchParams = new URLSearchParams()
@@ -50,6 +40,5 @@ export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
     throw new Error('Failed to fetch recruitments')
   }
 
-  // 여기서 반환 타입은 PaginationResponse<RecruitmentRow> 형태일 것
   return res.json()
 }

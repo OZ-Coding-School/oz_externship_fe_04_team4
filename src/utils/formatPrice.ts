@@ -1,6 +1,4 @@
-export const formatPrice = (
-  value: number | string | null | undefined
-): string => {
+const formatPrice = (value: number | string | null | undefined): string => {
   if (value === null || value === undefined) return ''
 
   const numeric =
@@ -10,3 +8,5 @@ export const formatPrice = (
 
   return numeric.toLocaleString('ko-KR')
 }
+
+export default formatPrice

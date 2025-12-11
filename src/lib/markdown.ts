@@ -1,4 +1,4 @@
-export function markdownToHtml(markdown: string): string {
+export default function markdownToHtml(markdown: string): string {
   let html: string = markdown
 
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')

@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
 
-import { RecruitmentStatusBadge } from '@/components/common/badge/RecruitmentStatusBadge'
-import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
-import type { TagType } from '@/mocks/types/accounts'
+import { RecruitmentStatusBadge } from '@/components/common/badge'
+import TagFilterPreview from '@/features/recruitment/ui/TagFilterPreview'
+import type { TagType } from '@/types/api'
 
-export const RecruitmentColumns = [
+const RecruitmentColumns = [
   { key: 'id', header: 'ID', width: '60px' },
   { key: 'title', header: '공고 제목', width: '320px' },
   {
@@ -59,3 +59,5 @@ export const RecruitmentColumns = [
     render: (row: string) => dayjs(row).format('YYYY-MM-DD HH:mm'),
   },
 ]
+
+export default RecruitmentColumns

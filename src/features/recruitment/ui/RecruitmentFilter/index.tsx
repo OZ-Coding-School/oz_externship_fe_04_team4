@@ -1,25 +1,39 @@
 import { ListFilter, Search } from 'lucide-react'
 
-import { useState, type KeyboardEvent } from 'react'
+import {
+  useState,
+  type Dispatch,
+  type KeyboardEvent,
+  type SetStateAction,
+} from 'react'
 
 import { FilterSelect } from '@/components/common/filter'
-import TagFilterPreview from '@/components/common/tag/TagFilterPreview'
+import TagFilterPreview from '@/features/recruitment/ui/TagFilterPreview'
 import { tM } from '@/lib/twMerge'
-import { useTagFilterModalStore } from '@/store/recruitment/useRecruitmentModalStore'
-import { useRecruitmentSearchStore } from '@/store/recruitment/useRecruitmentSearchStore'
-import { ueeRecruitmentStatusStore } from '@/store/recruitment/useRecruitmentStatusStore'
-import { useRecruitmentTagListStore } from '@/store/recruitment/useRecruitmentTagsStore'
+import {
+  useRecruitmentTagListStore,
+  useTagFilterModalStore,
+} from '@/store/recruitment'
+import type { statusType } from '@/types'
 
 const LABEL_STYLE = 'text-sm text-[#374151]'
 const BOX_BASE_STYLE = 'h-[38px] w-[256px]'
 
-export default function RecruitmentFilter() {
+type RecruitmentFilterProps = {
+  setKeyword: Dispatch<SetStateAction<string>>
+  status: string
+  setStatus: Dispatch<SetStateAction<statusType>>
+}
+
+export default function RecruitmentFilter({
+  setKeyword,
+  status,
+  setStatus,
+}: RecruitmentFilterProps) {
   const { openTagFilterModalModal } = useTagFilterModalStore()
+  const { selectedTagsResult } = useRecruitmentTagListStore()
 
   const [search, setSearch] = useState('')
-  const { setKeyword } = useRecruitmentSearchStore()
-  const { status, setStatus } = ueeRecruitmentStatusStore()
-  const { selectedTagsResult } = useRecruitmentTagListStore()
 
   const handleSearchSubmit = () => {
     setKeyword(search.trim())
@@ -74,7 +88,7 @@ export default function RecruitmentFilter() {
             { label: '마감', value: 'true' },
           ]}
           value={status}
-          onChange={setStatus}
+          onChange={(value) => setStatus(value as statusType)}
           placeholder="전체"
         />
 

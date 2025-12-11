@@ -1,14 +1,14 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-import type { TagType } from '@/mocks/types/accounts'
+import type { TagType } from '@/types/api'
 
 const WRAPPER_STYLE = 'flex truncate text-sm text-[#374151] w-[180px]'
 
-type Props = {
+type TagFilterPreviewProps = {
   tags: TagType[]
 }
 
-export default function TagFilterPreview({ tags }: Props) {
+export default function TagFilterPreview({ tags }: TagFilterPreviewProps) {
   const measureRef = useRef<HTMLDivElement | null>(null)
   const [visibleCount, setVisibleCount] = useState(0)
 

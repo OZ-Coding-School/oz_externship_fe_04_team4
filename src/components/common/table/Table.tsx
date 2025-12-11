@@ -1,8 +1,6 @@
-import clsx, { type ClassValue } from 'clsx'
+import { type ClassValue } from 'clsx'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
 import type { ReactNode } from 'react'
-
-import { twMerge } from 'tailwind-merge'
 
 import { Pagination } from '@/components/common/table/Pagination'
 import { TableDataNone } from '@/components/common/table/TableDataNone'
@@ -12,6 +10,7 @@ import type {
   PaginationResponse,
   SortConfig,
 } from '@/components/common/table/types'
+import { tM } from '@/lib/twMerge'
 
 interface TableProps<T> {
   columns: Column<T>[]
@@ -56,7 +55,7 @@ export function Table<T>({
   const results = response?.results ?? []
 
   const twClassName = (classes: ClassValue[]) => {
-    return twMerge(clsx(classes))
+    return tM(classes)
   }
 
   const getSortIcon = (columnKey: string) => {

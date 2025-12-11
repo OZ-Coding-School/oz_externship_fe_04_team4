@@ -1,7 +1,7 @@
 import Modal from '@/components/common/Modal'
 import RecruitmentDetailContent from '@/features/recruitment/ui/detailModal/RecruitmentDetailContent'
 import RecruitmentDetailFooterActions from '@/features/recruitment/ui/detailModal/RecruitmentDetailFooterActions'
-import { useRecruitmentDetailModalStore } from '@/store/recruitment/useRecruitmentModalStore'
+import { useRecruitmentDetailModalStore } from '@/store/recruitment'
 
 export default function RecruitmentDetailModal() {
   const { isDetailModalOpen, closeDetailModal } =

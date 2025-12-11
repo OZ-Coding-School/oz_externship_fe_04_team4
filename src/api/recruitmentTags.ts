@@ -1,5 +1,5 @@
 import { authFetch } from '@/api/client'
-import type { RecruitmentTags } from '@/mocks/types/accounts'
+import type { RecruitmentTags } from '@/types/api'
 
 type fetchRecruitmentTagsParams = {
   page?: number

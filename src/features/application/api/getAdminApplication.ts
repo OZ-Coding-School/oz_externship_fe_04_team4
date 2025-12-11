@@ -1,13 +1,6 @@
 import { authFetch } from '@/api/client'
 import { ADMIN_TEXT } from '@/config/api'
-
-export type GetAdminApplicationParams = {
-  search: string
-  page: number
-  page_size: number
-  status: string
-  sort: string
-}
+import type { GetAdminApplicationParams } from '@/types'
 
 export async function getAdminApplication(params: GetAdminApplicationParams) {
   const searchParams = new URLSearchParams()

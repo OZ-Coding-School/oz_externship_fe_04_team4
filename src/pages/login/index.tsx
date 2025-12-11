@@ -1,18 +1,27 @@
 import { type FormEvent } from 'react'
 
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 
-import { useLoginMutation } from '@/api/auth/useLoginMutation'
+import { ROUTE_PATHS } from '@/app/router/routePaths'
 import Button from '@/components/common/Button'
+import { useLoginMutation } from '@/hooks/model'
 import { useAuthRole } from '@/hooks/useAuthRole'
+
+type LocationState = {
+  from?: string
+}
 
 const INPUT_STYLE =
   'h-12 w-[328px] rounded-sm border border-[#BDBDBD] bg-white mb-3 placeholder-[#BDBDBD] py-3.5 px-4 outline-0'
 
 export default function Login() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { mutate, isPending, error } = useLoginMutation()
   const { isUser } = useAuthRole()
+
+  const from =
+    (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,7 +35,7 @@ export default function Login() {
       {
         onSuccess: () => {
           if (!isUser) {
-            navigate('/members/users')
+            navigate(from, { replace: true })
           } else {
             alert(
               '관리자 전용 페이지입니다. 관리자 계정으로 다시 로그인해주세요.'

@@ -1,17 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 
 import type { ChangeEvent } from 'react'
 
-import { twMerge } from 'tailwind-merge'
-
-import {
-  ApplicationStatusMediumBadge,
-  GenderBadge,
-} from '@/components/common/badge'
-import { getAdminApplicationDetail } from '@/features/recruitment/api/getAdminApplicationDetail'
+import { ApplicationStatusMediumBadge } from '@/components/common/badge'
+import { GENDER_LABEL } from '@/config/gender'
+import { getAdminApplicationDetail } from '@/features/application/api'
+import { tM } from '@/lib/twMerge'
 import { useApplicationDetailModalStore } from '@/store/application/useApplicationModalStore'
 
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
@@ -76,7 +72,7 @@ export default function ApplicationDetailContent() {
           <div className={WRAPPER_BOX}>
             <div className={TEXT_STYLE}>강의 목록</div>
             {data?.recruitment.lectures.length === 0 && (
-              <div className={twMerge(clsx(TEXT_BOX, 'text-gray-400'))}>
+              <div className={tM(TEXT_BOX, 'text-gray-400')}>
                 현재 이 스터디와 연동된 강의가 없습니다.{' '}
               </div>
             )}
@@ -135,7 +131,7 @@ export default function ApplicationDetailContent() {
               </div>
               <div className="text-[#4B5563]">{data.applicant.email}</div>
               <div className="text-[#4B5563]">
-                {GenderBadge[data.applicant.gender]}
+                {GENDER_LABEL[data.applicant.gender]}
               </div>
             </div>
           </div>
@@ -186,13 +182,13 @@ export default function ApplicationDetailContent() {
 
           {/* 지원 일시 / 수정 일시 */}
           <div className="flex items-center justify-between">
-            <div className={twMerge(clsx('w-[228px]', WRAPPER_BOX))}>
+            <div className={tM('w-[228px]', WRAPPER_BOX)}>
               <div className={TEXT_STYLE}>지원 일시</div>
               <div className={TEXT_BOX}>
                 {dayjs(data.created_at).format('YYYY-MM-DD HH:mm:ss')}
               </div>
             </div>
-            <div className={twMerge(clsx('w-[228px]', WRAPPER_BOX))}>
+            <div className={tM('w-[228px]', WRAPPER_BOX)}>
               <div className={TEXT_STYLE}>수정일시</div>
               <div className={TEXT_BOX}>
                 {dayjs(data.updated_at).format('YYYY-MM-DD HH:mm:ss')}
@@ -203,7 +199,7 @@ export default function ApplicationDetailContent() {
           {/* 지원 상태 */}
           <div className={WRAPPER_BOX}>
             <div className={TEXT_STYLE}>지원 상태</div>
-            <div className="">{ApplicationStatusMediumBadge[data.status]}</div>
+            <div>{ApplicationStatusMediumBadge[data.status]}</div>
           </div>
         </div>
       </div>
