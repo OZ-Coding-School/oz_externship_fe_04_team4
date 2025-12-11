@@ -11,7 +11,7 @@ import {
   useRecruitmentDetailModalStore,
   useRecruitmentTagListStore,
 } from '@/store/recruitment'
-import type { GetAdminRecruitmentsParams, statusType } from '@/types'
+import type { GetAdminRecruitmentsParams, sortType, statusType } from '@/types'
 import type { RecruitmentListResults } from '@/types/api'
 
 const PAGE_SIZE = 10
@@ -29,11 +29,11 @@ export default function RecruitmentPage() {
 
   const queryParams: GetAdminRecruitmentsParams = {
     page: currentPage,
-    page_size: PAGE_SIZE,
+    page_size: 10,
     search: keyword,
     status,
     tags: selectedTagsResult,
-    sort: sortConfig?.value,
+    sort: sortConfig?.value as sortType,
   }
 
   // 3) Table에 넘길 response 생성

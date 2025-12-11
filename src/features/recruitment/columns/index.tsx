@@ -49,7 +49,7 @@ const RecruitmentColumns = [
     key: 'created_at',
     header: '생성일시',
     width: '160px',
-    sortable: { asc: 'created_asc', desc: 'created_desc' },
+    sortable: { asc: 'oldest', desc: 'latest' },
     render: (row: string) => dayjs(row).format('YYYY-MM-DD HH:mm'),
   },
   {

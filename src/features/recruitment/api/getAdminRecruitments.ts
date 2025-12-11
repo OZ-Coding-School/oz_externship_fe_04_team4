@@ -12,22 +12,16 @@ export async function getAdminRecruitments(params: GetAdminRecruitmentsParams) {
     searchParams.set('search', params.search.trim())
   }
 
-  // 서버 스펙에 맞춰서 매핑 (예: is_closed=true/false/all)
   if (params.status !== 'all') {
-    // 예시: status === 'true' → is_closed=true
     searchParams.set('is_closed', params.status === 'true' ? 'true' : 'false')
   }
 
   if (params.tags && params.tags.length > 0) {
-    // 예시: "python,react" 형식으로 보냄
     searchParams.set('tags', params.tags.map((el) => el.name).join(','))
   }
 
   if (params.sort) {
-    searchParams.set(
-      'sort',
-      params.sort === 'created_asc' ? 'oldest' : 'latest'
-    )
+    searchParams.set('sort', params.sort === 'oldest' ? 'oldest' : 'latest')
   } else {
     searchParams.set('sort', (params.sort = 'latest'))
   }
