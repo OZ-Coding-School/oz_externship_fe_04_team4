@@ -1,5 +1,4 @@
 // api/v1/admin/accounts
-
 import type {
   AccountStatus,
   GenderStatus,

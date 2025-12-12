@@ -1,6 +1,6 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 
-import { axiosInstance } from '@/lib/axios'
+import { axiosInstance } from '@/api/axios'
 
 type HttpMethod = 'post' | 'patch' | 'put' | 'delete' | 'postForm'
 

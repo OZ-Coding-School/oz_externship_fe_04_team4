@@ -2,7 +2,7 @@ import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
 
 import type { AxiosError } from 'axios'
 
-import { axiosInstance } from '@/lib/axios'
+import { axiosInstance } from '@/api/axios'
 
 interface UseFetchQueryParams<TData, TError = AxiosError> extends Omit<
   UseQueryOptions<TData, TError>,
