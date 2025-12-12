@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { StudyGroupStatusBadge } from '@/components/common/badge/StudyGroupStatusBadge'
 import { FilterBar } from '@/components/common/filter'
 import {
@@ -8,7 +6,7 @@ import {
   type PaginationResponse,
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
-import { useTableFilters } from '@/hooks'
+import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { StudyGroupDetailModal } from '@/pages/study/groups/StudyGroupDetailModal'
 import { formatDateTime } from '@/utils'
@@ -99,10 +97,8 @@ export default function StudyGroupManagementPage() {
     },
   })
 
-  const [selectedStudyGroupId, setSelectedStudyGroupId] = useState<
-    number | null
-  >(null)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const modal = useModal<number>('study-group-detail')
+
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<StudyGroup>
   >({
@@ -118,13 +114,7 @@ export default function StudyGroupManagementPage() {
   })
 
   const handleRowClick = (studyGroup: StudyGroup) => {
-    setSelectedStudyGroupId(studyGroup.id)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedStudyGroupId(null)
+    modal.open(studyGroup.id)
   }
   return (
     <>
@@ -163,9 +153,9 @@ export default function StudyGroupManagementPage() {
         onSort={handleSort}
       />
       <StudyGroupDetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        studyGroupId={selectedStudyGroupId}
+        isOpen={modal.isOpen}
+        onClose={modal.close}
+        studyGroupId={modal.value ?? null}
       />
     </>
   )
