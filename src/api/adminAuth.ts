@@ -1,5 +1,5 @@
 import { authFetch } from '@/api/client'
-import { ADMIN_TEXT } from '@/config/api'
+import { API_URL } from '@/config/api'
 
 export type LoginRequest = {
   email: string
@@ -17,7 +17,7 @@ export type LoginResponse = {
 }
 
 export async function loginAdmin(body: LoginRequest): Promise<LoginResponse> {
-  const res = await authFetch(`${ADMIN_TEXT}/login`, {
+  const res = await authFetch(`${API_URL}/login`, {
     method: 'POST',
     skipAuth: true,
     body: JSON.stringify(body),

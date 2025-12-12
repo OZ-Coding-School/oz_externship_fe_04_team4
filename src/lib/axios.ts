@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios'
 
-import { ADMIN_API_PREFIX } from '@/config/api'
+import { ADMIN_API_URL } from '@/config/api'
 import { useAuthStore } from '@/store/authStore'
 
 export const axiosInstance = axios.create({
-  baseURL: ADMIN_API_PREFIX,
+  baseURL: ADMIN_API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

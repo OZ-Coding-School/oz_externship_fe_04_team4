@@ -1,14 +1,15 @@
 import type { TagType } from '@/types/api'
 
 export type statusType = 'all' | 'false' | 'true'
+export type sortType = 'latest' | 'oldest'
 
 export type GetAdminRecruitmentsParams = {
   page: number
   page_size: number
   search?: string
-  status?: 'all' | 'true' | 'false' | string
+  status?: statusType
   tags?: TagType[]
-  sort?: string
+  sort?: sortType
 }
 
 export type GetAdminApplicationParams = {
@@ -16,5 +17,5 @@ export type GetAdminApplicationParams = {
   page: number
   page_size: number
   status: string
-  sort: string
+  sort: sortType
 }

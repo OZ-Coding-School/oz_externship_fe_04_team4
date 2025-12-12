@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 
-import { ADMIN_API_PREFIX, API_V1_PREFIX, BASE_URL } from '@/config/api'
+import { ADMIN_API_URL, API_URL } from '@/config/api'
 import {
   mockAccountDetailMap,
   mockAccountsList,
@@ -26,7 +26,7 @@ import {
   mockWithdrawalsTrendsYearly,
 } from '@/mocks/data/accounts'
 import { parseRequestBody } from '@/mocks/handlers/parseRequestBody'
-import type { ReasonStatus, RecruitmentTags } from '@/types/api'
+import type { ReasonStatus, RecruitmentTags, RoleStatus } from '@/types/api'
 
 /**
  * 공통 admin 인증 체크
@@ -86,7 +86,7 @@ const paginate = <T>(items: T[], page: number, pageSize: number) => {
 // api/v1/accounts/me
 // 내 정보 조회
 export const getAccountsMeHandler = http.get(
-  `${API_V1_PREFIX}/accounts/me`,
+  `${API_URL}/accounts/me`,
   ({ request }) => {
     const authorization = request.headers.get('Authorization')
 
@@ -108,7 +108,7 @@ export const getAccountsMeHandler = http.get(
 
 // GET /api/v1/admin/accounts - 회원 목록 조회
 export const getAdminAccountsHandler = http.get(
-  `${ADMIN_API_PREFIX}/accounts`,
+  `${ADMIN_API_URL}/accounts`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -149,10 +149,10 @@ export const getAdminAccountsHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/accounts?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/accounts?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/accounts?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/accounts?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -170,7 +170,7 @@ export const getAdminAccountsHandler = http.get(
 
 // GET /api/v1/admin/accounts/check-nickname - 닉네임 중복 검사
 export const checkNicknameHandler = http.get(
-  `${ADMIN_API_PREFIX}/accounts/check-nickname`,
+  `${ADMIN_API_URL}/accounts/check-nickname`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -207,7 +207,7 @@ export const checkNicknameHandler = http.get(
 
 // GET /api/v1/admin/accounts/{account_id} - 회원 상세 조회
 export const getAdminAccountDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/accounts/:account_id`,
+  `${ADMIN_API_URL}/accounts/:account_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -239,7 +239,7 @@ export const getAdminAccountDetailHandler = http.get(
 
 // PATCH /api/v1/admin/accounts/{account_id} - 회원 정보 수정
 export const patchAdminAccountHandler = http.patch(
-  `${ADMIN_API_PREFIX}/accounts/:account_id`,
+  `${ADMIN_API_URL}/accounts/:account_id`,
   async ({ request, params }) => {
     const body = await parseRequestBody(request)
     const authError = requireAdminAuth(request)
@@ -279,7 +279,7 @@ export const patchAdminAccountHandler = http.patch(
 )
 // POST /api/v1/admin/accounts/{account_id} - 회원 정보 수정 (JSON)
 export const postAdminAccountHandler = http.post(
-  `${ADMIN_API_PREFIX}/accounts/:account_id`,
+  `${ADMIN_API_URL}/accounts/:account_id`,
   async ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -321,7 +321,7 @@ export const postAdminAccountHandler = http.post(
 
 // DELETE /api/v1/admin/accounts/{account_id} - 회원 삭제
 export const deleteAdminAccountHandler = http.delete(
-  `${ADMIN_API_PREFIX}/accounts/:account_id`,
+  `${ADMIN_API_URL}/accounts/:account_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -347,15 +347,51 @@ export const deleteAdminAccountHandler = http.delete(
 
 // PATCH /api/v1/admin/accounts/{account_id}/role - 회원 권한 변경
 export const patchAdminAccountRoleHandler = http.patch(
-  `${ADMIN_API_PREFIX}/accounts/:account_id/role`,
-  async ({ request }) => {
+  `${ADMIN_API_URL}/accounts/:account_id/role`,
+  async ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
       return HttpResponse.json(authError.body, { status: authError.status })
     }
 
-    const body = (await request.json()) as { role?: string }
+    const { account_id } = params as { account_id?: string }
+    const id = Number(account_id)
 
+    // 1) 파라미터 검증
+    if (!account_id || Number.isNaN(id)) {
+      return HttpResponse.json(
+        { error_detail: '사용자 정보를 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    const current = mockAccountDetailMap[id]
+
+    if (!current) {
+      return HttpResponse.json(
+        { error_detail: '사용자 정보를 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    const body = (await request.json()) as { role?: RoleStatus }
+
+    if (!body.role) {
+      return HttpResponse.json(
+        { error_detail: '변경할 권한 정보가 없습니다.' },
+        { status: 400 }
+      )
+    }
+
+    // 2) 메모리 mock 업데이트
+    const updated = {
+      ...current,
+      role: body.role,
+    }
+
+    mockAccountDetailMap[id] = updated
+
+    // 3) 응답은 기존 스펙 유지 (detail + role)
     return HttpResponse.json(
       {
         detail: '권한이 변경되었습니다.',
@@ -368,7 +404,7 @@ export const patchAdminAccountRoleHandler = http.patch(
 
 // POST /api/v1/admin/accounts/{account_id}/activate - 탈퇴 회원 복구
 export const postAdminAccountActivateHandler = http.post(
-  `${ADMIN_API_PREFIX}/accounts/:account_id/activate`,
+  `${ADMIN_API_URL}/accounts/:account_id/activate`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -394,7 +430,7 @@ export const postAdminAccountActivateHandler = http.post(
 
 // POST /api/v1/admin/accounts/{account_id}/deactivate - 회원 비활성화
 export const postAdminAccountDeactivateHandler = http.post(
-  `${ADMIN_API_PREFIX}/accounts/:account_id/deactivate`,
+  `${ADMIN_API_URL}/accounts/:account_id/deactivate`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -424,7 +460,7 @@ export const postAdminAccountDeactivateHandler = http.post(
 
 // GET /api/v1/admin/withdrawals - 탈퇴 내역 목록
 export const getAdminWithdrawalsHandler = http.get(
-  `${ADMIN_API_PREFIX}/withdrawals`,
+  `${ADMIN_API_URL}/withdrawals`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -500,10 +536,10 @@ export const getAdminWithdrawalsHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/withdrawals?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/withdrawals?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/withdrawals?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/withdrawals?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -521,7 +557,7 @@ export const getAdminWithdrawalsHandler = http.get(
 
 // GET /api/v1/admin/withdrawals/{withdrawal_id} - 탈퇴 내역 상세
 export const getAdminWithdrawalDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/withdrawals/:withdrawal_id`,
+  `${ADMIN_API_URL}/withdrawals/:withdrawal_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -560,7 +596,7 @@ export const getAdminWithdrawalDetailHandler = http.get(
 
 // GET /api/v1/admin/analytics/signup/trends - 회원가입 추세 분석
 export const getAdminSignupTrendsHandler = http.get(
-  `${ADMIN_API_PREFIX}/analytics/signup/trends`,
+  `${ADMIN_API_URL}/analytics/signup/trends`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -581,7 +617,7 @@ export const getAdminSignupTrendsHandler = http.get(
 
 // GET /api/v1/admin/analytics/withdrawals/trends - 회원탈퇴 추세 분석
 export const getAdminWithdrawalsTrendsHandler = http.get(
-  `${ADMIN_API_PREFIX}/analytics/withdrawals/trends`,
+  `${ADMIN_API_URL}/analytics/withdrawals/trends`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -605,7 +641,7 @@ export const getAdminWithdrawalsTrendsHandler = http.get(
 
 // GET /api/v1/admin/analytics/withdrawal-reasons/percentage
 export const getAdminWithdrawalReasonsPercentageHandler = http.get(
-  `${ADMIN_API_PREFIX}/analytics/withdrawal-reasons/percentage`,
+  `${ADMIN_API_URL}/analytics/withdrawal-reasons/percentage`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -618,7 +654,7 @@ export const getAdminWithdrawalReasonsPercentageHandler = http.get(
 
 // GET /api/v1/admin/analytics/withdrawal-reasons/stats/monthly
 export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
-  `${ADMIN_API_PREFIX}/analytics/withdrawal-reasons/stats/monthly`,
+  `${ADMIN_API_URL}/analytics/withdrawal-reasons/stats/monthly`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -654,7 +690,7 @@ export const getAdminWithdrawalReasonsStatsMonthlyHandler = http.get(
 
 // GET /api/v1/admin/lectures - 강의 목록
 export const getAdminLecturesHandler = http.get(
-  `${ADMIN_API_PREFIX}/lectures`,
+  `${ADMIN_API_URL}/lectures`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -679,10 +715,10 @@ export const getAdminLecturesHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/lectures?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/lectures?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/lectures?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/lectures?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -700,7 +736,7 @@ export const getAdminLecturesHandler = http.get(
 
 // GET /api/v1/admin/lectures/{lecture_id} - 강의 상세
 export const getAdminLectureDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/lectures/:lecture_id`,
+  `${ADMIN_API_URL}/lectures/:lecture_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -739,7 +775,7 @@ export const getAdminLectureDetailHandler = http.get(
 
 // GET /api/v1/admin/study-groups - 스터디 그룹 목록
 export const getAdminStudyGroupsHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-groups`,
+  `${ADMIN_API_URL}/study-groups`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -792,10 +828,10 @@ export const getAdminStudyGroupsHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/study-groups?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/study-groups?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/study-groups?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/study-groups?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -813,7 +849,7 @@ export const getAdminStudyGroupsHandler = http.get(
 
 // GET /api/v1/admin/study-groups/{group_id} - 스터디 그룹 상세
 export const getAdminStudyGroupDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-groups/:group_id`,
+  `${ADMIN_API_URL}/study-groups/:group_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -836,7 +872,7 @@ export const getAdminStudyGroupDetailHandler = http.get(
 
 // GET /api/v1/admin/study-reviews - 스터디 리뷰 목록
 export const getAdminStudyReviewsHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-reviews`,
+  `${ADMIN_API_URL}/study-reviews`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -861,10 +897,10 @@ export const getAdminStudyReviewsHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/study-reviews?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/study-reviews?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/study-reviews?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/study-reviews?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -882,7 +918,7 @@ export const getAdminStudyReviewsHandler = http.get(
 
 // GET /api/v1/admin/study-reviews/{review_id} - 스터디 리뷰 상세
 export const getAdminStudyReviewDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/study-reviews/:review_id`,
+  `${ADMIN_API_URL}/study-reviews/:review_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -909,7 +945,7 @@ export const getAdminStudyReviewDetailHandler = http.get(
 
 // GET /api/v1/recruitment-tags - 태그 목록 조회
 export const getRecruitmentTagsHandler = http.get(
-  `${BASE_URL}${API_V1_PREFIX}/recruitment-tags`,
+  `${API_URL}/recruitment-tags`,
   ({ request }) => {
     const url = new URL(request.url)
 
@@ -938,7 +974,7 @@ export const getRecruitmentTagsHandler = http.get(
     const end = start + pageSize
     const paginatedTags = filteredTags.slice(start, end)
 
-    const baseUrl = `${BASE_URL}${API_V1_PREFIX}/recruitment-tags`
+    const baseUrl = `${API_URL}/recruitment-tags`
     const buildUrl = (p: number) =>
       `${baseUrl}?page=${p}&page_size=${pageSize}${
         search ? `&search=${encodeURIComponent(search)}` : ''
@@ -957,7 +993,7 @@ export const getRecruitmentTagsHandler = http.get(
 
 // GET /api/v1/admin/recruitments - 모집 공고 목록
 export const getAdminRecruitmentsHandler = http.get(
-  `${ADMIN_API_PREFIX}/recruitments`,
+  `${ADMIN_API_URL}/recruitments`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1048,7 +1084,7 @@ export const getAdminRecruitmentsHandler = http.get(
     )
 
     // next / previous URL 생성 (기존 쿼리 유지 + page/page_size만 교체)
-    const baseUrl = `${BASE_URL}${ADMIN_API_PREFIX}/recruitments`
+    const baseUrl = `${ADMIN_API_URL}/recruitments`
     const buildUrl = (targetPage: number) => {
       const params = new URLSearchParams(url.searchParams)
       params.set('page', String(targetPage))
@@ -1074,7 +1110,7 @@ export const getAdminRecruitmentsHandler = http.get(
 
 // GET /api/v1/admin/recruitments/{recruitment_id} - 모집 공고 상세
 export const getAdminRecruitmentDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/recruitments/:recruitment_id`,
+  `${ADMIN_API_URL}/recruitments/:recruitment_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1084,24 +1120,32 @@ export const getAdminRecruitmentDetailHandler = http.get(
     const { recruitment_id } = params as { recruitment_id?: string }
     const id = Number(recruitment_id)
 
-    if (
-      !recruitment_id ||
-      Number.isNaN(id) ||
-      id !== mockRecruitmentDetailMap[Number(id)].id
-    ) {
+    // 1) 파라미터가 없거나 숫자로 변환 불가한 경우
+    if (!recruitment_id || Number.isNaN(id)) {
       return HttpResponse.json(
         { error_detail: '해당 공고를 찾을 수 없습니다.' },
         { status: 404 }
       )
     }
 
-    return HttpResponse.json(mockRecruitmentDetailMap[id], { status: 200 })
+    // 2) 더미 상세 맵에서 해당 id 조회
+    const detail = mockRecruitmentDetailMap[id]
+
+    if (!detail) {
+      return HttpResponse.json(
+        { error_detail: '해당 공고를 찾을 수 없습니다.' },
+        { status: 404 }
+      )
+    }
+
+    // 3) 정상 응답
+    return HttpResponse.json(detail, { status: 200 })
   }
 )
 
 // DELETE /api/v1/admin/recruitments/{recruitment_id} - 모집 공고 삭제
 export const deleteAdminRecruitmentHandler = http.delete(
-  `${ADMIN_API_PREFIX}/recruitments/:recruitment_id`,
+  `${ADMIN_API_URL}/recruitments/:recruitment_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1131,7 +1175,7 @@ export const deleteAdminRecruitmentHandler = http.delete(
 
 // GET /api/v1/admin/applications - 지원 내역 목록
 export const getAdminApplicationsHandler = http.get(
-  `${ADMIN_API_PREFIX}/applications`,
+  `${ADMIN_API_URL}/applications`,
   ({ request }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1178,10 +1222,10 @@ export const getAdminApplicationsHandler = http.get(
     )
 
     const next = hasNext
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/applications?page=${page + 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/applications?page=${page + 1}&page_size=${pageSize}`
       : null
     const previous = hasPrev
-      ? `${BASE_URL}${ADMIN_API_PREFIX}/applications?page=${page - 1}&page_size=${pageSize}`
+      ? `${ADMIN_API_URL}/applications?page=${page - 1}&page_size=${pageSize}`
       : null
 
     return HttpResponse.json(
@@ -1199,7 +1243,7 @@ export const getAdminApplicationsHandler = http.get(
 
 // GET /api/v1/admin/applications/{application_id} - 지원 내역 상세
 export const getAdminApplicationDetailHandler = http.get(
-  `${ADMIN_API_PREFIX}/applications/:application_id`,
+  `${ADMIN_API_URL}/applications/:application_id`,
   ({ request, params }) => {
     const authError = requireAdminAuth(request)
     if (authError) {
@@ -1228,7 +1272,7 @@ export const getAdminApplicationDetailHandler = http.get(
 )
 
 export const catchAllAdminHandler = http.all(
-  `${ADMIN_API_PREFIX}/*`,
+  `${ADMIN_API_URL}/*`,
   ({ request }) => {
     return HttpResponse.json(
       {
