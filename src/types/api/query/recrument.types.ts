@@ -1,4 +1,4 @@
-import type { SortType, StatusType, TagType } from '@/types'
+import type { ApplicationsStatus, SortType, StatusType, TagType } from '@/types'
 
 export type GetRecruitmentTagsQuery = {
   page?: number
@@ -16,9 +16,9 @@ export type GetAdminRecruitmentsQuery = {
 }
 
 export type GetAdminApplicationQuery = {
-  search: string
   page: number
   page_size: number
-  status: string
-  sort: SortType
+  search?: string
+  status?: ApplicationsStatus
+  sort?: SortType
 }

@@ -19,3 +19,14 @@ export interface SearchConfig {
   value: string
   onChange: (value: string) => void
 }
+
+export interface ApplicationSearchConfig {
+  className?: string
+  label?: string
+  labelClassName?: string
+  searchClassName?: string
+  inputClassName?: string
+  placeholder: string
+  value?: string
+  onChange: (value: string) => void
+}
