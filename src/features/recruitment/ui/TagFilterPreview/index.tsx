@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-import type { TagType } from '@/types/api'
+import type { TagType } from '@/types'
 
 const WRAPPER_STYLE = 'flex truncate text-sm text-[#374151] w-[180px]'
 

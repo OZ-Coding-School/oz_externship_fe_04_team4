@@ -11,7 +11,7 @@ import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { ReviewDetailModal } from '@/pages/study/reviews/ReviewDetailModal'
-import type { StudyReviewListResults } from '@/types/api'
+import type { StudyReviewListResults } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
 type ReviewProps = StudyReviewListResults

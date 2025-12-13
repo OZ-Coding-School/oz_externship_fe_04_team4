@@ -2,11 +2,11 @@ import type {
   ApplicationsStatus,
   GenderStatus,
   TagType,
-} from '@/types/api/common.types'
+} from '@/types/common.types'
 
 // api/v1/recruitment-tags
 // 태그 목록 조회
-export type RecruitmentTags = {
+export type GetRecruitmentTagsResponse = {
   count: number
   next: null | string
   previous: null | string
@@ -15,12 +15,6 @@ export type RecruitmentTags = {
 
 // api/v1/admin/recruitments
 // 스터디 모집 공고 목록 조회
-export type RecruitmentList = {
-  count: number
-  next: null | string
-  previous: null | string
-  results: RecruitmentListResults[]
-}
 export type RecruitmentListResults = {
   id: number
   title: string
@@ -31,6 +25,13 @@ export type RecruitmentListResults = {
   bookmark_count: number
   created_at: string
   updated_at: string
+}
+
+export type GetRecruitmentListResponse = {
+  count: number
+  next: null | string
+  previous: null | string
+  results: RecruitmentListResults[]
 }
 
 // api/v1/admin/recruitments/{recruitment_id}
@@ -57,7 +58,7 @@ export type RecruitmentDetailApplications = {
   status: ApplicationsStatus
   created_at: string
 }
-export type RecruitmentDetail = {
+export type GetRecruitmentDetailResponse = {
   id: number
   uuid: string
   title: string
@@ -94,7 +95,7 @@ export type ApplicationsListResults = {
   created_at: string
   updated_at: string
 }
-export type ApplicationsList = {
+export type GetApplicationsListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -108,7 +109,7 @@ export type ApplicationsDetailLectures = {
   title: string
   instructor: string
 }
-export type ApplicationsDetail = {
+export type GetApplicationsDetailResponse = {
   id: number
   self_introduction: string
   motivation: string

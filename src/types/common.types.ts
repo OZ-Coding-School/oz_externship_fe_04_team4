@@ -33,3 +33,7 @@ export type TagType = {
   id: number
   name: string
 }
+
+export type SortType = 'latest' | 'oldest'
+
+export type IsClosedType = 'all' | 'false' | 'true'

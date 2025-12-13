@@ -17,8 +17,16 @@ const INPUT_STYLE =
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { mutate, isPending, error } = useLoginMutation()
   const { isUser } = useAuthRole()
+  const { mutate, isPending, error } = useLoginMutation({
+    onSuccess: () => {
+      if (!isUser) {
+        navigate(from, { replace: true })
+      } else {
+        alert('관리자 전용 페이지입니다. 관리자 계정으로 다시 로그인해주세요.')
+      }
+    },
+  })
 
   const from =
     (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
@@ -30,20 +38,7 @@ export default function Login() {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    mutate(
-      { email, password },
-      {
-        onSuccess: () => {
-          if (!isUser) {
-            navigate(from, { replace: true })
-          } else {
-            alert(
-              '관리자 전용 페이지입니다. 관리자 계정으로 다시 로그인해주세요.'
-            )
-          }
-        },
-      }
-    )
+    mutate({ email, password })
   }
 
   return (

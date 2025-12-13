@@ -2,7 +2,7 @@ import { Search } from 'lucide-react'
 
 import { useState, type KeyboardEvent } from 'react'
 
-import type { SearchConfig } from '@/components/common/filter/types'
+import type { ApplicationSearchConfig } from '@/components/common/filter/types'
 import { tM } from '@/lib/twMerge'
 
 export function ApplicationSearchInput({
@@ -13,7 +13,7 @@ export function ApplicationSearchInput({
   inputClassName,
   placeholder,
   onChange,
-}: SearchConfig) {
+}: ApplicationSearchConfig) {
   const [search, setSearch] = useState('')
 
   const handleSearchSubmit = () => {

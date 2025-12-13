@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { RecruitmentStatusBadge } from '@/components/common/badge'
 import TagFilterPreview from '@/features/recruitment/ui/TagFilterPreview'
-import type { TagType } from '@/types/api'
+import type { TagType } from '@/types'
 
 const RecruitmentColumns = [
   { key: 'id', header: 'ID', width: '60px' },

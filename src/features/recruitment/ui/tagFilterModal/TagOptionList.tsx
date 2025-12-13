@@ -1,7 +1,10 @@
 import { Check } from 'lucide-react'
 
-import { useRecruitmentTagsQuery } from '@/hooks/model'
+import { SERVICE_URLS } from '@/config/serviceUrls'
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useRecruitmentTagsStore } from '@/store/recruitment'
+import type { GetRecruitmentTagsQuery } from '@/types/api/query'
+import type { GetRecruitmentTagsResponse } from '@/types/api/response'
 
 type TagOptionListProps = {
   submittedValue: string
@@ -13,11 +16,17 @@ const ITEMS_STYLE =
 export default function TagOptionList({ submittedValue }: TagOptionListProps) {
   const { selectedTags, toggleTag } = useRecruitmentTagsStore()
 
-  const { data, isLoading, isError } = useRecruitmentTagsQuery({
+  const apiQueryParams: GetRecruitmentTagsQuery = {
     page: 1,
-    pageSize: 100,
-    search: submittedValue,
-  })
+    page_size: 100,
+    search: submittedValue.trim(),
+  }
+  const { data, isLoading, isError } =
+    useFetchQuery<GetRecruitmentTagsResponse>({
+      queryKey: ['recruitment-tags', apiQueryParams],
+      url: SERVICE_URLS.TAGS.LIST,
+      params: apiQueryParams,
+    })
 
   if (isLoading) {
     return (

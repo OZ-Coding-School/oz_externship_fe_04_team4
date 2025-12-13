@@ -1,16 +1,15 @@
 // api/v1/admin/accounts
-
 import type {
   AccountStatus,
   GenderStatus,
   IntervalStatus,
   ReasonStatus,
   RoleStatus,
-} from '@/types/api/common.types'
+} from '@/types'
 
 // api/v1/accounts/me
 // 내 정보 조회
-export type AccountsMe = {
+export type GetAccountsMeResponse = {
   id: number
   email: string
   nickname: string
@@ -35,7 +34,7 @@ export type AccountListItem = {
   withdraw_at: string | null
   created_at: string
 }
-export type AccountsList = {
+export type GetAccountsListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -44,7 +43,7 @@ export type AccountsList = {
 
 // api/v1/admin/accounts/{account_id}
 // 유저 정보 상세 조회
-export type AccountsDetail = {
+export type GetAccountsDetailResponse = {
   id: number
   email: string
   nickname: string
@@ -71,7 +70,7 @@ export type WithdrawalsListItem = {
 
   withdrawn_at: string
 }
-export type WithdrawalsList = {
+export type GetWithdrawalsListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -80,7 +79,7 @@ export type WithdrawalsList = {
 
 // api/v1/admin/withdrawals/{withdrawal_id}
 // 회원 탈퇴 내역 상세 조회
-export type WithdrawalsDetail = {
+export type GetWithdrawalsDetailResponse = {
   id: number
   user: {
     id: number
@@ -105,7 +104,7 @@ export type SignupTrendsItems = {
   period: string
   count: number
 }
-export type SignupTrends = {
+export type GetSignupTrendsResponse = {
   interval: IntervalStatus
   from_date: string
   to_date: string
@@ -119,7 +118,7 @@ export type WithdrawalsTrendsItems = {
   period: string
   count: number
 }
-export type WithdrawalsTrends = {
+export type GetWithdrawalsTrendsResponse = {
   interval: IntervalStatus
   from_date: string
   to_date: string
@@ -135,7 +134,7 @@ export type WithdrawalReasonsPercentageItems = {
   count: number
   percentage: number
 }
-export type WithdrawalReasonsPercentage = {
+export type GetWithdrawalReasonsPercentageResponse = {
   from_date: string
   to_date: string
   total: number
@@ -148,7 +147,7 @@ export type WithdrawalReasonsStatsMonthlyItem = {
   period: string
   count: number
 }
-export type WithdrawalReasonsStatsMonthly = {
+export type GetWithdrawalReasonsStatsMonthlyResponse = {
   reason: ReasonStatus
 
   reason_label: string

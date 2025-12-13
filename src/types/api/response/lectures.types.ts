@@ -4,7 +4,7 @@ import type {
   DifficultyStatus,
   PlatformStatus,
   Status,
-} from '@/types/api/common.types'
+} from '@/types/common.types'
 
 // 어드민 페이지 강의 목록 조회 API
 export type LecturesResults = {
@@ -17,7 +17,7 @@ export type LecturesResults = {
   created_at: string
   updated_at: string
 }
-export type LectureList = {
+export type GetLectureListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -30,7 +30,7 @@ export type LecturesDetailCategory = {
   id: number
   name: string
 }
-export type LecturesDetail = {
+export type GetLecturesDetailResponse = {
   id: number
   title: string
   instructor: string
@@ -61,7 +61,7 @@ export type StudyGroupListResults = {
   created_at: string
   updated_at: string
 }
-export type StudyGroupList = {
+export type GetStudyGroupListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -82,7 +82,7 @@ export type StudyGroupDetailMembers = {
   nickname: string
   is_leader: boolean
 }
-export type StudyGroupDetail = {
+export type GetStudyGroupDetailResponse = {
   id: number
   name: string
   start_at: string
@@ -116,7 +116,7 @@ export type StudyReviewListResults = {
   created_at: string
   updated_at: string
 }
-export type StudyReviewList = {
+export type GetStudyReviewListResponse = {
   count: number
   next: string | null
   previous: string | null
@@ -125,7 +125,7 @@ export type StudyReviewList = {
 
 // api/v1/admin/study-reviews/{review_id}
 // 스터디 리뷰 상세보기
-export type StudyReviewDetail = {
+export type GetStudyReviewDetailResponse = {
   id: number
   study_group: {
     id: number

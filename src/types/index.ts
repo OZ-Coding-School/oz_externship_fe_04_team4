@@ -1,1 +1,1 @@
-export * from './recrument.types'
+export * from './common.types'

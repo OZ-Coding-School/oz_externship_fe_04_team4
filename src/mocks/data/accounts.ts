@@ -1,31 +1,31 @@
 // api/v1/accounts/me
 
+import type { ReasonStatus } from '@/types'
 import type {
-  AccountsDetail,
-  AccountsList,
-  AccountsMe,
-  ApplicationsDetail,
-  ApplicationsList,
-  LectureList,
-  LecturesDetail,
-  ReasonStatus,
-  RecruitmentDetail,
-  RecruitmentList,
-  RecruitmentTags,
-  SignupTrends,
-  StudyGroupDetail,
-  StudyGroupList,
-  StudyReviewDetail,
-  StudyReviewList,
-  WithdrawalReasonsPercentage,
-  WithdrawalReasonsStatsMonthly,
-  WithdrawalsDetail,
-  WithdrawalsList,
-  WithdrawalsTrends,
-} from '@/types/api'
+  GetAccountsDetailResponse,
+  GetAccountsListResponse,
+  GetAccountsMeResponse,
+  GetApplicationsDetailResponse,
+  GetApplicationsListResponse,
+  GetLectureListResponse,
+  GetLecturesDetailResponse,
+  GetRecruitmentDetailResponse,
+  GetRecruitmentListResponse,
+  GetRecruitmentTagsResponse,
+  GetSignupTrendsResponse,
+  GetStudyGroupDetailResponse,
+  GetStudyGroupListResponse,
+  GetStudyReviewDetailResponse,
+  GetStudyReviewListResponse,
+  GetWithdrawalReasonsPercentageResponse,
+  GetWithdrawalReasonsStatsMonthlyResponse,
+  GetWithdrawalsDetailResponse,
+  GetWithdrawalsListResponse,
+  GetWithdrawalsTrendsResponse,
+} from '@/types/api/response'
 
 // 내 정보 조회
-export const mockAccountsMe: AccountsMe = {
+export const mockAccountsMe: GetAccountsMeResponse = {
   id: 1,
   email: 'admin@ozcoding.com',
   nickname: 'admin',
@@ -40,7 +40,7 @@ export const mockAccountsMe: AccountsMe = {
 
 // api/v1/admin/accounts
 // 유저 목록 조회
-export const mockAccountsList: AccountsList = {
+export const mockAccountsList: GetAccountsListResponse = {
   count: 4018,
   next: 'http://api.ozcoding.site/api/v1/admin/accounts?page=2&page_size=20',
   previous: null,
@@ -270,7 +270,7 @@ export const mockAccountsList: AccountsList = {
 
 // api/v1/admin/accounts/{account_id}
 // 유저 정보 상세 조회
-export const mockAccountDetail: AccountsDetail = {
+export const mockAccountDetail: GetAccountsDetailResponse = {
   // mockAccountsList의 첫 번째 유저(id: 1)와 연결
   id: 1,
   email: 'admin@example.com',
@@ -285,7 +285,7 @@ export const mockAccountDetail: AccountsDetail = {
   created_at: '2025-10-30T10:01:57.505250+09:00',
 }
 
-export const mockAccountDetailMap: Record<number, AccountsDetail> = {
+export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
   1: {
     id: 1,
     email: 'admin@example.com',
@@ -549,7 +549,7 @@ export const mockAccountDetailMap: Record<number, AccountsDetail> = {
 }
 // api/v1/admin/withdrawals
 // 회원 탈퇴 내역 목록 조회
-export const mockWithdrawalsList: WithdrawalsList = {
+export const mockWithdrawalsList: GetWithdrawalsListResponse = {
   count: 1973,
   next: 'http://api.ozcoding.site/api/v1/admin/withdrawals?page=2&page_size=20',
   previous: null,
@@ -739,7 +739,7 @@ export const mockWithdrawalsList: WithdrawalsList = {
 
 // api/v1/admin/withdrawals/{withdrawal_id}
 // 회원 탈퇴 내역 상세 조회
-export const mockWithdrawalsDetail: WithdrawalsDetail = {
+export const mockWithdrawalsDetail: GetWithdrawalsDetailResponse = {
   // mockWithdrawalsList의 id 3986(홍길동 탈퇴 이력)과 연결
   id: 3986,
   user: {
@@ -765,7 +765,10 @@ export const mockWithdrawalsDetail: WithdrawalsDetail = {
   withdrawn_at: '2025-11-02T09:15:00+09:00',
 }
 
-export const mockWithdrawalsDetailMap: Record<number, WithdrawalsDetail> = {
+export const mockWithdrawalsDetailMap: Record<
+  number,
+  GetWithdrawalsDetailResponse
+> = {
   3985: {
     // mockWithdrawalsList의 id 3985(테스트58202506 탈퇴 이력)과 연결
     id: 3985,
@@ -1149,7 +1152,7 @@ export const mockWithdrawalsDetailMap: Record<number, WithdrawalsDetail> = {
 
 // api/v1/admin/analytics/signup/trends
 // 회원가입 추세 분석
-export const mockSignupTrendsMonthly: SignupTrends = {
+export const mockSignupTrendsMonthly: GetSignupTrendsResponse = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1170,7 +1173,7 @@ export const mockSignupTrendsMonthly: SignupTrends = {
   ],
 }
 
-export const mockSignupTrendsYearly: SignupTrends = {
+export const mockSignupTrendsYearly: GetSignupTrendsResponse = {
   interval: 'yearly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1193,7 +1196,7 @@ export const mockSignupTrendsYearly: SignupTrends = {
 
 // api/v1/admin/analytics/withdrawals/trends
 // 회원 탈퇴 추세 분석
-export const mockWithdrawalsTrendsMonthly: WithdrawalsTrends = {
+export const mockWithdrawalsTrendsMonthly: GetWithdrawalsTrendsResponse = {
   interval: 'monthly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1213,7 +1216,7 @@ export const mockWithdrawalsTrendsMonthly: WithdrawalsTrends = {
     { period: '2025-11', count: 120 },
   ],
 }
-export const mockWithdrawalsTrendsYearly: WithdrawalsTrends = {
+export const mockWithdrawalsTrendsYearly: GetWithdrawalsTrendsResponse = {
   interval: 'yearly',
   from_date: '2024-12-01',
   to_date: '2025-11-30',
@@ -1236,71 +1239,72 @@ export const mockWithdrawalsTrendsYearly: WithdrawalsTrends = {
 
 // api/v1/admin/analytics/withdrawal-reasons/percentage
 // 전체 기간 회원 탈퇴 사유 분석
-export const mockWithdrawalReasonsPercentage: WithdrawalReasonsPercentage = {
-  from_date: '2021-01-01',
-  to_date: '2025-11-30',
-  total: 5000,
-  items: [
-    {
-      reason: 'NO_LONGER_NEEDED',
-      reason_label: '더 이상 필요하지 않음',
-      count: 900,
-      percentage: 18,
-    },
-    {
-      reason: 'LACK_OF_INTEREST',
-      reason_label: '관심 감소/흥미 저하',
-      count: 850,
-      percentage: 17,
-    },
-    {
-      reason: 'TOO_DIFFICULT',
-      reason_label: '난이도가 너무 높음',
-      count: 700,
-      percentage: 14,
-    },
-    {
-      reason: 'FOUND_BETTER_SERVICE',
-      reason_label: '더 나은/맞는 다른 서비스 이용',
-      count: 650,
-      percentage: 13,
-    },
-    {
-      reason: 'PRIVACY_CONCERNS',
-      reason_label: '개인정보/보안 관련 우려',
-      count: 550,
-      percentage: 11,
-    },
-    {
-      reason: 'POOR_SERVICE_QUALITY',
-      reason_label: '서비스 품질 불만족',
-      count: 500,
-      percentage: 10,
-    },
-    {
-      reason: 'TECHNICAL_ISSUES',
-      reason_label: '오류·버그 등 기술적 문제',
-      count: 400,
-      percentage: 8,
-    },
-    {
-      reason: 'LACK_OF_CONTENT',
-      reason_label: '원하는 콘텐츠/기능 부족',
-      count: 300,
-      percentage: 6,
-    },
-    {
-      reason: 'OTHER',
-      reason_label: '기타',
-      count: 150,
-      percentage: 3,
-    },
-  ],
-}
+export const mockWithdrawalReasonsPercentage: GetWithdrawalReasonsPercentageResponse =
+  {
+    from_date: '2021-01-01',
+    to_date: '2025-11-30',
+    total: 5000,
+    items: [
+      {
+        reason: 'NO_LONGER_NEEDED',
+        reason_label: '더 이상 필요하지 않음',
+        count: 900,
+        percentage: 18,
+      },
+      {
+        reason: 'LACK_OF_INTEREST',
+        reason_label: '관심 감소/흥미 저하',
+        count: 850,
+        percentage: 17,
+      },
+      {
+        reason: 'TOO_DIFFICULT',
+        reason_label: '난이도가 너무 높음',
+        count: 700,
+        percentage: 14,
+      },
+      {
+        reason: 'FOUND_BETTER_SERVICE',
+        reason_label: '더 나은/맞는 다른 서비스 이용',
+        count: 650,
+        percentage: 13,
+      },
+      {
+        reason: 'PRIVACY_CONCERNS',
+        reason_label: '개인정보/보안 관련 우려',
+        count: 550,
+        percentage: 11,
+      },
+      {
+        reason: 'POOR_SERVICE_QUALITY',
+        reason_label: '서비스 품질 불만족',
+        count: 500,
+        percentage: 10,
+      },
+      {
+        reason: 'TECHNICAL_ISSUES',
+        reason_label: '오류·버그 등 기술적 문제',
+        count: 400,
+        percentage: 8,
+      },
+      {
+        reason: 'LACK_OF_CONTENT',
+        reason_label: '원하는 콘텐츠/기능 부족',
+        count: 300,
+        percentage: 6,
+      },
+      {
+        reason: 'OTHER',
+        reason_label: '기타',
+        count: 150,
+        percentage: 3,
+      },
+    ],
+  }
 
 // api/v1/admin/analytics/withdrawal-reasons/stats/monthly
 // 어드민 페이지 월별 회원 탈퇴 사유 분석 API
-export const mockWithdrawalReasonsStatsMonthly: WithdrawalReasonsStatsMonthly =
+export const mockWithdrawalReasonsStatsMonthly: GetWithdrawalReasonsStatsMonthlyResponse =
   {
     reason: 'OTHER',
     reason_label: '기타',
@@ -1327,7 +1331,7 @@ export const mockWithdrawalReasonsStatsMonthly: WithdrawalReasonsStatsMonthly =
 
 export const mockWithdrawalReasonsStatsMonthlyMap: Record<
   ReasonStatus,
-  WithdrawalReasonsStatsMonthly
+  GetWithdrawalReasonsStatsMonthlyResponse
 > = {
   NO_LONGER_NEEDED: {
     reason: 'NO_LONGER_NEEDED',
@@ -1530,7 +1534,7 @@ export const mockWithdrawalReasonsStatsMonthlyMap: Record<
 
 // api/v1/admin/lectures
 // 어드민 페이지 강의 목록 조회 API
-export const mockLecturesList: LectureList = {
+export const mockLecturesList: GetLectureListResponse = {
   count: 4018,
   next: 'http://api.ozcoding.site/api/v1/admin/lectures?page=2&page_size=20',
   previous: null,
@@ -1756,412 +1760,422 @@ export const mockLecturesList: LectureList = {
 
 // api/v1/admin/lectures/{lecture_id}
 // 강의 상세 조회 - 전체 강의 상세 맵
-export const mockLecturesDetailMap: Record<number, LecturesDetail> = {
-  43001: {
-    id: 43001,
-    title: '파이썬 입문',
-    instructor: '김한영',
-    total_class_time: 180,
-    original_price: 99000,
-    discounted_price: 69000,
-    difficulty: 'EASY',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/python1.png',
-    average_rating: 4.7,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/python-intro',
-    categories: [
-      { id: 1, name: 'Python' },
-      { id: 2, name: '입문' },
-    ],
-    created_at: '2025-11-01T10:00:00+09:00',
-    updated_at: '2025-11-01T10:00:00+09:00',
-  },
-  43002: {
-    id: 43002,
-    title: '자바스크립트 마스터',
-    instructor: '이철수',
-    total_class_time: 240,
-    original_price: 120000,
-    discounted_price: 89000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/js.png',
-    average_rating: 4.5,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/js-master',
-    categories: [
-      { id: 3, name: 'JavaScript' },
-      { id: 4, name: '웹 프론트엔드' },
-    ],
-    created_at: '2025-11-02T11:00:00+09:00',
-    updated_at: '2025-11-02T11:00:00+09:00',
-  },
-  43003: {
-    id: 43003,
-    title: 'React 완전정복',
-    instructor: '홍길동',
-    total_class_time: 300,
-    original_price: 130000,
-    discounted_price: 99000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/react.png',
-    average_rating: 4.8,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/react-master',
-    categories: [
-      { id: 5, name: 'React' },
-      { id: 4, name: '웹 프론트엔드' },
-    ],
-    created_at: '2025-11-03T12:00:00+09:00',
-    updated_at: '2025-11-03T12:00:00+09:00',
-  },
-  43004: {
-    id: 43004,
-    title: 'Vue.js로 웹 개발',
-    instructor: '박민수',
-    total_class_time: 240,
-    original_price: 110000,
-    discounted_price: 85000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/vue.png',
-    average_rating: 4.3,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/vue-web',
-    categories: [
-      { id: 6, name: 'Vue.js' },
-      { id: 4, name: '웹 프론트엔드' },
-    ],
-    created_at: '2025-11-04T13:00:00+09:00',
-    updated_at: '2025-11-04T13:00:00+09:00',
-  },
-  43005: {
-    id: 43005,
-    title: 'Node.js 백엔드',
-    instructor: '최수지',
-    total_class_time: 270,
-    original_price: 115000,
-    discounted_price: 89000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/node.png',
-    average_rating: 4.4,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/node-backend',
-    categories: [
-      { id: 7, name: 'Node.js' },
-      { id: 8, name: '백엔드' },
-    ],
-    created_at: '2025-11-05T14:00:00+09:00',
-    updated_at: '2025-11-05T14:00:00+09:00',
-  },
-  43006: {
-    id: 43006,
-    title: 'AI 기초',
-    instructor: '장우진',
-    total_class_time: 180,
-    original_price: 99000,
-    discounted_price: 79000,
-    difficulty: 'EASY',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/ai.png',
-    average_rating: 4.2,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/ai-basic',
-    categories: [
-      { id: 9, name: 'AI 기초' },
-      { id: 10, name: '머신러닝/딥러닝 입문' },
-    ],
-    created_at: '2025-11-06T15:00:00+09:00',
-    updated_at: '2025-11-06T15:00:00+09:00',
-  },
-  43007: {
-    id: 43007,
-    title: '머신러닝 실전',
-    instructor: '한지민',
-    total_class_time: 320,
-    original_price: 140000,
-    discounted_price: 109000,
-    difficulty: 'HARD',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/ml.png',
-    average_rating: 4.6,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/ml-practice',
-    categories: [
-      { id: 11, name: '머신러닝' },
-      { id: 12, name: '실전 프로젝트' },
-    ],
-    created_at: '2025-11-07T16:00:00+09:00',
-    updated_at: '2025-11-07T16:00:00+09:00',
-  },
-  43008: {
-    id: 43008,
-    title: '딥러닝 완벽 가이드',
-    instructor: '오세훈',
-    total_class_time: 360,
-    original_price: 150000,
-    discounted_price: 119000,
-    difficulty: 'HARD',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/dl.png',
-    average_rating: 4.7,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/dl-guide',
-    categories: [
-      { id: 13, name: '딥러닝' },
-      { id: 10, name: '머신러닝/딥러닝 입문' },
-    ],
-    created_at: '2025-11-08T17:00:00+09:00',
-    updated_at: '2025-11-08T17:00:00+09:00',
-  },
-  43009: {
-    id: 43009,
-    title: 'SQL과 데이터베이스',
-    instructor: '유나리',
-    total_class_time: 210,
-    original_price: 90000,
-    discounted_price: 69000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/sql.png',
-    average_rating: 4.4,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/sql-db',
-    categories: [
-      { id: 14, name: 'SQL' },
-      { id: 15, name: '데이터베이스' },
-    ],
-    created_at: '2025-11-09T18:00:00+09:00',
-    updated_at: '2025-11-09T18:00:00+09:00',
-  },
-  43010: {
-    id: 43010,
-    title: 'AWS 클라우드 입문',
-    instructor: '정도윤',
-    total_class_time: 200,
-    original_price: 110000,
-    discounted_price: 85000,
-    difficulty: 'EASY',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/aws.png',
-    average_rating: 4.3,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/aws-intro',
-    categories: [
-      { id: 16, name: '클라우드' },
-      { id: 17, name: 'AWS' },
-    ],
-    created_at: '2025-11-10T19:00:00+09:00',
-    updated_at: '2025-11-10T19:00:00+09:00',
-  },
-  43011: {
-    id: 43011,
-    title: 'Docker와 DevOps',
-    instructor: '서지호',
-    total_class_time: 220,
-    original_price: 120000,
-    discounted_price: 95000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/docker.png',
-    average_rating: 4.5,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/docker-devops',
-    categories: [
-      { id: 18, name: 'DevOps' },
-      { id: 19, name: 'Docker/Kubernetes' },
-    ],
-    created_at: '2025-11-11T20:00:00+09:00',
-    updated_at: '2025-11-11T20:00:00+09:00',
-  },
-  43012: {
-    // mockLecturesList의 id 43012 강의와 연결
-    id: 43012,
-    title: '3시간 완성 n8n',
-    instructor: 'SOLVIT team',
-    total_class_time: 180, // 3시간 완성 컨셉에 맞게 180분으로 설정
-    original_price: 100000,
-    discounted_price: 80000,
-    difficulty: 'EASY',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/image.png',
-    average_rating: 4.3,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/3시간-완성-n8n',
-    // 카테고리는 어드민에서 필터링/통계에 쓰일 수 있도록 태그성으로 구성
-    categories: [
-      {
-        id: 20,
-        name: '노코드 / 자동화',
-      },
-      {
-        id: 21,
-        name: '워크플로우 툴',
-      },
-    ],
-    // mockLecturesList의 생성/수정일과 동일하게 맞춤
-    created_at: '2025-11-20T00:00:05.875842+09:00',
-    updated_at: '2025-11-20T00:00:05.875842+09:00',
-  },
-  43013: {
-    id: 43013,
-    title: 'Git & GitHub 마스터',
-    instructor: '문다은',
-    total_class_time: 180,
-    original_price: 80000,
-    discounted_price: 59000,
-    difficulty: 'EASY',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/git.png',
-    average_rating: 4.6,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/git-github',
-    categories: [
-      { id: 22, name: 'Git' },
-      { id: 23, name: '협업 도구' },
-    ],
-    created_at: '2025-11-13T09:00:00+09:00',
-    updated_at: '2025-11-13T09:00:00+09:00',
-  },
-  43014: {
-    id: 43014,
-    title: 'HTML/CSS 웹 퍼블리싱',
-    instructor: '신해준',
-    total_class_time: 200,
-    original_price: 70000,
-    discounted_price: 55000,
-    difficulty: 'EASY',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/htmlcss.png',
-    average_rating: 4.4,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/html-css',
-    categories: [
-      { id: 24, name: 'HTML/CSS' },
-      { id: 4, name: '웹 프론트엔드' },
-    ],
-    created_at: '2025-11-14T10:00:00+09:00',
-    updated_at: '2025-11-14T10:00:00+09:00',
-  },
-  43015: {
-    id: 43015,
-    title: '프론트엔드 실무',
-    instructor: '강보라',
-    total_class_time: 260,
-    original_price: 130000,
-    discounted_price: 99000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/frontend.png',
-    average_rating: 4.7,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/frontend-practice',
-    categories: [
-      { id: 25, name: '프론트엔드 실무' },
-      { id: 4, name: '웹 프론트엔드' },
-    ],
-    created_at: '2025-11-15T11:00:00+09:00',
-    updated_at: '2025-11-15T11:00:00+09:00',
-  },
-  43016: {
-    id: 43016,
-    title: '백엔드 실무',
-    instructor: '노태현',
-    total_class_time: 280,
-    original_price: 130000,
-    discounted_price: 99000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/backend.png',
-    average_rating: 4.5,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/backend-practice',
-    categories: [
-      { id: 26, name: '백엔드 실무' },
-      { id: 8, name: '백엔드' },
-    ],
-    created_at: '2025-11-16T12:00:00+09:00',
-    updated_at: '2025-11-16T12:00:00+09:00',
-  },
-  43017: {
-    id: 43017,
-    title: '데이터 분석 입문',
-    instructor: '임다솔',
-    total_class_time: 210,
-    original_price: 90000,
-    discounted_price: 69000,
-    difficulty: 'EASY',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/data.png',
-    average_rating: 4.3,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/data-analysis',
-    categories: [
-      { id: 27, name: '데이터 분석' },
-      { id: 28, name: '입문' },
-    ],
-    created_at: '2025-11-17T13:00:00+09:00',
-    updated_at: '2025-11-17T13:00:00+09:00',
-  },
-  43018: {
-    id: 43018,
-    title: '통계로 보는 세상',
-    instructor: '배지훈',
-    total_class_time: 200,
-    original_price: 85000,
-    discounted_price: 65000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/stat.png',
-    average_rating: 4.1,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/statistics',
-    categories: [
-      { id: 29, name: '통계' },
-      { id: 27, name: '데이터 분석' },
-    ],
-    created_at: '2025-11-18T14:00:00+09:00',
-    updated_at: '2025-11-18T14:00:00+09:00',
-  },
-  43019: {
-    id: 43019,
-    title: '파이썬 자동화',
-    instructor: '권소연',
-    total_class_time: 190,
-    original_price: 95000,
-    discounted_price: 72000,
-    difficulty: 'NORMAL',
-    thumbnail_img_url:
-      'https://example.com/images/lecture/thumbnails/automation.png',
-    average_rating: 4.6,
-    platform: 'INFLEARN',
-    url_link: 'https://www.inflearn.com/course/python-automation',
-    categories: [
-      { id: 1, name: 'Python' },
-      { id: 30, name: '업무 자동화' },
-    ],
-    created_at: '2025-11-19T15:00:00+09:00',
-    updated_at: '2025-11-19T15:00:00+09:00',
-  },
-  43020: {
-    id: 43020,
-    title: 'UI/UX 디자인',
-    instructor: '윤가은',
-    total_class_time: 180,
-    original_price: 100000,
-    discounted_price: 79000,
-    difficulty: 'EASY',
-    thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/uiux.png',
-    average_rating: 4.5,
-    platform: 'UDEMY',
-    url_link: 'https://www.udemy.com/course/uiux-design',
-    categories: [
-      { id: 31, name: 'UI/UX' },
-      { id: 32, name: '디자인' },
-    ],
-    created_at: '2025-11-20T16:00:00+09:00',
-    updated_at: '2025-11-20T16:00:00+09:00',
-  },
-}
+export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
+  {
+    43001: {
+      id: 43001,
+      title: '파이썬 입문',
+      instructor: '김한영',
+      total_class_time: 180,
+      original_price: 99000,
+      discounted_price: 69000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/python1.png',
+      average_rating: 4.7,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/python-intro',
+      categories: [
+        { id: 1, name: 'Python' },
+        { id: 2, name: '입문' },
+      ],
+      created_at: '2025-11-01T10:00:00+09:00',
+      updated_at: '2025-11-01T10:00:00+09:00',
+    },
+    43002: {
+      id: 43002,
+      title: '자바스크립트 마스터',
+      instructor: '이철수',
+      total_class_time: 240,
+      original_price: 120000,
+      discounted_price: 89000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/js.png',
+      average_rating: 4.5,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/js-master',
+      categories: [
+        { id: 3, name: 'JavaScript' },
+        { id: 4, name: '웹 프론트엔드' },
+      ],
+      created_at: '2025-11-02T11:00:00+09:00',
+      updated_at: '2025-11-02T11:00:00+09:00',
+    },
+    43003: {
+      id: 43003,
+      title: 'React 완전정복',
+      instructor: '홍길동',
+      total_class_time: 300,
+      original_price: 130000,
+      discounted_price: 99000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/react.png',
+      average_rating: 4.8,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/react-master',
+      categories: [
+        { id: 5, name: 'React' },
+        { id: 4, name: '웹 프론트엔드' },
+      ],
+      created_at: '2025-11-03T12:00:00+09:00',
+      updated_at: '2025-11-03T12:00:00+09:00',
+    },
+    43004: {
+      id: 43004,
+      title: 'Vue.js로 웹 개발',
+      instructor: '박민수',
+      total_class_time: 240,
+      original_price: 110000,
+      discounted_price: 85000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/vue.png',
+      average_rating: 4.3,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/vue-web',
+      categories: [
+        { id: 6, name: 'Vue.js' },
+        { id: 4, name: '웹 프론트엔드' },
+      ],
+      created_at: '2025-11-04T13:00:00+09:00',
+      updated_at: '2025-11-04T13:00:00+09:00',
+    },
+    43005: {
+      id: 43005,
+      title: 'Node.js 백엔드',
+      instructor: '최수지',
+      total_class_time: 270,
+      original_price: 115000,
+      discounted_price: 89000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/node.png',
+      average_rating: 4.4,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/node-backend',
+      categories: [
+        { id: 7, name: 'Node.js' },
+        { id: 8, name: '백엔드' },
+      ],
+      created_at: '2025-11-05T14:00:00+09:00',
+      updated_at: '2025-11-05T14:00:00+09:00',
+    },
+    43006: {
+      id: 43006,
+      title: 'AI 기초',
+      instructor: '장우진',
+      total_class_time: 180,
+      original_price: 99000,
+      discounted_price: 79000,
+      difficulty: 'EASY',
+      thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/ai.png',
+      average_rating: 4.2,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/ai-basic',
+      categories: [
+        { id: 9, name: 'AI 기초' },
+        { id: 10, name: '머신러닝/딥러닝 입문' },
+      ],
+      created_at: '2025-11-06T15:00:00+09:00',
+      updated_at: '2025-11-06T15:00:00+09:00',
+    },
+    43007: {
+      id: 43007,
+      title: '머신러닝 실전',
+      instructor: '한지민',
+      total_class_time: 320,
+      original_price: 140000,
+      discounted_price: 109000,
+      difficulty: 'HARD',
+      thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/ml.png',
+      average_rating: 4.6,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/ml-practice',
+      categories: [
+        { id: 11, name: '머신러닝' },
+        { id: 12, name: '실전 프로젝트' },
+      ],
+      created_at: '2025-11-07T16:00:00+09:00',
+      updated_at: '2025-11-07T16:00:00+09:00',
+    },
+    43008: {
+      id: 43008,
+      title: '딥러닝 완벽 가이드',
+      instructor: '오세훈',
+      total_class_time: 360,
+      original_price: 150000,
+      discounted_price: 119000,
+      difficulty: 'HARD',
+      thumbnail_img_url: 'https://example.com/images/lecture/thumbnails/dl.png',
+      average_rating: 4.7,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/dl-guide',
+      categories: [
+        { id: 13, name: '딥러닝' },
+        { id: 10, name: '머신러닝/딥러닝 입문' },
+      ],
+      created_at: '2025-11-08T17:00:00+09:00',
+      updated_at: '2025-11-08T17:00:00+09:00',
+    },
+    43009: {
+      id: 43009,
+      title: 'SQL과 데이터베이스',
+      instructor: '유나리',
+      total_class_time: 210,
+      original_price: 90000,
+      discounted_price: 69000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/sql.png',
+      average_rating: 4.4,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/sql-db',
+      categories: [
+        { id: 14, name: 'SQL' },
+        { id: 15, name: '데이터베이스' },
+      ],
+      created_at: '2025-11-09T18:00:00+09:00',
+      updated_at: '2025-11-09T18:00:00+09:00',
+    },
+    43010: {
+      id: 43010,
+      title: 'AWS 클라우드 입문',
+      instructor: '정도윤',
+      total_class_time: 200,
+      original_price: 110000,
+      discounted_price: 85000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/aws.png',
+      average_rating: 4.3,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/aws-intro',
+      categories: [
+        { id: 16, name: '클라우드' },
+        { id: 17, name: 'AWS' },
+      ],
+      created_at: '2025-11-10T19:00:00+09:00',
+      updated_at: '2025-11-10T19:00:00+09:00',
+    },
+    43011: {
+      id: 43011,
+      title: 'Docker와 DevOps',
+      instructor: '서지호',
+      total_class_time: 220,
+      original_price: 120000,
+      discounted_price: 95000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/docker.png',
+      average_rating: 4.5,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/docker-devops',
+      categories: [
+        { id: 18, name: 'DevOps' },
+        { id: 19, name: 'Docker/Kubernetes' },
+      ],
+      created_at: '2025-11-11T20:00:00+09:00',
+      updated_at: '2025-11-11T20:00:00+09:00',
+    },
+    43012: {
+      // mockLecturesList의 id 43012 강의와 연결
+      id: 43012,
+      title: '3시간 완성 n8n',
+      instructor: 'SOLVIT team',
+      total_class_time: 180, // 3시간 완성 컨셉에 맞게 180분으로 설정
+      original_price: 100000,
+      discounted_price: 80000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/image.png',
+      average_rating: 4.3,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/3시간-완성-n8n',
+      // 카테고리는 어드민에서 필터링/통계에 쓰일 수 있도록 태그성으로 구성
+      categories: [
+        {
+          id: 20,
+          name: '노코드 / 자동화',
+        },
+        {
+          id: 21,
+          name: '워크플로우 툴',
+        },
+      ],
+      // mockLecturesList의 생성/수정일과 동일하게 맞춤
+      created_at: '2025-11-20T00:00:05.875842+09:00',
+      updated_at: '2025-11-20T00:00:05.875842+09:00',
+    },
+    43013: {
+      id: 43013,
+      title: 'Git & GitHub 마스터',
+      instructor: '문다은',
+      total_class_time: 180,
+      original_price: 80000,
+      discounted_price: 59000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/git.png',
+      average_rating: 4.6,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/git-github',
+      categories: [
+        { id: 22, name: 'Git' },
+        { id: 23, name: '협업 도구' },
+      ],
+      created_at: '2025-11-13T09:00:00+09:00',
+      updated_at: '2025-11-13T09:00:00+09:00',
+    },
+    43014: {
+      id: 43014,
+      title: 'HTML/CSS 웹 퍼블리싱',
+      instructor: '신해준',
+      total_class_time: 200,
+      original_price: 70000,
+      discounted_price: 55000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/htmlcss.png',
+      average_rating: 4.4,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/html-css',
+      categories: [
+        { id: 24, name: 'HTML/CSS' },
+        { id: 4, name: '웹 프론트엔드' },
+      ],
+      created_at: '2025-11-14T10:00:00+09:00',
+      updated_at: '2025-11-14T10:00:00+09:00',
+    },
+    43015: {
+      id: 43015,
+      title: '프론트엔드 실무',
+      instructor: '강보라',
+      total_class_time: 260,
+      original_price: 130000,
+      discounted_price: 99000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/frontend.png',
+      average_rating: 4.7,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/frontend-practice',
+      categories: [
+        { id: 25, name: '프론트엔드 실무' },
+        { id: 4, name: '웹 프론트엔드' },
+      ],
+      created_at: '2025-11-15T11:00:00+09:00',
+      updated_at: '2025-11-15T11:00:00+09:00',
+    },
+    43016: {
+      id: 43016,
+      title: '백엔드 실무',
+      instructor: '노태현',
+      total_class_time: 280,
+      original_price: 130000,
+      discounted_price: 99000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/backend.png',
+      average_rating: 4.5,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/backend-practice',
+      categories: [
+        { id: 26, name: '백엔드 실무' },
+        { id: 8, name: '백엔드' },
+      ],
+      created_at: '2025-11-16T12:00:00+09:00',
+      updated_at: '2025-11-16T12:00:00+09:00',
+    },
+    43017: {
+      id: 43017,
+      title: '데이터 분석 입문',
+      instructor: '임다솔',
+      total_class_time: 210,
+      original_price: 90000,
+      discounted_price: 69000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/data.png',
+      average_rating: 4.3,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/data-analysis',
+      categories: [
+        { id: 27, name: '데이터 분석' },
+        { id: 28, name: '입문' },
+      ],
+      created_at: '2025-11-17T13:00:00+09:00',
+      updated_at: '2025-11-17T13:00:00+09:00',
+    },
+    43018: {
+      id: 43018,
+      title: '통계로 보는 세상',
+      instructor: '배지훈',
+      total_class_time: 200,
+      original_price: 85000,
+      discounted_price: 65000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/stat.png',
+      average_rating: 4.1,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/statistics',
+      categories: [
+        { id: 29, name: '통계' },
+        { id: 27, name: '데이터 분석' },
+      ],
+      created_at: '2025-11-18T14:00:00+09:00',
+      updated_at: '2025-11-18T14:00:00+09:00',
+    },
+    43019: {
+      id: 43019,
+      title: '파이썬 자동화',
+      instructor: '권소연',
+      total_class_time: 190,
+      original_price: 95000,
+      discounted_price: 72000,
+      difficulty: 'NORMAL',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/automation.png',
+      average_rating: 4.6,
+      platform: 'INFLEARN',
+      url_link: 'https://www.inflearn.com/course/python-automation',
+      categories: [
+        { id: 1, name: 'Python' },
+        { id: 30, name: '업무 자동화' },
+      ],
+      created_at: '2025-11-19T15:00:00+09:00',
+      updated_at: '2025-11-19T15:00:00+09:00',
+    },
+    43020: {
+      id: 43020,
+      title: 'UI/UX 디자인',
+      instructor: '윤가은',
+      total_class_time: 180,
+      original_price: 100000,
+      discounted_price: 79000,
+      difficulty: 'EASY',
+      thumbnail_img_url:
+        'https://example.com/images/lecture/thumbnails/uiux.png',
+      average_rating: 4.5,
+      platform: 'UDEMY',
+      url_link: 'https://www.udemy.com/course/uiux-design',
+      categories: [
+        { id: 31, name: 'UI/UX' },
+        { id: 32, name: '디자인' },
+      ],
+      created_at: '2025-11-20T16:00:00+09:00',
+      updated_at: '2025-11-20T16:00:00+09:00',
+    },
+  }
 
 // 기존 핸들러 호환용 단일 상세 데이터 (id 43012)
-export const mockLecturesDetail: LecturesDetail = mockLecturesDetailMap[43012]
+export const mockLecturesDetail: GetLecturesDetailResponse =
+  mockLecturesDetailMap[43012]
 
 // api/v1/admin/study-groups
 // 스터디 그룹 목록 조회
-export const mockStudyGroupList: StudyGroupList = {
+export const mockStudyGroupList: GetStudyGroupListResponse = {
   count: 100,
   next: 'http://api.ozcoding.site/api/v1/admin/study-groups/?page=2&page_size=20',
   previous: null,
@@ -2431,7 +2445,7 @@ export const mockStudyGroupList: StudyGroupList = {
 
 // api/v1/admin/study-groups/{group_id}
 // 스터디 그룹 상세 조회
-export const mockStudyGroupDetail: StudyGroupDetail = {
+export const mockStudyGroupDetail: GetStudyGroupDetailResponse = {
   id: 1,
   name: 'python 스터디',
   start_at: '2025-11-01',
@@ -2490,7 +2504,7 @@ export const mockStudyGroupDetail: StudyGroupDetail = {
 
 // api/v1/admin/study-reviews
 // 스터디 리뷰 목록 조회
-export const mockStudyReviewList: StudyReviewList = {
+export const mockStudyReviewList: GetStudyReviewListResponse = {
   count: 100,
   next: 'http://api.ozcoding.site/api/v1/admin/study-reviews?page=2&page_size=20',
   previous: null,
@@ -2821,7 +2835,7 @@ export const mockStudyReviewList: StudyReviewList = {
 
 // api/v1/admin/study-reviews/{review_id}
 // 스터디 리뷰 상세보기
-export const mockStudyReviewDetail: StudyReviewDetail = {
+export const mockStudyReviewDetail: GetStudyReviewDetailResponse = {
   id: 1,
   study_group: {
     // mockStudyGroupList / mockStudyGroupDetail의 첫 번째 스터디와 연결
@@ -2848,7 +2862,7 @@ export const mockStudyReviewDetail: StudyReviewDetail = {
 
 // api/v1/recruitment-tags
 // 태그 목록 조회
-export const mockRecruitmentTags: RecruitmentTags = {
+export const mockRecruitmentTags: GetRecruitmentTagsResponse = {
   count: 100,
   next: 'http://api.ozcoding.site/api/v1/recruitments-tags/page=2&page_size=10',
   previous: null,
@@ -2898,7 +2912,7 @@ export const mockRecruitmentTags: RecruitmentTags = {
 
 // api/v1/admin/recruitments
 // 스터디 모집 공고 목록 조회
-export const mockRecruitmentList: RecruitmentList = {
+export const mockRecruitmentList: GetRecruitmentListResponse = {
   count: 100,
   next: 'http://api.ozcoding.site/api/v1/admin/recruitments?page=2&page_size=20',
   previous: null,
@@ -3206,7 +3220,7 @@ export const mockRecruitmentList: RecruitmentList = {
 
 // api/v1/admin/recruitments/{recruitment_id}
 // 스터디 모집 공고 상세 조회
-export const mockRecruitmentDetail: RecruitmentDetail = {
+export const mockRecruitmentDetail: GetRecruitmentDetailResponse = {
   id: 1,
   uuid: 'b8dbd77f-cf73-4ef4-9914-4394d5ab366e',
   title: 'python 스터디 모집 공고 1',
@@ -3267,7 +3281,7 @@ export const mockRecruitmentDetail: RecruitmentDetail = {
       url_link: 'https://www.inflearn.com/course/3시간-완성-n8n',
     },
   ],
-  // ApplicationsDetail / mockApplicationsDetail의 태그와 맞춰 확장
+  // GetApplicationsDetailResponse / mockApplicationsDetail의 태그와 맞춰 확장
   tags: [
     {
       id: 1,
@@ -3334,7 +3348,10 @@ export const mockRecruitmentDetail: RecruitmentDetail = {
     },
   ],
 }
-export const mockRecruitmentDetailMap: Record<number, RecruitmentDetail> = {
+export const mockRecruitmentDetailMap: Record<
+  number,
+  GetRecruitmentDetailResponse
+> = {
   1: {
     id: 1,
     uuid: 'b8dbd77f-cf73-4ef4-9914-4394d5ab366e',
@@ -4392,7 +4409,7 @@ Next.js와 Markdown 기반으로 개인 기술 블로그를 만드는 스터디�
 
 // api/v1/admin/applications
 // 모집공고 지원 내역 목록 조회
-export const mockApplicationsList: ApplicationsList = {
+export const mockApplicationsList: GetApplicationsListResponse = {
   count: 23,
   next: 'http://api.ozcoding.site/api/v1/admin/applications?page=2&page_size=20',
   previous: null,
@@ -4702,7 +4719,7 @@ export const mockApplicationsList: ApplicationsList = {
 
 // api/v1/admin/applications/{application_id}
 // 지원 내역 상세 조회
-export const mockApplicationsDetail: ApplicationsDetail = {
+export const mockApplicationsDetail: GetApplicationsDetailResponse = {
   id: 1,
   self_introduction:
     '안녕하세요! 백엔드 개발 3년 차로 일하고 있으며, 프론트엔드 기술을 깊이 있게 배우고 싶어 지원하게 되었습니다.',
@@ -4751,7 +4768,10 @@ export const mockApplicationsDetail: ApplicationsDetail = {
 }
 
 // 지원 내역 상세 맵 (id 1 ~ 20)
-export const mockApplicationsDetailMap: Record<number, ApplicationsDetail> = {
+export const mockApplicationsDetailMap: Record<
+  number,
+  GetApplicationsDetailResponse
+> = {
   1: {
     id: 1,
     self_introduction:

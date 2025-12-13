@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import { DashboardAnalyzingSelect } from '@/pages/members/dashboard/components/DashboardAnalyzingSelect'
 import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 import type { Interval } from '@/pages/types/users'
@@ -15,7 +16,7 @@ export function DashboardAnalyzingWithdrawalsTrends() {
         />
       </div>
       <AnalyzingTrendsBarGraph
-        apiUrl={`/analytics/withdrawals/trends?interval=${interval}`}
+        apiUrl={`${SERVICE_URLS.ANALYTICS.WITHDRAWALS}/trends?interval=${interval}`}
         title="회원탈퇴 추세"
         barColor="#EF4444"
         height={320}

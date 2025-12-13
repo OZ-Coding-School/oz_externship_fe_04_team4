@@ -1,7 +1,7 @@
 import Modal from '@/components/common/Modal'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { StudyReviewDetail } from '@/types/api'
+import type { GetStudyReviewDetailResponse } from '@/types/api/response'
 
 import { ReviewDetailContent } from './ReviewDetailContent'
 
@@ -11,7 +11,7 @@ interface ReviewDetailModalProps {
   reviewId: number | null
 }
 
-type StudyReviewDetailProps = StudyReviewDetail
+type StudyReviewDetailProps = GetStudyReviewDetailResponse
 
 export function ReviewDetailModal({
   isOpen,

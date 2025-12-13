@@ -1,15 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
-
-import { getAccountsMe } from '@/features/login/api'
+import { SERVICE_URLS } from '@/config/serviceUrls'
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useAuthStore } from '@/store/authStore'
-import type { AccountsMe } from '@/types/api'
+import type { GetAccountsMeResponse } from '@/types/api/response'
 
 export const useAccountsMeQuery = () => {
   const accessToken = useAuthStore((s) => s.accessToken)
 
-  return useQuery<AccountsMe>({
+  return useFetchQuery<GetAccountsMeResponse>({
     queryKey: ['account', 'me'],
-    queryFn: getAccountsMe,
+    url: SERVICE_URLS.ACCOUNTS.ME,
     enabled: !!accessToken,
   })
 }

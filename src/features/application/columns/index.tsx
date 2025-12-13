@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
 
 import { ApplicationStatusBadge } from '@/components/common/badge'
+import type { ApplicationsStatus } from '@/types'
 import type {
   ApplicationApplicant,
   ApplicationRecruitment,
-  ApplicationsStatus,
-} from '@/types/api'
+} from '@/types/api/response'
 
 export const ApplicationColumns = [
   {

@@ -1,9 +1,9 @@
 import ReviewRating from '@/components/common/ReviewRating'
-import type { StudyReviewDetail } from '@/types/api'
+import type { GetStudyReviewDetailResponse } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
 interface ReviewDetailContentProps {
-  reviewDetail: StudyReviewDetail
+  reviewDetail: GetStudyReviewDetailResponse
 }
 
 export function ReviewDetailContent({

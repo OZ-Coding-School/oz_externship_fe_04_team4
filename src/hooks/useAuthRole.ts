@@ -1,7 +1,7 @@
 import { useAccountsMeQuery } from '@/hooks/model'
-import type { AccountsMe } from '@/types/api'
+import type { GetAccountsMeResponse } from '@/types/api/response'
 
-type Role = AccountsMe['role']
+type Role = GetAccountsMeResponse['role']
 
 export const useAuthRole = () => {
   const { data } = useAccountsMeQuery()

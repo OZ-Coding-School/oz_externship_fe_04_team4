@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import AnalyzingDistributionOfReasonsForWithdrawalGraph from '@/pages/members/dashboard/graphs/AnalyzingDistributionOfReasonsForWithdrawalGraph'
 import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 
@@ -39,7 +40,7 @@ export function DashboardAnalyzingwithdrawalReasons() {
     <div>
       <div className="flex h-auto w-full max-w-[1120px] flex-col rounded-xl bg-white p-6 shadow">
         <AnalyzingDistributionOfReasonsForWithdrawalGraph
-          apiUrl="/analytics/withdrawal-reasons/percentage"
+          apiUrl={SERVICE_URLS.ANALYTICS.WITHDRAWAL_REASONS_PERCENTAGE}
           title="탈퇴 사유 비율 분석"
           height={360} // 원하는 높이
           isAnimationActive
@@ -65,7 +66,7 @@ export function DashboardAnalyzingwithdrawalReasons() {
           </select>
         </div>
         <AnalyzingTrendsBarGraph
-          apiUrl={`/analytics/withdrawal-reasons/stats/monthly?reason=${reason}`}
+          apiUrl={`${SERVICE_URLS.ANALYTICS.WITHDRAWAL_REASONS_STATS_MONTHLY}?reason=${reason}`}
           title="탈퇴 사유별 월별 추세"
           barColor="#FACC15"
           height={320}

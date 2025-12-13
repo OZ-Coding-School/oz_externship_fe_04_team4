@@ -1,14 +1,13 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import {
-  ApplicationSearchInput,
-  FilterSelect,
-} from '@/components/common/filter'
-import type { GetAdminApplicationParams, sortType } from '@/types'
+import { ApplicationSearchInput } from '@/components/common/filter'
+import { ApplicationFilterSelect } from '@/components/common/filter/ApplicationFilterSelect'
+import type { ApplicationsStatus, SortType } from '@/types'
+import type { GetAdminApplicationQuery } from '@/types/api/query'
 
 type ApplicationFilterProps = {
-  setQueryParams: Dispatch<SetStateAction<GetAdminApplicationParams>>
-  queryParams: GetAdminApplicationParams
+  setQueryParams: Dispatch<SetStateAction<GetAdminApplicationQuery>>
+  queryParams: GetAdminApplicationQuery
 }
 
 export default function ApplicationFilter({
@@ -26,13 +25,14 @@ export default function ApplicationFilter({
   const application = {
     label: '지원 상태',
     options: [
+      { label: '전체', value: '' },
       { label: '승인', value: 'ACCEPTED' },
       { label: '검토중', value: 'PENDING' },
       { label: '거절', value: 'REJECTED' },
       { label: '취소', value: 'CANCELED' },
     ],
     value: queryParams.status,
-    onChange: (value: string) =>
+    onChange: (value: ApplicationsStatus) =>
       setQueryParams((prev) => ({ ...prev, status: value })),
   }
   const sort = {
@@ -42,7 +42,7 @@ export default function ApplicationFilter({
       { label: '오래된순', value: 'oldest' },
     ],
     value: queryParams.sort,
-    onChange: (value: sortType) =>
+    onChange: (value: SortType) =>
       setQueryParams((prev) => ({ ...prev, sort: value })),
   }
 
@@ -58,24 +58,23 @@ export default function ApplicationFilter({
           inputClassName="text-sm"
         />
 
-        <FilterSelect
+        <ApplicationFilterSelect
           label={application.label}
           className="flex flex-col gap-2"
           labelClassName="font-medium text-sm text-[#374151]"
-          selectClassName="h-[38px] w-full appearance-none rounded-lg border border-[#D1D5DB] px-3 py-2 outline-0"
+          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0"
           options={application.options}
           value={application.value}
           onChange={application.onChange}
-          placeholder="전체"
         />
-        <FilterSelect
+        <ApplicationFilterSelect
           label={sort.label}
           className="flex flex-col gap-2"
           labelClassName="font-medium text-sm text-[#374151]"
-          selectClassName="h-[38px] w-full appearance-none rounded-lg border border-[#D1D5DB] px-3 py-2 outline-0"
+          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0"
           options={sort.options}
           value={sort.value}
-          onChange={(value) => sort.onChange(value as sortType)}
+          onChange={sort.onChange}
         />
       </div>
     </div>

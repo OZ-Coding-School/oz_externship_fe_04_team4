@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import { DashboardAnalyzingSelect } from '@/pages/members/dashboard/components/DashboardAnalyzingSelect'
 import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 import type { Interval } from '@/pages/types/users'
@@ -15,7 +16,7 @@ export function DashboardAnalyzingSignupTrends() {
         />
       </div>
       <AnalyzingTrendsBarGraph
-        apiUrl={`/analytics/signup/trends?interval=${interval}`}
+        apiUrl={`${SERVICE_URLS.ANALYTICS.SIGNUP_TRENDS}?interval=${interval}`}
         title="회원가입 추세"
         barColor="#FACC15"
         height={320}

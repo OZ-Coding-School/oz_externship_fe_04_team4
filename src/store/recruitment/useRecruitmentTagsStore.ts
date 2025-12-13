@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import type { TagType } from '@/types/api'
+import type { TagType } from '@/types'
 
 type TagsState = {
   selectedTags: TagType[]

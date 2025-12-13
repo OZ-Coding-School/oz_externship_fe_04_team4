@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import type { LoginResponse } from '@/api/adminAuth'
+import type { CreateLoginResponse } from '@/types/api/response'
 
 type AuthState = {
   accessToken: string | null
   refreshToken: string | null
-  user: LoginResponse['user'] | null
+  user: CreateLoginResponse['user'] | null
   isLoggedIn: boolean
-  setAuth: (payload: LoginResponse) => void
+  setAuth: (payload: CreateLoginResponse) => void
 }
 
 // 로그인 성공 결과를 store에 저장

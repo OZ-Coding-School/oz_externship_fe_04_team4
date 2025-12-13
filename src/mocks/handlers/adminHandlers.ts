@@ -26,7 +26,8 @@ import {
   mockWithdrawalsTrendsYearly,
 } from '@/mocks/data/accounts'
 import { parseRequestBody } from '@/mocks/handlers/parseRequestBody'
-import type { ReasonStatus, RecruitmentTags, RoleStatus } from '@/types/api'
+import type { ReasonStatus, RoleStatus } from '@/types'
+import type { GetRecruitmentTagsResponse } from '@/types/api/response'
 
 /**
  * 공통 admin 인증 체크
@@ -980,7 +981,7 @@ export const getRecruitmentTagsHandler = http.get(
         search ? `&search=${encodeURIComponent(search)}` : ''
       }`
 
-    const responseBody: RecruitmentTags = {
+    const responseBody: GetRecruitmentTagsResponse = {
       count: filteredTags.length,
       next: end < filteredTags.length ? buildUrl(page + 1) : null,
       previous: page > 1 ? buildUrl(page - 1) : null,
