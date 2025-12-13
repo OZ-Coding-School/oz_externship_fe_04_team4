@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import {
   Bookmark,
@@ -11,10 +10,12 @@ import type { ChangeEvent } from 'react'
 import { Link } from 'react-router'
 
 import { ApplicationStatusBadge } from '@/components/common/badge'
-import { getAdminRecruitmentDetail } from '@/features/recruitment/api'
+import { SERVICE_URLS } from '@/config/serviceUrls'
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import markdownToHtml from '@/lib/markdown'
 import { tM } from '@/lib/twMerge'
 import { useRecruitmentDetailModalStore } from '@/store/recruitment'
+import type { GetRecruitmentDetailResponse } from '@/types/api/response'
 import formatPrice from '@/utils/formatPrice'
 
 const LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-4 cursor-default'
@@ -24,16 +25,11 @@ const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
 export default function RecruitmentDetailContent() {
   const { recruitment_id } = useRecruitmentDetailModalStore()
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['adminRecruitmentDetail', recruitment_id],
-    queryFn: () => {
-      if (recruitment_id === null) {
-        throw new Error('선택한 공고가 없습니다.')
-      }
-      return getAdminRecruitmentDetail(recruitment_id)
-    },
-    enabled: recruitment_id != null,
-  })
+  const { data, isLoading, error } =
+    useFetchQuery<GetRecruitmentDetailResponse>({
+      queryKey: ['adminRecruitmentDetail', recruitment_id],
+      url: SERVICE_URLS.RECRUITMENTS.DETAIL(recruitment_id!),
+    })
 
   if (isLoading) {
     return <div className="p-6">불러오는 중...</div>
