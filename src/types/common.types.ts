@@ -36,4 +36,4 @@ export type TagType = {
 
 export type SortType = 'latest' | 'oldest'
 
-export type StatusType = 'all' | 'false' | 'true'
+export type IsClosedType = 'all' | 'false' | 'true'

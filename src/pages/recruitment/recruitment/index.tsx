@@ -1,19 +1,22 @@
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Table, type SortConfig } from '@/components/common/table'
-import { getAdminRecruitments } from '@/features/recruitment/api'
+import { SERVICE_URLS } from '@/config/serviceUrls'
 import RecruitmentColumns from '@/features/recruitment/columns'
 import RecruitmentDetailModal from '@/features/recruitment/ui/detailModal'
 import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
 import RecruitmentTagFilterModal from '@/features/recruitment/ui/tagFilterModal'
+import { useFetchQuery } from '@/hooks/useFetchQuery'
 import {
   useRecruitmentDetailModalStore,
   useRecruitmentTagListStore,
 } from '@/store/recruitment'
-import type { SortType, StatusType } from '@/types'
+import type { IsClosedType, SortType } from '@/types'
 import type { GetAdminRecruitmentsQuery } from '@/types/api/query'
-import type { RecruitmentListResults } from '@/types/api/response'
+import type {
+  GetRecruitmentListResponse,
+  RecruitmentListResults,
+} from '@/types/api/response'
 
 const PAGE_SIZE = 10
 
@@ -23,25 +26,34 @@ export default function RecruitmentPage() {
   // 1) 테이블용 상태
   const [currentPage, setCurrentPage] = useState(1)
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
-
-  const [keyword, setKeyword] = useState('')
-  const [status, setStatus] = useState<StatusType>('all')
+  const [isClosedFilter, setIsClosedFilter] = useState<IsClosedType>('all')
   const { selectedTagsResult } = useRecruitmentTagListStore()
 
-  const queryParams: GetAdminRecruitmentsQuery = {
+  const mapStatusFilterToBoolean = (
+    filter: IsClosedType
+  ): boolean | undefined => {
+    if (filter === 'true') return true
+    if (filter === 'false') return false
+  }
+
+  const [queryParams, setQueryParams] = useState<GetAdminRecruitmentsQuery>({
     page: currentPage,
-    page_size: 10,
-    search: keyword,
-    status,
-    tags: selectedTagsResult,
+    page_size: PAGE_SIZE,
+  })
+  const apiQueryParams: GetAdminRecruitmentsQuery = {
+    ...queryParams,
+    tags: selectedTagsResult.map((tag) => tag.name).join(','),
+    is_closed: mapStatusFilterToBoolean(isClosedFilter),
     sort: sortConfig?.value as SortType,
   }
 
   // 3) Table에 넘길 response 생성
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['adminRecruitments', queryParams],
-    queryFn: () => getAdminRecruitments(queryParams),
-  })
+  const { data, isLoading, error, refetch } =
+    useFetchQuery<GetRecruitmentListResponse>({
+      queryKey: ['adminRecruitments', apiQueryParams],
+      url: SERVICE_URLS.RECRUITMENTS.LIST,
+      params: apiQueryParams,
+    })
 
   // 4) 정렬 핸들러 (Table 헤더에서 호출)
   const handleSort = (
@@ -65,9 +77,9 @@ export default function RecruitmentPage() {
       <RecruitmentDetailModal />
 
       <RecruitmentFilter
-        setKeyword={setKeyword}
-        status={status}
-        setStatus={setStatus}
+        setQueryParams={setQueryParams}
+        isClosedFilter={isClosedFilter}
+        setIsClosedFilter={setIsClosedFilter}
       />
 
       <Table
@@ -75,14 +87,7 @@ export default function RecruitmentPage() {
         sortConfig={sortConfig}
         onSort={handleSort}
         currentPage={currentPage}
-        response={
-          data ?? {
-            count: 0,
-            next: null,
-            previous: null,
-            results: [],
-          }
-        }
+        response={data ?? { count: 0, results: [], next: null, previous: null }}
         onPageChange={setCurrentPage}
         pageSize={PAGE_SIZE}
         isLoading={isLoading}

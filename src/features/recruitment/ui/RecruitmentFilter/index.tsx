@@ -14,21 +14,22 @@ import {
   useRecruitmentTagListStore,
   useTagFilterModalStore,
 } from '@/store/recruitment'
-import type { StatusType } from '@/types'
+import type { IsClosedType } from '@/types'
+import type { GetAdminRecruitmentsQuery } from '@/types/api/query'
 
 const LABEL_STYLE = 'text-sm text-[#374151]'
 const BOX_BASE_STYLE = 'h-[38px] w-[256px]'
 
 type RecruitmentFilterProps = {
-  setKeyword: Dispatch<SetStateAction<string>>
-  status: string
-  setStatus: Dispatch<SetStateAction<StatusType>>
+  setQueryParams: Dispatch<SetStateAction<GetAdminRecruitmentsQuery>>
+  isClosedFilter: IsClosedType
+  setIsClosedFilter: Dispatch<SetStateAction<IsClosedType>>
 }
 
 export default function RecruitmentFilter({
-  setKeyword,
-  status,
-  setStatus,
+  setQueryParams,
+  isClosedFilter,
+  setIsClosedFilter,
 }: RecruitmentFilterProps) {
   const { openTagFilterModalModal } = useTagFilterModalStore()
   const { selectedTagsResult } = useRecruitmentTagListStore()
@@ -36,7 +37,7 @@ export default function RecruitmentFilter({
   const [search, setSearch] = useState('')
 
   const handleSearchSubmit = () => {
-    setKeyword(search.trim())
+    setQueryParams((prev) => ({ ...prev, search: search.trim() }))
   }
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -87,8 +88,8 @@ export default function RecruitmentFilter({
             { label: '모집중', value: 'false' },
             { label: '마감', value: 'true' },
           ]}
-          value={status}
-          onChange={(value) => setStatus(value as StatusType)}
+          value={isClosedFilter}
+          onChange={(value) => setIsClosedFilter(value as IsClosedType)}
           placeholder="전체"
         />
 
