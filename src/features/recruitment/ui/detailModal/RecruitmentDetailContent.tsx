@@ -174,7 +174,13 @@ export default function RecruitmentDetailContent() {
                   className="mb-2 flex w-full cursor-default items-center rounded-lg bg-[#F9FAFB] p-3 text-[#2563EB]"
                 >
                   <FileText className="mr-2 w-5 text-[#9CA3AF]" />
-                  <div className="cursor-pointer">{el.file_name}</div>
+                  <a
+                    href={el.file_name}
+                    download={el.file_name}
+                    className="cursor-pointer"
+                  >
+                    {el.file_name}
+                  </a>
                 </div>
               ))}
               {data?.files.length === 0 && (
