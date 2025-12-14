@@ -19,6 +19,7 @@ export default function ApplicationManagementPage() {
   const [queryParams, setQueryParams] = useState<GetAdminApplicationQuery>({
     page: 1,
     page_size: 10,
+    sort: 'latest',
   })
 
   const { data, isLoading, error, refetch } =
