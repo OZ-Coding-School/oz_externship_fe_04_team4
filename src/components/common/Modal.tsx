@@ -80,7 +80,7 @@ export default function Modal({
           {/* Top Close Button */}
           {topCloseButton && (
             <Dialog.Close
-              className="absolute top-6.5 right-6 cursor-pointer"
+              className="absolute top-6.5 right-6 cursor-pointer outline-none focus:outline-none"
               aria-label="닫기"
             >
               <X size={24} />
