@@ -64,6 +64,6 @@
 }
 @layer components {
   .gradient-loader {
-    @apply animate-[gradient_2s_ease_infinite] animate-spin bg-gradient-to-tr from-emerald-400 via-green-500 to-lime-400 bg-[length:200%_200%] bg-clip-text text-transparent;
+    @apply animate-[gradient-spin_2s_linear_infinite] bg-linear-to-tr from-emerald-400 via-green-500 to-lime-400 bg-size-[200%_200%] bg-clip-text text-transparent;
   }
 }

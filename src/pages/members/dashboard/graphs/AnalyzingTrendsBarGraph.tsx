@@ -8,6 +8,10 @@ import {
   YAxis,
 } from 'recharts'
 
+import { Empty } from '@/components/common/Empty'
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { Loading } from '@/components/common/Loading'
+import { RenderSwitch } from '@/components/common/RenderSwitch'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type {
   ApiItem,
@@ -38,40 +42,15 @@ export default function AnalyzingTrendsBarGraph({
       }))
     : []
 
-  if (isLoading) {
-    return (
-      <div
-        className="flex w-full items-center justify-center"
-        style={{ height }}
-      >
-        <p className="text-sm text-gray-500">로딩중...</p>
-      </div>
-    )
-  }
-  if (error) {
-    return (
-      <div
-        className="flex w-full items-center justify-center"
-        style={{ height }}
-      >
-        <p className="text-sm text-red-500">
-          데이터를 불러오는 중 오류가 발생했습니다.
-        </p>
-      </div>
-    )
-  }
-  if (!mappedData.length) {
-    return (
-      <div
-        className="flex w-full items-center justify-center"
-        style={{ height }}
-      >
-        <p className="text-sm text-gray-400">표시할 데이터가 없습니다.</p>
-      </div>
-    )
-  }
   return (
     <div className="border-box mx-auto flex w-full flex-col">
+      <RenderSwitch
+        cases={[
+          { when: isLoading, render: <Loading /> },
+          { when: error !== null, render: <ErrorMessage /> },
+          { when: !mappedData?.length, render: <Empty /> },
+        ]}
+      />
       {title && (
         <h2 className="mb-7 text-lg font-semibold text-gray-800">{title}</h2>
       )}
