@@ -1,6 +1,13 @@
 import { ExternalLink, User } from 'lucide-react'
 
 import { StudyGroupStatusBadge } from '@/components/common/badge/StudyGroupStatusBadge'
+import {
+  DetailItem,
+  DetailLayout,
+  DetailSection,
+  LeftColumn,
+  RightColumn,
+} from '@/components/common/detail'
 import { formatDateTime } from '@/utils'
 
 interface StudyGroupDetailContentProps {
@@ -33,8 +40,8 @@ export function StudyGroupDetailContent({
   studyGroup,
 }: StudyGroupDetailContentProps) {
   return (
-    <div className="flex gap-8">
-      <div className="w-96 shrink-0">
+    <DetailLayout>
+      <LeftColumn>
         <img
           src={
             studyGroup.profile_img_url ||
@@ -45,71 +52,63 @@ export function StudyGroupDetailContent({
         />
 
         <div className="mt-4 space-y-4">
-          <div>
-            <p className="mb-1 text-sm text-gray-500">그룹명</p>
+          <DetailItem label="그룹명">
             <p className="text-xl leading-tight font-semibold">
               {studyGroup.name}
             </p>
-          </div>
+          </DetailItem>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="mb-1 text-sm text-gray-500">고유 ID</p>
+            <DetailItem label="고유 ID">
               <p className="text-base font-medium">{studyGroup.id}</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-500">UUID</p>
+            </DetailItem>
+
+            <DetailItem label="UUID">
               <p className="text-base font-medium">{studyGroup.uuid || '-'}</p>
-            </div>
+            </DetailItem>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="mb-1 text-sm text-gray-500">인원 현황</p>
+            <DetailItem label="인원 현황">
               <p className="text-base font-medium">
                 {studyGroup.current_headcount} / {studyGroup.max_headcount}명
               </p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-500">스터디 상태</p>
+            </DetailItem>
+
+            <DetailItem label="스터디 상태">
               <StudyGroupStatusBadge status={studyGroup.status} />
-            </div>
+            </DetailItem>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="mb-1 text-sm text-gray-500">스터디 시작일</p>
+            <DetailItem label="스터디 시작일">
               <p className="text-base">{studyGroup.start_at}</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-500">스터디 종료일</p>
+            </DetailItem>
+
+            <DetailItem label="스터디 종료일">
               <p className="text-base">{studyGroup.end_at}</p>
-            </div>
+            </DetailItem>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="mb-1 text-sm text-gray-500">생성일시</p>
+            <DetailItem label="생성일시">
               <p className="text-base">
                 {formatDateTime(studyGroup.created_at)}
               </p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-500">수정일시</p>
+            </DetailItem>
+
+            <DetailItem label="수정일시">
               <p className="text-base">
                 {formatDateTime(studyGroup.updated_at)}
               </p>
-            </div>
+            </DetailItem>
           </div>
         </div>
-      </div>
+      </LeftColumn>
 
-      <div className="flex-1 space-y-6">
-        <div>
-          <h3 className="mb-3 text-base font-semibold text-gray-700">
-            멤버 목록
-          </h3>
-          <div className="space-y-2">
+      <RightColumn>
+        <div className="space-y-6">
+          <DetailSection title="멤버 목록">
             {studyGroup.members && studyGroup.members.length > 0 ? (
               studyGroup.members.map((member) => (
                 <div
@@ -130,14 +129,9 @@ export function StudyGroupDetailContent({
             ) : (
               <p className="text-sm text-gray-500">멤버 정보가 없습니다.</p>
             )}
-          </div>
-        </div>
+          </DetailSection>
 
-        <div>
-          <h3 className="mb-3 text-base font-semibold text-gray-700">
-            스터디 강의 목록
-          </h3>
-          <div className="space-y-4">
+          <DetailSection title="스터디 강의 목록">
             {studyGroup.lectures && studyGroup.lectures.length > 0 ? (
               studyGroup.lectures.map((lecture) => (
                 <div key={lecture.id} className="flex gap-3">
@@ -166,9 +160,9 @@ export function StudyGroupDetailContent({
             ) : (
               <p className="text-sm text-gray-500">강의 정보가 없습니다.</p>
             )}
-          </div>
+          </DetailSection>
         </div>
-      </div>
-    </div>
+      </RightColumn>
+    </DetailLayout>
   )
 }
