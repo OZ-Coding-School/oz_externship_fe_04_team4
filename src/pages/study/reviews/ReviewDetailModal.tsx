@@ -1,6 +1,7 @@
 import Modal from '@/components/common/Modal'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+
 import type { GetStudyReviewDetailResponse } from '@/types/api/response'
 
 import { ReviewDetailContent } from './ReviewDetailContent'
