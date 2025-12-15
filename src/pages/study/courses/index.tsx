@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { PlatformBadge } from '@/components/common/badge'
 import { FilterBar } from '@/components/common/filter'
 import {
@@ -8,8 +6,8 @@ import {
   type PaginationResponse,
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
+import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import { useTableFilters } from '@/hooks/useTableFilters'
 import { LectureDetailModal } from '@/pages/study/courses/LectureDetailModal'
 import { formatDateTime } from '@/utils'
 
@@ -86,8 +84,8 @@ export default function LectureManagementPage() {
     },
   })
 
-  const [selectedLecture, setSelectedLecture] = useState<number | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const modal = useModal<number>('lecture-detail')
+
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<Lecture>
   >({
@@ -101,13 +99,7 @@ export default function LectureManagementPage() {
   })
 
   const handleRowClick = (lecture: Lecture) => {
-    setSelectedLecture(lecture.id)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedLecture(null)
+    modal.open(lecture.id)
   }
   return (
     <>
@@ -132,9 +124,9 @@ export default function LectureManagementPage() {
         onRowClick={handleRowClick}
       />
       <LectureDetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        lectureId={selectedLecture}
+        isOpen={modal.isOpen}
+        onClose={modal.close}
+        lectureId={modal.value ?? null}
       />
     </>
   )

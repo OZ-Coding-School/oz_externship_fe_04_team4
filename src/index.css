@@ -62,3 +62,8 @@
     @apply bg-primary-red text-white hover:opacity-90;
   }
 }
+@layer components {
+  .gradient-loader {
+    @apply animate-[gradient-spin_2s_linear_infinite] bg-linear-to-tr from-emerald-400 via-green-500 to-lime-400 bg-size-[200%_200%] bg-clip-text text-transparent;
+  }
+}

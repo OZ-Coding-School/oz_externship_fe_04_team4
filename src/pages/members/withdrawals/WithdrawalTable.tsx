@@ -103,7 +103,6 @@ export default function WithdrawalTable() {
     setSelectedUser(null)
   }
 
-  if (isLoading) return <div>Loading</div>
   return (
     <div className="space-y-4 p-6">
       <FilterBar

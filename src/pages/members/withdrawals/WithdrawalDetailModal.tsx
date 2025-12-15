@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import { useEffect, useState } from 'react'
 
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { Loading } from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
@@ -76,9 +78,9 @@ export function WithdrawalDetailModal({
     })
   }, [user])
 
-  if (!isOpen || !withdrawalId) return null
-  if (isLoading) return <div>회원 정보를 로딩 중입니다...</div>
-  if (error) return <div>에러가 났습니다</div>
+  if (isLoading) return <Loading label="회원 정보를 로딩 중입니다..." />
+  if (!isOpen || !userId) return null
+  if (error) return <ErrorMessage />
 
   return (
     <Modal

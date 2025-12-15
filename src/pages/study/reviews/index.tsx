@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { FilterBar } from '@/components/common/filter'
 import ReviewRating from '@/components/common/ReviewRating'
 import {
@@ -8,7 +6,7 @@ import {
   type PaginationResponse,
 } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
-import { useTableFilters } from '@/hooks'
+import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { ReviewDetailModal } from '@/pages/study/reviews/ReviewDetailModal'
 import type { StudyReviewListResults } from '@/types/api/response'
@@ -71,8 +69,8 @@ export default function ReviewManagementPage() {
     },
   })
 
-  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const modal = useModal<number>('review-detail')
+
   const { data, isLoading, error, refetch } = useFetchQuery<
     PaginationResponse<ReviewProps>
   >({
@@ -86,13 +84,7 @@ export default function ReviewManagementPage() {
   })
 
   const handleRowClick = (review: ReviewProps) => {
-    setSelectedReviewId(review.id)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedReviewId(null)
+    modal.open(review.id)
   }
   return (
     <>
@@ -121,9 +113,9 @@ export default function ReviewManagementPage() {
         />
       </div>
       <ReviewDetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        reviewId={selectedReviewId}
+        isOpen={modal.isOpen}
+        onClose={modal.close}
+        reviewId={modal.value ?? null}
       />
     </>
   )

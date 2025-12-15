@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { ZodError } from 'zod'
 
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { Loading } from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
@@ -260,9 +262,9 @@ export function UserDetailModal({
   } = useCheckNickname(nicknameToCheck)
   const { isAdmin } = useAuthRole()
 
+  if (isLoading) return <Loading label="회원 정보를 로딩 중입니다..." />
   if (!isOpen || !userId) return null
-  if (isLoading) return <div>회원 정보를 로딩 중입니다...</div>
-  if (error) return <div>에러가 났습니다</div>
+  if (error) return <ErrorMessage>에러가 났습니다.</ErrorMessage>
 
   return (
     <Modal
