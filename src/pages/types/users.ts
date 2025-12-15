@@ -19,7 +19,7 @@ export interface UserApiRawItem {
 export interface UserDetailModalProps {
   isOpen: boolean
   onClose: () => void
-  withdrawalId: number | null
+  userId: number | null
   footer?: ReactNode
 }
 
