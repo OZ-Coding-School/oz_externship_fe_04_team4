@@ -34,8 +34,6 @@ export function WithdrawalDetailModal({
     refetchOnWindowFocus: false,
   })
 
-  const [_sisWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false)
-
   const [form, setForm] = useState<WithDrawwDetailFormType>({
     id: withdrawalId ?? 0,
     email: '',
@@ -48,11 +46,8 @@ export function WithdrawalDetailModal({
     profile_img_url: '',
     reason: '',
     reason_detail: '',
-<<<<<<< HEAD
     due_date: '',
     withdrawn_at: '',
-=======
->>>>>>> 4bac704 (feat: 탈퇴 form 데이터 연결)
   })
 
   useEffect(() => {
@@ -67,7 +62,6 @@ export function WithdrawalDetailModal({
       role: ROLE_LABEL[member.role as keyof typeof ROLE_LABEL] ?? '',
       created_at: member.created_at
         ? dayjs(member.created_at).locale('ko').format('YYYY. M. D. A h:mm:ss')
-<<<<<<< HEAD
         : '',
       status: STATUS_LABEL[member.status as keyof typeof STATUS_LABEL] ?? '',
       profile_img_url: member.profile_img_url,
@@ -79,24 +73,17 @@ export function WithdrawalDetailModal({
       due_date: user.due_date
         ? dayjs(user.due_date).locale('ko').format('YYYY. M. D. A h:mm:ss')
         : '',
-=======
-        : '',
-      status: STATUS_LABEL[member.status as keyof typeof STATUS_LABEL] ?? '',
-      profile_img_url: member.profile_img_url,
-      reason: user.reason,
-      reason_detail: user.reason_detail,
->>>>>>> 4bac704 (feat: 탈퇴 form 데이터 연결)
     })
   }, [user])
 
   if (isLoading) return <Loading label="회원 정보를 로딩 중입니다..." />
-  if (!isOpen || !userId) return null
+  if (!isOpen || !withdrawalId) return null
   if (error) return <ErrorMessage />
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => setIsWithdrawalModalOpen(false)}
+      onClose={onClose}
       title="회원 탈퇴 상세 정보"
       className="z-50"
       contentClassName="h-130 overflow-y-auto"
