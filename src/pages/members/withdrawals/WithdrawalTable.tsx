@@ -1,4 +1,3 @@
-import axios from 'axios'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
@@ -104,15 +103,6 @@ export default function WithdrawalTable() {
     setSelectedUser(null)
   }
 
-  if (isLoading) return <div>Loading</div>
-  if (axios.isAxiosError(error)) {
-    // eslint-disable-next-line no-console
-    console.log(error.response?.status)
-    // eslint-disable-next-line no-console
-    console.log(error.response?.data)
-    // eslint-disable-next-line no-console
-    console.log(error.message)
-  }
   return (
     <div className="space-y-4 p-6">
       <FilterBar

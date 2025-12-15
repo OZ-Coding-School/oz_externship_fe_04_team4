@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import { useEffect, useState } from 'react'
 
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { Loading } from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
 import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
@@ -66,52 +68,9 @@ export function WithdrawalDetailModal({
     })
   }, [user])
 
-  // useEffect(() => {
-
-  //   if (!isDeleteModalOpen) {
-  //     setIsDeleteModalOpen(false)
-  //   }
-  // }, [isOpen, isDeleteModalOpen, user])
-
-  // const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target
-
-  //   setForm((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }))
-  // }
-
-  // const handleUserDelete = () => {
-  //   deleteUserMutation.mutate({})
-  // }
-
-  // const deleteUserMutation = useMutateQuery({
-  //   url: SERVICE_URLS.ACCOUNTS.DELETE(userId!),
-  //   method: 'delete',
-  //   onSuccess: () => {
-  //     alert('회원 삭제가 완료되었습니다.')
-
-  //     onClose()
-  //     queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
-  //   },
-  // })
-
-  // const updateUserMutation = useMutateQuery({
-  //   url: SERVICE_URLS.WITHDRAWALS.DETAIL(userId!),
-  //   method: 'postForm',
-  //   onSuccess: () => {
-  //     alert('회원 정보가 수정되었습니다.')
-  //     refetch()
-  //     queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
-  //   },
-  // })
-
-  // const { isAdmin } = useAuthRole()
-
+  if (isLoading) return <Loading label="회원 정보를 로딩 중입니다..." />
   if (!isOpen || !userId) return null
-  if (isLoading) return <div>회원 정보를 로딩 중입니다...</div>
-  if (error) return <div>에러가 났습니다</div>
+  if (error) return <ErrorMessage />
 
   return (
     <Modal
@@ -125,12 +84,7 @@ export function WithdrawalDetailModal({
       footer={<WithdrawalDetailFooter />}
     >
       {user && (
-        <WithdrawalDetailForm
-          user={user}
-          setForm={setForm}
-          form={form}
-          // handleFormChange={handleFormChange}
-        />
+        <WithdrawalDetailForm user={user} setForm={setForm} form={form} />
       )}
     </Modal>
   )
