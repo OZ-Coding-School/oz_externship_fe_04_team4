@@ -33,11 +33,8 @@ export interface WithDrawDetailInfoUser {
   created_at: string
   reason: string
   reason_detail: string
-<<<<<<< HEAD
   withdrawn_at: string
   due_date: string
-=======
->>>>>>> 4bac704 (feat: 탈퇴 form 데이터 연결)
 }
 
 export interface WithDrawDetailInfo {
@@ -68,9 +65,6 @@ export interface WithDrawwDetailFormType {
   profile_img_url: string
   reason: string
   reason_detail: string
-<<<<<<< HEAD
   due_date: string
   withdrawn_at: string
-=======
->>>>>>> 4bac704 (feat: 탈퇴 form 데이터 연결)
 }
