@@ -3,12 +3,10 @@ import { ChevronDown } from 'lucide-react'
 
 import React from 'react'
 
-import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
-import Modal from '@/components/common/Modal'
 import { GENDER_LABEL } from '@/config/gender'
-import { ROLE_LABEL } from '@/config/role'
 import { STATUS_LABEL } from '@/config/status'
+import { UserDetailChangeRole } from '@/pages/members/users/UserDetailChangeRole'
 import type { UserDetailFormProps } from '@/pages/types/users'
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 
@@ -22,9 +20,9 @@ function UserDetailFormComponent({
   setRole,
   isRoleModalOpen,
   setIsRoleModalOpen,
+  setIsEditMode,
   handlePhoneBlur,
   handlePhoneChange,
-  role,
   handleFormChange,
   handleImgChange,
   nicknameRes,
@@ -33,7 +31,8 @@ function UserDetailFormComponent({
   nicknameError,
   errors,
   validateField,
-  setIsEditMode,
+  userId,
+  role,
 }: UserDetailFormProps) {
   return (
     <div>
@@ -231,88 +230,15 @@ function UserDetailFormComponent({
             className="cursor-default"
             value={form.role}
           />
-          <Modal
-            isOpen={isRoleModalOpen}
-            onClose={() => setIsRoleModalOpen(false)}
-            title="권한 변경"
-            className="z-60"
-            titleClassName="border-b-0"
-            footerClassName="border-t-0"
-            footer={
-              <div className="flex w-full items-center justify-end gap-2">
-                <Button
-                  className="bg-primary-blue text-white"
-                  onClick={() => {
-                    setForm((prev) => ({
-                      ...prev,
-                      role: ROLE_LABEL[role as keyof typeof ROLE_LABEL],
-                    }))
-                    setIsEditMode(true)
-                    setIsRoleModalOpen(false)
-                  }}
-                >
-                  저장
-                </Button>
-                <Button
-                  variant="cancel"
-                  onClick={() => setIsRoleModalOpen(false)}
-                >
-                  취소
-                </Button>
-              </div>
-            }
-          >
-            <div className="flex flex-col gap-3">
-              <label
-                htmlFor="admin"
-                className="flex h-full w-full rounded-lg text-base text-black"
-              >
-                <input
-                  type="radio"
-                  id="admin"
-                  name="role-choice"
-                  className="peer sr-only"
-                  value="admin"
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span className="flex h-full w-full rounded-lg border border-[#E5E7EB] bg-white px-4 py-3 peer-checked:border peer-checked:border-[#BFDBFE] peer-checked:bg-[#EFF6FF] peer-checked:text-base peer-checked:text-[#2563EB]">
-                  관리자
-                </span>
-              </label>
-              <label
-                htmlFor="staff"
-                className="flex h-full w-full rounded-lg text-base text-black"
-              >
-                <input
-                  type="radio"
-                  id="staff"
-                  value="staff"
-                  name="role-choice"
-                  className="peer sr-only"
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span className="flex h-full w-full rounded-lg border border-[#E5E7EB] bg-white px-4 py-3 peer-checked:border peer-checked:border-[#BFDBFE] peer-checked:bg-[#EFF6FF] peer-checked:text-base peer-checked:text-[#2563EB]">
-                  스태프
-                </span>
-              </label>
-              <label
-                htmlFor="user"
-                className="flex h-full w-full rounded-lg text-base text-black"
-              >
-                <input
-                  type="radio"
-                  id="user"
-                  name="role-choice"
-                  className="peer sr-only"
-                  value="user"
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span className="flex h-full w-full rounded-lg border border-[#E5E7EB] bg-white px-4 py-3 peer-checked:border peer-checked:border-[#BFDBFE] peer-checked:bg-[#EFF6FF] peer-checked:text-base peer-checked:text-[#2563EB]">
-                  일반회원
-                </span>
-              </label>
-            </div>
-          </Modal>
+
+          <UserDetailChangeRole
+            setRole={setRole}
+            isRoleModalOpen={isRoleModalOpen}
+            setIsRoleModalOpen={setIsRoleModalOpen}
+            setIsEditMode={setIsEditMode}
+            userId={Number(userId)}
+            role={role}
+          />
           <Input
             label="회원가입 일시"
             name="created_at"

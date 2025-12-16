@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { ZodError } from 'zod'
 
+import { handleApiError } from '@/api/handleApiError'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { Loading } from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
@@ -14,6 +15,7 @@ import { useAuthRole } from '@/hooks/useAuthRole'
 import { useCheckNickname } from '@/hooks/useCheckNickname'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
+import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
 import { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import { UserDetailFooter } from '@/pages/members/users/UserDetailFooter'
 import { UserDetailForm } from '@/pages/members/users/UserDetailForm'
@@ -196,6 +198,7 @@ export function UserDetailModal({
       onClose()
       queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
     },
+    onError: (error) => handleApiError(error, USER_API_ERROR_MESSAGE.delete),
   })
 
   const updateUserMutation = useMutateQuery({
@@ -208,6 +211,7 @@ export function UserDetailModal({
       refetch()
       queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
     },
+    onError: (error) => handleApiError(error, USER_API_ERROR_MESSAGE.edit),
   })
   const handleFormEditOk = () => {
     if (!isEditMode) return
@@ -311,6 +315,7 @@ export function UserDetailModal({
           validateField={validateField}
           handlePhoneChange={handlePhoneChange}
           setIsEditMode={setIsEditMode}
+          userId={userId}
         />
       )}
     </Modal>

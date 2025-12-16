@@ -51,6 +51,7 @@ export interface UserFormType {
 }
 
 export interface UserDetailFormProps {
+  userId: number | string
   profileImg: string
   isEditMode: boolean
   user: UserDetailUser
