@@ -62,7 +62,7 @@ export default function ApplicationFilter({
           label={application.label}
           className="flex flex-col gap-2"
           labelClassName="font-medium text-sm text-[#374151]"
-          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0"
+          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0 cursor-pointer"
           options={application.options}
           value={application.value}
           onChange={application.onChange}
@@ -71,7 +71,7 @@ export default function ApplicationFilter({
           label={sort.label}
           className="flex flex-col gap-2"
           labelClassName="font-medium text-sm text-[#374151]"
-          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0"
+          selectClassName="h-[38px] border-[#D1D5DB] px-3 py-2 focus:border-[#D1D5DB] focus:ring-0 cursor-pointer"
           options={sort.options}
           value={sort.value}
           onChange={sort.onChange}
