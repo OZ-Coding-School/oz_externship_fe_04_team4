@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import { useEffect, useState } from 'react'
 
+import { handleApiError } from '@/api/handleApiError'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { Loading } from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
@@ -9,6 +10,7 @@ import { ROLE_LABEL } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { STATUS_LABEL } from '@/config/status'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+import { WITHDRAWALS_API_ERROR_MESSAGE } from '@/pages/members/withdrawals/api/withdrawalsErrorMessageMap'
 import { WithdrawalDetailFooter } from '@/pages/members/withdrawals/WithdrawalDetailFooter'
 import { WithdrawalDetailForm } from '@/pages/members/withdrawals/WithdrawalDetailForm'
 import type {
@@ -33,7 +35,11 @@ export function WithdrawalDetailModal({
     gcTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   })
-
+  useEffect(() => {
+    if (error) {
+      handleApiError(error, WITHDRAWALS_API_ERROR_MESSAGE.detail)
+    }
+  }, [error])
   const [form, setForm] = useState<WithDrawwDetailFormType>({
     id: withdrawalId ?? 0,
     email: '',

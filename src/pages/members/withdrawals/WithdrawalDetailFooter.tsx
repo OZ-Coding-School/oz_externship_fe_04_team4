@@ -1,10 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { handleApiError } from '@/api/handleApiError'
 import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
+import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
 interface WithdrawalDetailFooterProps {
   status?: string
   onClose: () => void
@@ -24,6 +26,7 @@ export function WithdrawalDetailFooter({
       onClose()
       queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
     },
+    onError: (error) => handleApiError(error, USER_API_ERROR_MESSAGE.recovery),
   })
   const handleUserRecovery = () => {
     setIsRecoveryModalOpen(true)

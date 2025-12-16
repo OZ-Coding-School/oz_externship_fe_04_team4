@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import type { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { handleApiError } from '@/api/handleApiError'
 import Button from '@/components/common/Button'
@@ -24,7 +24,7 @@ export function UserDetailChangeRole({
   role,
 }: UserDetailChangeRoleProps) {
   const queryClient = useQueryClient()
-  const updateUserRoleMutation = useMutateQuery({
+  const { mutate } = useMutateQuery({
     url: SERVICE_URLS.ACCOUNTS.CHANGE_ROLE(userId!),
     method: 'patch',
     onSuccess: () => {
@@ -45,8 +45,9 @@ export function UserDetailChangeRole({
     onError: (error) =>
       handleApiError(error, USER_API_ERROR_MESSAGE.changeRole),
   })
+
   const handleChangedUserRole = () => {
-    updateUserRoleMutation.mutate({ role })
+    mutate({ role })
   }
 
   return (

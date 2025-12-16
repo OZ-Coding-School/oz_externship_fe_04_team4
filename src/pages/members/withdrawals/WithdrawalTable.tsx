@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { handleApiError } from '@/api/handleApiError'
 import { FilterBar } from '@/components/common/filter'
 import type { Column, PaginationResponse } from '@/components/common/table'
 import { Table } from '@/components/common/table/Table'
@@ -9,6 +10,7 @@ import { type RoleType } from '@/config/role'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+import { WITHDRAWALS_API_ERROR_MESSAGE } from '@/pages/members/withdrawals/api/withdrawalsErrorMessageMap'
 import { getRole } from '@/pages/members/withdrawals/utils/getRole'
 import { WithdrawalDetailModal } from '@/pages/members/withdrawals/WithdrawalDetailModal'
 import type { WithdrawalsApiRawItem } from '@/pages/types/users'
@@ -92,6 +94,11 @@ export default function WithdrawalTable() {
       sort: filters.sort,
     },
   })
+  useEffect(() => {
+    if (error) {
+      handleApiError(error, WITHDRAWALS_API_ERROR_MESSAGE.list)
+    }
+  }, [error])
 
   const handleRowClick = (user: WithdrawalsApiRawItem) => {
     setSelectedUser(user.id)

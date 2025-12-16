@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { handleApiError } from '@/api/handleApiError'
 import { FilterBar } from '@/components/common/filter'
 import {
   Table,
@@ -11,6 +12,7 @@ import { SERVICE_URLS } from '@/config/serviceUrls'
 import type { StatusType } from '@/config/status'
 import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
+import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
 import { UserDetailModal } from '@/pages/members/users/UserDetailModal'
 import { getRole } from '@/pages/members/withdrawals/utils/getRole'
 import { getStatus } from '@/pages/members/withdrawals/utils/getStatus'
@@ -92,6 +94,12 @@ export default function UserTable() {
       sort: filters.sort,
     },
   })
+
+  useEffect(() => {
+    if (error) {
+      handleApiError(error, USER_API_ERROR_MESSAGE.list)
+    }
+  }, [error])
 
   const handleRowClick = (user: UserApiRawItem) => {
     setSelectedUser(user.id)

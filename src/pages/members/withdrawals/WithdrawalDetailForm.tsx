@@ -5,7 +5,6 @@ import type { WithDrawwDetailFormType } from '@/pages/types/withdraw'
 
 interface WithdrawlDetailFormProps {
   form: WithDrawwDetailFormType
-  //handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 function WithdrawalDetailFormComponent({ form }: WithdrawlDetailFormProps) {
   return (
@@ -24,7 +23,7 @@ function WithdrawalDetailFormComponent({ form }: WithdrawlDetailFormProps) {
           </label>
         </div>
         <div className="-mt-6 flex flex-col">
-          <span className="text-xl font-semibold">{form.name}</span>∂
+          <span className="text-xl font-semibold">{form.name}</span>
           <span className="text-base">{form.email}</span>
         </div>
       </div>
