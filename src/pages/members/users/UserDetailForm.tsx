@@ -31,7 +31,6 @@ function UserDetailFormComponent({
 }: UserDetailFormProps) {
   return (
     <div>
-      fileInput,
       <UserDetailProfile
         profileImg={profileImg}
         user={user}
