@@ -13,6 +13,7 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    if (config.url?.includes('login')) return config
     const token = useAuthStore.getState().accessToken
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -23,6 +24,7 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
 axiosInstance.interceptors.response.use(
   (response) => {
     if (response.status !== 200 && !response.data) {

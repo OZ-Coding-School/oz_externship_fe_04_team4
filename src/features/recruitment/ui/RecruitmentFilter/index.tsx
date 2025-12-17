@@ -70,7 +70,7 @@ export default function RecruitmentFilter({
               onChange={(e) => setSearch(e.target.value)}
               value={search}
               onKeyDown={handleKeyDown}
-              className="h-5 text-sm outline-0"
+              className="h-5 w-full text-sm outline-0"
             />
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function RecruitmentFilter({
           labelClassName={LABEL_STYLE}
           selectClassName={tM(
             BOX_BASE_STYLE,
-            'focus:ring-0 focus:border-gray-300'
+            'focus:ring-0 focus:border-gray-300 cursor-pointer'
           )}
           options={[
             { label: '모집중', value: 'false' },

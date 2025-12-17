@@ -23,3 +23,5 @@ dist-ssr
 *.sw?
 .history
 .env*
+
+/src/mocks/data/example.ts

@@ -18,11 +18,11 @@ export type GetRecruitmentTagsResponse = {
 export type RecruitmentListResults = {
   id: number
   title: string
-  tags: TagType[]
   close_at: string
   is_closed: boolean
   views_count: number
   bookmark_count: number
+  tags: TagType[]
   created_at: string
   updated_at: string
 }
@@ -63,9 +63,8 @@ export type GetRecruitmentDetailResponse = {
   uuid: string
   title: string
   content: string
-  thumbnail_img_url: string
   expected_headcount: number
-  expected_payment_amount: number
+  estimated_fee: number
   close_at: string
   is_closed: boolean
   views_count: number
@@ -80,15 +79,19 @@ export type GetRecruitmentDetailResponse = {
 
 // api/v1/admin/applications
 // 모집공고 지원 내역 목록 조회
-export type ApplicationRecruitment = { id: number; title: string }
+export type ApplicationRecruitment = {
+  id: number
+  uuid?: string
+  title: string
+}
 export type ApplicationApplicant = {
   id: number
   nickname: string
   email: string
 }
-
 export type ApplicationsListResults = {
   id: number
+  uuid?: string
   recruitment: ApplicationRecruitment
   applicant: ApplicationApplicant
   status: ApplicationsStatus
@@ -109,15 +112,17 @@ export type ApplicationsDetailLectures = {
   title: string
   instructor: string
 }
+
 export type GetApplicationsDetailResponse = {
   id: number
+  uuid?: string
   self_introduction: string
   motivation: string
   objective: string
   available_time: string
   has_study_experience: boolean
-  study_experience: string
   status: ApplicationsStatus
+  study_experience: string
   recruitment: {
     id: number
     title: string

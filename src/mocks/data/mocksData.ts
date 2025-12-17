@@ -1,5 +1,3 @@
-// api/v1/accounts/me
-
 import type { ReasonStatus } from '@/types'
 import type {
   GetAccountsDetailResponse,
@@ -24,6 +22,7 @@ import type {
   GetWithdrawalsTrendsResponse,
 } from '@/types/api/response'
 
+// api/v1/accounts/me
 // 내 정보 조회
 export const mockAccountsMe: GetAccountsMeResponse = {
   id: 1,
@@ -33,9 +32,9 @@ export const mockAccountsMe: GetAccountsMeResponse = {
   phone_number: '01000000001',
   birthday: '1998-08-29',
   gender: 'M',
-  role: 'admin',
   profile_img_url: 'https://example.com/images/profiles/image.png',
   created_at: '2025-10-30T14:01:57.505250+09:00',
+  role: 'admin',
 }
 
 // api/v1/admin/accounts
@@ -139,7 +138,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'nari9',
       name: '유나리',
       birthday: '1998-02-11',
-      status: 'withdrew',
+      status: 'active',
       role: 'user',
       withdraw_at: '2025-11-10T12:40:00+09:00',
       created_at: '2025-10-30T10:40:30.505250+09:00',
@@ -161,7 +160,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'jiho11',
       name: '서지호',
       birthday: '1999-03-19',
-      status: 'withdrew',
+      status: 'active',
       role: 'user',
       withdraw_at: '2025-11-12T09:10:30+09:00',
       created_at: '2025-10-30T10:50:50.505250+09:00',
@@ -172,7 +171,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'daeun12',
       name: '문다은',
       birthday: '1993-04-28',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'user',
       withdraw_at: '2025-11-13T11:25:45+09:00',
       created_at: '2025-10-30T10:55:00.505250+09:00',
@@ -183,7 +182,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'hae13',
       name: '신해준',
       birthday: '1990-09-01',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'staff',
       withdraw_at: '2025-11-14T17:35:00+09:00',
       created_at: '2025-10-30T11:00:10.505250+09:00',
@@ -194,7 +193,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'bora14',
       name: '강보라',
       birthday: '1997-01-09',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'user',
       withdraw_at: '2025-11-15T20:15:10+09:00',
       created_at: '2025-10-30T11:05:20.505250+09:00',
@@ -205,7 +204,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'tae15',
       name: '노태현',
       birthday: '1992-02-02',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'user',
       withdraw_at: '2025-11-16T07:50:30+09:00',
       created_at: '2025-10-30T11:10:30.505250+09:00',
@@ -216,7 +215,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'dasol16',
       name: '임다솔',
       birthday: '1996-06-18',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'admin',
       withdraw_at: '2025-11-17T13:05:55+09:00',
       created_at: '2025-10-30T11:15:40.505250+09:00',
@@ -227,7 +226,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'jihoon17',
       name: '배지훈',
       birthday: '1994-10-21',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'staff',
       withdraw_at: '2025-11-18T10:40:00+09:00',
       created_at: '2025-10-30T11:20:50.505250+09:00',
@@ -238,7 +237,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'soyeon18',
       name: '권소연',
       birthday: '1995-12-03',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'user',
       withdraw_at: '2025-11-19T16:00:15+09:00',
       created_at: '2025-10-30T11:25:00.505250+09:00',
@@ -249,7 +248,7 @@ export const mockAccountsList: GetAccountsListResponse = {
       nickname: 'gaeun19',
       name: '윤가은',
       birthday: '1998-11-17',
-      status: 'withdrew',
+      status: 'inactive',
       role: 'user',
       withdraw_at: '2025-11-20T19:20:40+09:00',
       created_at: '2025-10-30T11:30:10.505250+09:00',
@@ -273,16 +272,16 @@ export const mockAccountsList: GetAccountsListResponse = {
 export const mockAccountDetail: GetAccountsDetailResponse = {
   // mockAccountsList의 첫 번째 유저(id: 1)와 연결
   id: 1,
-  email: 'admin@example.com',
-  nickname: 'hong1',
   name: '홍길동',
   gender: 'M',
-  phone_number: '01000000001',
+  nickname: 'hong1',
   birthday: '1995-01-15',
-  status: 'withdrew',
+  phone_number: '01000000001',
+  email: 'admin@example.com',
+  status: 'inactive',
   role: 'user',
-  profile_img_url: 'https://example.com/images/profiles/user1.png',
   created_at: '2025-10-30T10:01:57.505250+09:00',
+  profile_img_url: 'https://example.com/images/profiles/user1.png',
 }
 
 export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
@@ -398,7 +397,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000009',
     birthday: '1998-02-11',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user9.png',
     created_at: '2025-10-30T10:40:30.505250+09:00',
@@ -424,7 +423,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'M',
     phone_number: '01000000011',
     birthday: '1999-03-19',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user11.png',
     created_at: '2025-10-30T10:50:50.505250+09:00',
@@ -437,7 +436,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000012',
     birthday: '1993-04-28',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user12.png',
     created_at: '2025-10-30T10:55:00.505250+09:00',
@@ -450,7 +449,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'M',
     phone_number: '01000000013',
     birthday: '1990-09-01',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'staff',
     profile_img_url: 'https://example.com/images/profiles/user13.png',
     created_at: '2025-10-30T11:00:10.505250+09:00',
@@ -463,7 +462,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000014',
     birthday: '1997-01-09',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user14.png',
     created_at: '2025-10-30T11:05:20.505250+09:00',
@@ -476,7 +475,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'M',
     phone_number: '01000000015',
     birthday: '1992-02-02',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user15.png',
     created_at: '2025-10-30T11:10:30.505250+09:00',
@@ -489,7 +488,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000016',
     birthday: '1996-06-18',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'admin',
     profile_img_url: 'https://example.com/images/profiles/user16.png',
     created_at: '2025-10-30T11:15:40.505250+09:00',
@@ -502,7 +501,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'M',
     phone_number: '01000000017',
     birthday: '1994-10-21',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'staff',
     profile_img_url: 'https://example.com/images/profiles/user17.png',
     created_at: '2025-10-30T11:20:50.505250+09:00',
@@ -515,7 +514,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000018',
     birthday: '1995-12-03',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user18.png',
     created_at: '2025-10-30T11:25:00.505250+09:00',
@@ -528,7 +527,7 @@ export const mockAccountDetailMap: Record<number, GetAccountsDetailResponse> = {
     gender: 'F',
     phone_number: '01000000019',
     birthday: '1998-11-17',
-    status: 'withdrew',
+    status: 'inactive',
     role: 'user',
     profile_img_url: 'https://example.com/images/profiles/user19.png',
     created_at: '2025-10-30T11:30:10.505250+09:00',
@@ -750,7 +749,7 @@ export const mockWithdrawalsDetail: GetWithdrawalsDetailResponse = {
     name: '홍길동',
     gender: 'M',
     role: 'user',
-    status: 'withdrew',
+    status: 'inactive',
     profile_img_url: 'https://example.com/images/profiles/user1.png',
     created_at: '2025-10-30T10:01:57.505250+09:00',
   },
@@ -780,7 +779,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '테스트58202506',
       gender: 'M',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/test58202506.png',
       created_at: '2025-10-01T00:00:00+09:00',
     },
@@ -800,7 +799,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '홍길동',
       gender: 'M',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user1.png',
       created_at: '2025-10-30T10:01:57.505250+09:00',
     },
@@ -819,7 +818,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '김영희',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user2.png',
       created_at: '2025-10-30T10:05:10.505250+09:00',
     },
@@ -837,7 +836,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '이철수',
       gender: 'M',
       role: 'staff',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user3.png',
       created_at: '2025-10-30T10:10:20.505250+09:00',
     },
@@ -856,7 +855,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '박민수',
       gender: 'M',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user4.png',
       created_at: '2025-10-30T10:15:30.505250+09:00',
     },
@@ -875,7 +874,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '최수지',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user5.png',
       created_at: '2025-10-30T10:20:40.505250+09:00',
     },
@@ -894,7 +893,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '장우진',
       gender: 'M',
       role: 'staff',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user6.png',
       created_at: '2025-10-30T10:25:00.505250+09:00',
     },
@@ -913,7 +912,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '한지민',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user7.png',
       created_at: '2025-10-30T10:30:10.505250+09:00',
     },
@@ -932,7 +931,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '오세훈',
       gender: 'M',
       role: 'admin',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user8.png',
       created_at: '2025-10-30T10:35:20.505250+09:00',
     },
@@ -950,7 +949,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '유나리',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user9.png',
       created_at: '2025-10-30T10:40:30.505250+09:00',
     },
@@ -969,7 +968,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '정도윤',
       gender: 'M',
       role: 'staff',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user10.png',
       created_at: '2025-10-30T10:45:40.505250+09:00',
     },
@@ -988,7 +987,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '서지호',
       gender: 'M',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user11.png',
       created_at: '2025-10-30T10:50:50.505250+09:00',
     },
@@ -1006,7 +1005,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '문다은',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user12.png',
       created_at: '2025-10-30T10:55:00.505250+09:00',
     },
@@ -1025,7 +1024,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '신해준',
       gender: 'M',
       role: 'staff',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user13.png',
       created_at: '2025-10-30T11:00:10.505250+09:00',
     },
@@ -1044,7 +1043,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '강보라',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user14.png',
       created_at: '2025-10-30T11:05:20.505250+09:00',
     },
@@ -1063,7 +1062,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '노태현',
       gender: 'M',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user15.png',
       created_at: '2025-10-30T11:10:30.505250+09:00',
     },
@@ -1082,7 +1081,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '임다솔',
       gender: 'F',
       role: 'admin',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user16.png',
       created_at: '2025-10-30T11:15:40.505250+09:00',
     },
@@ -1101,7 +1100,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '배지훈',
       gender: 'M',
       role: 'staff',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user17.png',
       created_at: '2025-10-30T11:20:50.505250+09:00',
     },
@@ -1119,7 +1118,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '권소연',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user18.png',
       created_at: '2025-10-30T11:25:00.505250+09:00',
     },
@@ -1138,7 +1137,7 @@ export const mockWithdrawalsDetailMap: Record<
       name: '윤가은',
       gender: 'F',
       role: 'user',
-      status: 'withdrew',
+      status: 'inactive',
       profile_img_url: 'https://example.com/images/profiles/user19.png',
       created_at: '2025-10-30T11:30:10.505250+09:00',
     },
@@ -1766,6 +1765,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43001,
       title: '파이썬 입문',
       instructor: '김한영',
+      description: '파이썬 기초부터 실무 활용까지 완벽 가이드하는 강의입니다.',
       total_class_time: 180,
       original_price: 99000,
       discounted_price: 69000,
@@ -1786,6 +1786,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43002,
       title: '자바스크립트 마스터',
       instructor: '이철수',
+      description: '자바스크립트의 모든 것을 다루는 종합 강의입니다.',
       total_class_time: 240,
       original_price: 120000,
       discounted_price: 89000,
@@ -1805,6 +1806,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43003,
       title: 'React 완전정복',
       instructor: '홍길동',
+      description: 'React를 활용한 현대적인 웹 애플리케이션 개발 강의입니다.',
       total_class_time: 300,
       original_price: 130000,
       discounted_price: 99000,
@@ -1825,6 +1827,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43004,
       title: 'Vue.js로 웹 개발',
       instructor: '박민수',
+      description: 'Vue.js를 이용한 반응형 웹 개발 입문 강의입니다.',
       total_class_time: 240,
       original_price: 110000,
       discounted_price: 85000,
@@ -1845,6 +1848,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43005,
       title: 'Node.js 백엔드',
       instructor: '최수지',
+      description: 'Node.js를 활용한 서버 사이드 개발 완전 정복 강의입니다.',
       total_class_time: 270,
       original_price: 115000,
       discounted_price: 89000,
@@ -1865,6 +1869,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43006,
       title: 'AI 기초',
       instructor: '장우진',
+      description: '인공지능의 기본 개념과 원리를 배우는 입문 강의입니다.',
       total_class_time: 180,
       original_price: 99000,
       discounted_price: 79000,
@@ -1884,6 +1889,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43007,
       title: '머신러닝 실전',
       instructor: '한지민',
+      description: '실무 프로젝트를 통해 배우는 머신러닝 심화 강의입니다.',
       total_class_time: 320,
       original_price: 140000,
       discounted_price: 109000,
@@ -1903,6 +1909,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43008,
       title: '딥러닝 완벽 가이드',
       instructor: '오세훈',
+      description: '딥러닝의 이론과 실습을 아우르는 종합 강의입니다.',
       total_class_time: 360,
       original_price: 150000,
       discounted_price: 119000,
@@ -1922,6 +1929,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43009,
       title: 'SQL과 데이터베이스',
       instructor: '유나리',
+      description: 'SQL 기본 문법부터 데이터베이스 설계까지 다루는 강의입니다.',
       total_class_time: 210,
       original_price: 90000,
       discounted_price: 69000,
@@ -1942,6 +1950,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43010,
       title: 'AWS 클라우드 입문',
       instructor: '정도윤',
+      description: 'AWS의 기본 서비스와 활용법을 배우는 입문 강의입니다.',
       total_class_time: 200,
       original_price: 110000,
       discounted_price: 85000,
@@ -1962,6 +1971,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43011,
       title: 'Docker와 DevOps',
       instructor: '서지호',
+      description: 'Docker와 DevOps 문화에 대한 종합 강의입니다.',
       total_class_time: 220,
       original_price: 120000,
       discounted_price: 95000,
@@ -1983,6 +1993,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43012,
       title: '3시간 완성 n8n',
       instructor: 'SOLVIT team',
+      description:
+        'n8n을 활용하여 노코드 자동화 워크플로우를 3시간 만에 완성하는 강의입니다.',
       total_class_time: 180, // 3시간 완성 컨셉에 맞게 180분으로 설정
       original_price: 100000,
       discounted_price: 80000,
@@ -2011,6 +2023,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43013,
       title: 'Git & GitHub 마스터',
       instructor: '문다은',
+      description:
+        'Git과 GitHub를 활용한 버전 관리 및 협업 기술 완전 정복 강의입니다.',
       total_class_time: 180,
       original_price: 80000,
       discounted_price: 59000,
@@ -2031,6 +2045,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43014,
       title: 'HTML/CSS 웹 퍼블리싱',
       instructor: '신해준',
+      description:
+        'HTML과 CSS를 활용한 웹 퍼블리싱 기초부터 실무까지 다루는 강의입니다.',
       total_class_time: 200,
       original_price: 70000,
       discounted_price: 55000,
@@ -2051,6 +2067,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43015,
       title: '프론트엔드 실무',
       instructor: '강보라',
+      description:
+        '현업에서 바로 활용 가능한 프론트엔드 개발 실무 기술 강의입니다.',
       total_class_time: 260,
       original_price: 130000,
       discounted_price: 99000,
@@ -2071,6 +2089,7 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43016,
       title: '백엔드 실무',
       instructor: '노태현',
+      description: '실무 중심의 백엔드 개발 기술과 아키텍처 설계 강의입니다.',
       total_class_time: 280,
       original_price: 130000,
       discounted_price: 99000,
@@ -2091,6 +2110,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43017,
       title: '데이터 분석 입문',
       instructor: '임다솔',
+      description:
+        '데이터 분석의 기초 개념과 실습을 통해 데이터 활용 능력을 키우는 강의입니다.',
       total_class_time: 210,
       original_price: 90000,
       discounted_price: 69000,
@@ -2111,6 +2132,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43018,
       title: '통계로 보는 세상',
       instructor: '배지훈',
+      description:
+        '통계학의 기본 원리와 실제 사례를 통해 통계적 사고를 기르는 강의입니다.',
       total_class_time: 200,
       original_price: 85000,
       discounted_price: 65000,
@@ -2131,6 +2154,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43019,
       title: '파이썬 자동화',
       instructor: '권소연',
+      description:
+        '파이썬을 활용한 업무 자동화 기법과 실습을 다루는 강의입니다.',
       total_class_time: 190,
       original_price: 95000,
       discounted_price: 72000,
@@ -2151,6 +2176,8 @@ export const mockLecturesDetailMap: Record<number, GetLecturesDetailResponse> =
       id: 43020,
       title: 'UI/UX 디자인',
       instructor: '윤가은',
+      description:
+        '사용자 경험을 고려한 UI/UX 디자인 원칙과 실무 적용 방법을 배우는 강의입니다.',
       total_class_time: 180,
       original_price: 100000,
       discounted_price: 79000,
@@ -3244,10 +3271,8 @@ export const mockRecruitmentDetail: GetRecruitmentDetailResponse = {
 - 매 회차 인프런 강의 수강 후 정리 및 실습
 - 과제 코드를 GitHub 레포지토리로 공유 후 간단 리뷰
 `,
-  thumbnail_img_url:
-    'https://example.com/uploads/recruitments/images/image.png',
   expected_headcount: 5,
-  expected_payment_amount: 59000, // 예상 결제 금액(원)
+  estimated_fee: 59000, // 예상 결제 금액(원)
   close_at: '2025-11-20T00:00:05.875842+09:00',
   is_closed: false,
   views_count: 1231,
@@ -3375,10 +3400,9 @@ export const mockRecruitmentDetailMap: Record<
 - 인프런 [파이썬 입문] 강의를 기반으로 학습
 - 매 스터디마다 과제 코드 리뷰 및 질의응답 진행
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/python-study.png',
+
     expected_headcount: 5,
-    expected_payment_amount: 49000,
+    estimated_fee: 49000,
     close_at: '2025-12-01T23:59:59+09:00',
     is_closed: false,
     views_count: 1231,
@@ -3676,10 +3700,8 @@ export const mockRecruitmentDetailMap: Record<
 - 주 2회 구글 밋으로 진행
 - 매 회차 과제 코드 PR 후 코드 리뷰
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/js-dom.png',
     expected_headcount: 6,
-    expected_payment_amount: 39000,
+    estimated_fee: 39000,
     close_at: '2025-12-03T23:59:59+09:00',
     is_closed: false,
     views_count: 980,
@@ -3712,10 +3734,8 @@ export const mockRecruitmentDetailMap: Record<
 - 주 1회 온라인 라이브 + 주 1회 비동기 과제
 - 공식 핸드북과 인프런 강의를 병행하여 학습
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/ts-intro.png',
     expected_headcount: 8,
-    expected_payment_amount: 59000,
+    estimated_fee: 59000,
     close_at: '2025-12-05T23:59:59+09:00',
     is_closed: false,
     views_count: 754,
@@ -3789,10 +3809,8 @@ export const mockRecruitmentDetailMap: Record<
 - 주 2회 온라인 실시간 코드 실습
 - 간단한 미니 프로젝트를 함께 만들며 적용
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/react-hooks.png',
     expected_headcount: 6,
-    expected_payment_amount: 69000,
+    estimated_fee: 69000,
     close_at: '2025-12-02T23:59:59+09:00',
     is_closed: false,
     views_count: 520,
@@ -3850,10 +3868,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 - 라우팅, 데이터 패칭, 이미지 최적화 경험
 - 실제 배포까지 진행하여 링크로 공유 가능한 결과물 만들기
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/next-portfolio.png',
     expected_headcount: 8,
-    expected_payment_amount: 79000,
+    estimated_fee: 79000,
     close_at: '2025-12-07T23:59:59+09:00',
     is_closed: false,
     views_count: 812,
@@ -3919,10 +3935,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 - 배열, 문자열, 해시, 스택/큐 등 기본 유형 위주
 - 매주 백준/프로그래머스 문제 함께 풀이
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/algorithm-basic.png',
     expected_headcount: 10,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-11-30T23:59:59+09:00',
     is_closed: true,
     views_count: 1120,
@@ -3962,10 +3976,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 - Pandas, Matplotlib, 기초 EDA 진행
 - 간단한 데이터셋을 가지고 프로젝트 진행
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/python-data.png',
     expected_headcount: 7,
-    expected_payment_amount: 69000,
+    estimated_fee: 69000,
     close_at: '2025-12-04T23:59:59+09:00',
     is_closed: false,
     views_count: 630,
@@ -4013,10 +4025,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 - 주제별로 나눠 발표 & 질의응답
 - 취준 면접 대비 위주로 정리
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/cs-basic.png',
     expected_headcount: 6,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-10T23:59:59+09:00',
     is_closed: false,
     views_count: 410,
@@ -4053,10 +4063,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 실제 팀 프로젝트처럼 Git 브랜치 전략, 이슈 트래킹, PR 리뷰를 경험해보는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/git-collab.png',
     expected_headcount: 6,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-11-28T23:59:59+09:00',
     is_closed: true,
     views_count: 950,
@@ -4105,10 +4113,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 - 1분 자기소개, 프로젝트 설명 연습
 - 예상 질문 리스트를 기반으로 모의 면접 진행
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/fe-interview.png',
     expected_headcount: 5,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-11-27T23:59:59+09:00',
     is_closed: true,
     views_count: 1340,
@@ -4141,10 +4147,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 파이썬으로 객체지향 설계와 테스트 코드를 연습하는 심화 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/python-oop.png',
     expected_headcount: 5,
-    expected_payment_amount: 89000,
+    estimated_fee: 89000,
     close_at: '2025-12-08T23:59:59+09:00',
     is_closed: false,
     views_count: 320,
@@ -4169,10 +4173,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 웹 접근성의 기본 원칙과 실무에서 적용하는 방법을 함께 공부하는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/web-a11y.png',
     expected_headcount: 4,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-12T23:59:59+09:00',
     is_closed: false,
     views_count: 210,
@@ -4194,10 +4196,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 유데미 리액트 강의를 함께 수강하며 실습 위주로 정리하는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/react-udemy.png',
     expected_headcount: 10,
-    expected_payment_amount: 39000,
+    estimated_fee: 39000,
     close_at: '2025-12-06T23:59:59+09:00',
     is_closed: false,
     views_count: 450,
@@ -4231,10 +4231,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 반응형 레이아웃과 그리드, 플렉스박스를 중심으로 여러 랜딩 페이지를 클론 코딩합니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/html-css.png',
     expected_headcount: 8,
-    expected_payment_amount: 29000,
+    estimated_fee: 29000,
     close_at: '2025-12-09T23:59:59+09:00',
     is_closed: false,
     views_count: 380,
@@ -4259,10 +4257,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 간단한 프론트엔드 프로젝트를 대상으로 GitHub Actions를 이용해 CI/CD 파이프라인을 구축해보는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/github-actions.png',
     expected_headcount: 5,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-11T23:59:59+09:00',
     is_closed: false,
     views_count: 260,
@@ -4284,10 +4280,8 @@ Next.js를 사용해서 자신의 포트폴리오 사이트를 끝까지 완성�
 
 REST API의 기본 개념과 HTTP 메서드, 응답 코드 등을 정리하고 Postman으로 직접 호출해보는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/rest-api.png',
     expected_headcount: 6,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-13T23:59:59+09:00',
     is_closed: false,
     views_count: 230,
@@ -4309,10 +4303,8 @@ REST API의 기본 개념과 HTTP 메서드, 응답 코드 등을 정리하고 P
 
 파이썬으로 기본 알고리즘 문제를 함께 풀어보는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/py-algo.png',
     expected_headcount: 7,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-02T23:59:59+09:00',
     is_closed: false,
     views_count: 310,
@@ -4337,10 +4329,8 @@ REST API의 기본 개념과 HTTP 메서드, 응답 코드 등을 정리하고 P
 
 리액트에서 많이 사용하는 상태관리 라이브러리들을 가볍게 비교해보는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/state-management.png',
     expected_headcount: 6,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-15T23:59:59+09:00',
     is_closed: false,
     views_count: 190,
@@ -4362,10 +4352,8 @@ REST API의 기본 개념과 HTTP 메서드, 응답 코드 등을 정리하고 P
 
 Next.js와 Markdown 기반으로 개인 기술 블로그를 만드는 스터디입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/next-blog.png',
     expected_headcount: 5,
-    expected_payment_amount: 59000,
+    estimated_fee: 59000,
     close_at: '2025-12-20T23:59:59+09:00',
     is_closed: false,
     views_count: 270,
@@ -4390,10 +4378,8 @@ Next.js와 Markdown 기반으로 개인 기술 블로그를 만드는 스터디�
 
 이미 스터디를 운영 중이거나 운영을 준비하는 분들이 모여 노하우를 공유하는 모임입니다.
 `,
-    thumbnail_img_url:
-      'https://example.com/uploads/recruitments/images/study-leader.png',
     expected_headcount: 10,
-    expected_payment_amount: 0,
+    estimated_fee: 0,
     close_at: '2025-12-22T23:59:59+09:00',
     is_closed: false,
     views_count: 150,

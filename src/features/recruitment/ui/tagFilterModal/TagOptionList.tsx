@@ -19,7 +19,7 @@ export default function TagOptionList({ submittedValue }: TagOptionListProps) {
   const apiQueryParams: GetRecruitmentTagsQuery = {
     page: 1,
     page_size: 100,
-    search: submittedValue.trim(),
+    keyword: submittedValue.trim(),
   }
   const { data, isLoading, isError } =
     useFetchQuery<GetRecruitmentTagsResponse>({

@@ -1,11 +1,10 @@
-// api/v1/admin/lectures
-
 import type {
   DifficultyStatus,
   PlatformStatus,
   Status,
 } from '@/types/common.types'
 
+// api/v1/admin/lectures
 // 어드민 페이지 강의 목록 조회 API
 export type LecturesResults = {
   id: number
@@ -29,11 +28,14 @@ export type GetLectureListResponse = {
 export type LecturesDetailCategory = {
   id: number
   name: string
+  created_at?: string
+  updated_at?: string
 }
 export type GetLecturesDetailResponse = {
   id: number
   title: string
   instructor: string
+  description: string
   total_class_time: number
   original_price: number
   discounted_price: number

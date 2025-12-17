@@ -7,6 +7,7 @@ type AuthState = {
   accessToken: string | null
   refreshToken: string | null
   user: CreateLoginResponse['user'] | null
+  clearAuth: () => void
   isLoggedIn: boolean
   setAuth: (payload: CreateLoginResponse) => void
 }
@@ -26,6 +27,18 @@ export const useAuthStore = create<AuthState>()(
           user: payload.user,
           isLoggedIn: true,
         }),
+      clearAuth: () => {
+        set({
+          accessToken: null,
+          user: null,
+          isLoggedIn: false,
+        })
+        try {
+          sessionStorage.removeItem('admin-auth')
+        } catch (error) {
+          alert(error)
+        }
+      },
     }),
     { name: 'admin-auth' }
   )

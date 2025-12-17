@@ -2,7 +2,13 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 
 import { axiosInstance } from '@/api/axios'
 
-type HttpMethod = 'post' | 'patch' | 'put' | 'delete' | 'patchForm'
+type HttpMethod =
+  | 'loginPost'
+  | 'post'
+  | 'patch'
+  | 'put'
+  | 'delete'
+  | 'patchForm'
 
 interface UseMutateQueryParams<TData, TVariables, TError = Error> extends Omit<
   UseMutationOptions<TData, TError, TVariables>,

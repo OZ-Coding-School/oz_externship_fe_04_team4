@@ -1,4 +1,4 @@
-import { type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 import { useLocation, useNavigate } from 'react-router'
 
@@ -6,6 +6,7 @@ import { ROUTE_PATHS } from '@/app/router/routePaths'
 import Button from '@/components/common/Button'
 import { useLoginMutation } from '@/hooks/model'
 import { useAuthRole } from '@/hooks/useAuthRole'
+import { useAuthStore } from '@/store/authStore'
 
 type LocationState = {
   from?: string
@@ -17,26 +18,41 @@ const INPUT_STYLE =
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { isUser } = useAuthRole()
+  const from =
+    (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
+  const clearAuth = useAuthStore((s) => s.clearAuth)
+  const { role } = useAuthRole()
+  const [didLogin, setDidLogin] = useState(false)
   const { mutate, isPending, error } = useLoginMutation({
     onSuccess: () => {
-      if (!isUser) {
-        navigate(from, { replace: true })
-      } else {
-        alert('관리자 전용 페이지입니다. 관리자 계정으로 다시 로그인해주세요.')
-      }
+      setDidLogin(true)
     },
   })
 
-  const from =
-    (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
+  useEffect(() => {
+    if (!didLogin) return
+    if (!role) return
+
+    if (role === 'admin' || role === 'staff') {
+      navigate(from, { replace: true })
+      return
+    }
+
+    if (role === 'user') {
+      clearAuth()
+      setDidLogin(false)
+      alert('관리자 페이지는 admin 및 staff 계정만 접근 가능합니다.')
+    }
+  }, [didLogin, role, navigate, from, clearAuth])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    if (typeof email !== 'string' || typeof password !== 'string') return
 
     mutate({ email, password })
   }

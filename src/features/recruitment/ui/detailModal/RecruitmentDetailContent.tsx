@@ -77,7 +77,7 @@ export default function RecruitmentDetailContent() {
                 예상 결제 비용
               </div>
               <div className={TEXT_STYLE}>
-                {formatPrice(data?.expected_payment_amount)}원
+                {formatPrice(data?.estimated_fee)}원
               </div>
             </div>
           </div>

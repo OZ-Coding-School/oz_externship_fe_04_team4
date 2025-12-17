@@ -1,4 +1,3 @@
-// src/mocks/handlers/handlers.ts
 import { http, HttpResponse } from 'msw'
 
 import { API_URL } from '@/config/api'
@@ -32,7 +31,4 @@ const loginHandler = http.post(
 )
 
 // ✅ MSW에 넘겨줄 최종 handlers 배열
-export const handlers = [
-  loginHandler, // 필요 없으면 이 줄 빼도 됨
-  ...adminHandlers,
-]
+export const handlers = [loginHandler, ...adminHandlers]

@@ -1,7 +1,6 @@
 export type RoleStatus = 'user' | 'staff' | 'admin'
 
-export type AccountStatus = 'active' | 'inactive' | 'withdrew'
-
+export type AccountStatus = 'active' | 'inactive'
 export type ReasonStatus =
   | 'NO_LONGER_NEEDED'
   | 'LACK_OF_INTEREST'

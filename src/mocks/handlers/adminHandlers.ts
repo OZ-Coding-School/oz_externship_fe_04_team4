@@ -24,7 +24,7 @@ import {
   mockWithdrawalsList,
   mockWithdrawalsTrendsMonthly,
   mockWithdrawalsTrendsYearly,
-} from '@/mocks/data/accounts'
+} from '@/mocks/data/mocksData'
 import { parseRequestBody } from '@/mocks/handlers/parseRequestBody'
 import type { ReasonStatus, RoleStatus } from '@/types'
 import type { GetRecruitmentTagsResponse } from '@/types/api/response'

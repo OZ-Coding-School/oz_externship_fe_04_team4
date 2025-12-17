@@ -1,4 +1,3 @@
-// api/v1/admin/accounts
 import type {
   AccountStatus,
   GenderStatus,
@@ -14,14 +13,15 @@ export type GetAccountsMeResponse = {
   email: string
   nickname: string
   name: string
-  birthday: string
   phone_number: string
+  birthday: string
   gender: GenderStatus
-  role: RoleStatus
   profile_img_url: string
   created_at: string
+  role: RoleStatus
 }
 
+// api/v1/admin/accounts
 // 유저 목록 조회
 export type AccountListItem = {
   id: number
@@ -45,16 +45,16 @@ export type GetAccountsListResponse = {
 // 유저 정보 상세 조회
 export type GetAccountsDetailResponse = {
   id: number
-  email: string
-  nickname: string
   name: string
   gender: GenderStatus
-  phone_number: string
+  nickname: string
   birthday: string
-  status: AccountStatus
+  phone_number: string
+  email: string
   role: RoleStatus
-  profile_img_url: string
+  status: AccountStatus
   created_at: string
+  profile_img_url: string
 }
 
 // api/v1/admin/withdrawals

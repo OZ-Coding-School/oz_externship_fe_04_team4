@@ -3,7 +3,7 @@ import type { ApplicationsStatus, SortType } from '@/types'
 export type GetRecruitmentTagsQuery = {
   page?: number
   page_size?: number
-  search?: string
+  keyword?: string
 }
 
 export type GetAdminRecruitmentsQuery = {
