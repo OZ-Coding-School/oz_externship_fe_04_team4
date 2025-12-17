@@ -33,9 +33,9 @@ export type LecturesDetailCategory = {
 }
 export type GetLecturesDetailResponse = {
   id: number
+  uuid?: string
   title: string
   instructor: string
-  description: string
   total_class_time: number
   original_price: number
   discounted_price: number
@@ -44,6 +44,7 @@ export type GetLecturesDetailResponse = {
   average_rating: number
   platform: PlatformStatus
   url_link: string
+  description?: string
   categories: LecturesDetailCategory[]
   created_at: string
   updated_at: string
