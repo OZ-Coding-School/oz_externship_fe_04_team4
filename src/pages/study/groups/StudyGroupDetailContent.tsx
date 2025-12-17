@@ -8,32 +8,11 @@ import {
   LeftColumn,
   RightColumn,
 } from '@/components/common/detail'
+import type { GetStudyGroupDetailResponse } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
 interface StudyGroupDetailContentProps {
-  studyGroup: StudyGroupDetailProps
-}
-
-interface StudyGroupDetailProps {
-  id: number
-  name: string
-  uuid: string
-  profile_img_url: string
-  current_headcount: number
-  max_headcount: number
-  status: string
-  start_at: string
-  end_at: string
-  created_at: string
-  updated_at: string
-  lectures: {
-    id: number
-    title: string
-    instructor: string
-    profile_img_url: string
-    url_link: string
-  }[]
-  members: { id: number; nickname: string; is_leader: boolean }[]
+  studyGroup: GetStudyGroupDetailResponse
 }
 
 export function StudyGroupDetailContent({

@@ -9,20 +9,10 @@ import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { StudyGroupDetailModal } from '@/pages/study/groups/StudyGroupDetailModal'
+import type { StudyGroupListResults } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
-export interface StudyGroup {
-  id: number
-  name: string
-  start_at: string
-  end_at: string
-  max_headcount: number
-  current_headcount: number
-  profile_img_url: string
-  status: string
-  created_at: string
-  updated_at: string
-}
+export type StudyGroup = StudyGroupListResults
 const COLUMNS: Column<StudyGroup>[] = [
   {
     key: 'profile_img_url',

@@ -1,7 +1,7 @@
 import Modal from '@/components/common/Modal'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { StudyGroup } from '@/pages/study/groups'
+import type { GetStudyGroupDetailResponse } from '@/types/api/response'
 
 import { StudyGroupDetailContent } from './StudyGroupDetailContent'
 
@@ -9,18 +9,6 @@ interface StudyGroupDetailModalProps {
   isOpen: boolean
   onClose: () => void
   studyGroupId: number | null
-}
-
-interface StudyGroupDetailProps extends StudyGroup {
-  uuid: string
-  lectures: {
-    id: number
-    title: string
-    instructor: string
-    profile_img_url: string
-    url_link: string
-  }[]
-  members: { id: number; nickname: string; is_leader: boolean }[]
 }
 
 export function StudyGroupDetailModal({
@@ -32,7 +20,7 @@ export function StudyGroupDetailModal({
     data: studyGroup,
     isLoading,
     error,
-  } = useFetchQuery<StudyGroupDetailProps>({
+  } = useFetchQuery<GetStudyGroupDetailResponse>({
     queryKey: ['studygroup-detail', studyGroupId],
     url: SERVICE_URLS.STUDY_GROUPS.DETAIL(studyGroupId || 0),
     enabled: !!studyGroupId && isOpen,

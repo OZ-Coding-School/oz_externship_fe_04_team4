@@ -9,26 +9,10 @@ import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { LectureDetailModal } from '@/pages/study/courses/LectureDetailModal'
+import type { LecturesResults } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
-export interface Lecture {
-  id: number
-  uuid: string
-  title: string
-  instructor: string
-  platform: string
-  thumbnail_img_url?: string
-  url_link?: string
-  description?: string
-  difficulty?: string
-  total_class_time?: number
-  original_price?: number
-  discounted_price?: number
-  average_rating?: number
-  categories?: { id: number; name: string }[]
-  created_at: string
-  updated_at: string
-}
+export type Lecture = LecturesResults
 const COLUMNS: Column<Lecture>[] = [
   {
     key: 'id',

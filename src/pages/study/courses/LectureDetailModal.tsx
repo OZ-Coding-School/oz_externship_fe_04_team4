@@ -1,7 +1,7 @@
 import Modal from '@/components/common/Modal'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import type { Lecture } from '@/pages/study/courses'
+import type { GetLecturesDetailResponse } from '@/types/api/response'
 
 import { LectureDetailContent } from './LectureDetailContent'
 
@@ -20,7 +20,7 @@ export function LectureDetailModal({
     data: lecture,
     isLoading,
     error,
-  } = useFetchQuery<Lecture>({
+  } = useFetchQuery<GetLecturesDetailResponse>({
     queryKey: ['lecture', lectureId],
     url: SERVICE_URLS.LECTURES.DETAIL(lectureId || 0),
     enabled: !!lectureId && isOpen,

@@ -8,11 +8,11 @@ import {
   LeftColumn,
   RightColumn,
 } from '@/components/common/detail'
-import type { Lecture } from '@/pages/study/courses'
+import type { GetLecturesDetailResponse } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
 interface LectureDetailContentProps {
-  lecture: Lecture
+  lecture: GetLecturesDetailResponse
 }
 
 export function LectureDetailContent({ lecture }: LectureDetailContentProps) {
