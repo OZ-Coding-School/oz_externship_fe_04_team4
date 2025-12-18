@@ -113,6 +113,7 @@ export default function UserTable() {
   const sortedResults = data?.results
     ? [...data.results].sort((a, b) => a.id - b.id)
     : []
+  if (isLoading) return <div>Loading</div>
   return (
     <div className="space-y-4 p-6">
       <FilterBar

@@ -22,11 +22,16 @@ export const userUpdateSchema = z.object({
 
   status: z.enum(['active', 'inactive', 'withdraw']),
 
-  profile_img: z
-    .instanceof(File)
-    .refine((file) => file.size <= 10 * 1024 * 1024, {
-      message: '프로필 사진은 10MB 이하만 업로드 가능합니다.',
-    })
+  profile_img_url: z
+    .string()
+    .refine((v) => {
+      try {
+        new URL(v)
+        return true
+      } catch {
+        return false
+      }
+    }, '유효한 이미지 URL이 아닙니다.')
     .optional(),
 })
 
