@@ -2973,8 +2973,8 @@ export const mockRecruitmentList: GetRecruitmentListResponse = {
       bookmark_count: 45,
       is_closed: false,
       tags: [
-        { id: 11, name: 'Python' },
-        { id: 31, name: '실무' },
+        // { id: 11, name: 'Python' },
+        // { id: 31, name: '실무' },
       ],
       close_at: '2025-11-21T00:00:00+09:00',
       created_at: '2025-11-11T09:00:00+09:00',

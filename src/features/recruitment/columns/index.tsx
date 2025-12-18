@@ -16,7 +16,7 @@ const RecruitmentColumns = [
 
       return (
         <div className="flex flex-wrap gap-1">
-          <TagFilterPreview tags={tags} />
+          <TagFilterPreview usage="table" tags={tags} />
         </div>
       )
     },
