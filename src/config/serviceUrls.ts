@@ -5,17 +5,17 @@ export const SERVICE_URLS = {
   ACCOUNTS: {
     LOGIN: `/accounts/login`,
     ME: `/accounts/me`,
-    LIST: `${ADMIN_TEXT}/accounts`,
-    DETAIL: (accountId: number) => `${ADMIN_TEXT}/accounts/${accountId}`,
-    UPDATE: (accountId: number) => `${ADMIN_TEXT}/accounts/${accountId}`,
-    DELETE: (accountId: number) => `${ADMIN_TEXT}/accounts/${accountId}`,
+    LIST: `${ADMIN_TEXT}/account`,
+    DETAIL: (accountId: number) => `${ADMIN_TEXT}/account/${accountId}`,
+    UPDATE: (accountId: number) => `${ADMIN_TEXT}/account/${accountId}`,
+    DELETE: (accountId: number) => `${ADMIN_TEXT}/account/${accountId}`,
     CHANGE_ROLE: (accountId: number) =>
-      `${ADMIN_TEXT}/accounts/${accountId}/role`,
+      `${ADMIN_TEXT}/account/${accountId}/role`,
     ACTIVATE: (accountId: number) =>
-      `${ADMIN_TEXT}/accounts/${accountId}/activate`,
+      `${ADMIN_TEXT}/account/${accountId}/activate`,
     DEACTIVATE: (accountId: number) =>
-      `${ADMIN_TEXT}/accounts/${accountId}/deactivate`,
-    CHECK_NICKNAME: `${ADMIN_TEXT}/accounts/check-nickname`,
+      `${ADMIN_TEXT}/account/${accountId}/deactivate`,
+    CHECK_NICKNAME: `/accounts/check-nickname`,
   },
 
   // 탈퇴 관리
