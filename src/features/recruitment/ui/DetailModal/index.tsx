@@ -1,6 +1,6 @@
 import Modal from '@/components/common/Modal'
-import RecruitmentDetailContent from '@/features/recruitment/ui/detailModal/RecruitmentDetailContent'
-import RecruitmentDetailFooterActions from '@/features/recruitment/ui/detailModal/RecruitmentDetailFooterActions'
+import RecruitmentDetailContent from '@/features/recruitment/ui/DetailModal/RecruitmentDetailContent'
+import RecruitmentDetailFooterActions from '@/features/recruitment/ui/DetailModal/RecruitmentDetailFooterActions'
 import { useRecruitmentDetailModalStore } from '@/store/recruitment'
 
 export default function RecruitmentDetailModal() {

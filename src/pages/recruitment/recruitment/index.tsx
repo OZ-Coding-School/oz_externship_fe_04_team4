@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { Table, type SortConfig } from '@/components/common/table'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import RecruitmentColumns from '@/features/recruitment/columns'
-import RecruitmentDetailModal from '@/features/recruitment/ui/detailModal'
+import RecruitmentDetailModal from '@/features/recruitment/ui/DetailModal'
 import RecruitmentFilter from '@/features/recruitment/ui/RecruitmentFilter'
-import RecruitmentTagFilterModal from '@/features/recruitment/ui/tagFilterModal'
+import RecruitmentTagFilterModal from '@/features/recruitment/ui/TagFilterModal'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import {
   useRecruitmentDetailModalStore,

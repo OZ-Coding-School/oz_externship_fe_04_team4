@@ -108,7 +108,7 @@ export default function RecruitmentFilter({
               'flex cursor-pointer items-center justify-between rounded-lg border border-[#D1D5DB] px-3 py-2'
             )}
           >
-            <TagFilterPreview tags={selectedTagsResult} />
+            <TagFilterPreview usage="filter" tags={selectedTagsResult} />
             <ListFilter className="w-4 text-[#9CA3AF]" />
           </div>
         </div>

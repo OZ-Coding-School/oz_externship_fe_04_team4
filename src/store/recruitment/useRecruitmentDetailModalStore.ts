@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 type DetailModalState = {
   isDetailModalOpen: boolean
-  recruitment_id: number | null
+  recruitmentId: number | null
 
   openDetailModal: (value: number) => void
   closeDetailModal: () => void
@@ -12,10 +12,10 @@ type DetailModalState = {
 export const useRecruitmentDetailModalStore = create<DetailModalState>(
   (set) => ({
     isDetailModalOpen: false,
-    recruitment_id: null,
+    recruitmentId: null,
 
     openDetailModal: (id) =>
-      set({ isDetailModalOpen: true, recruitment_id: id }),
+      set({ isDetailModalOpen: true, recruitmentId: id }),
     closeDetailModal: () => set({ isDetailModalOpen: false }),
     toggleDetailModal: () =>
       set((state) => ({ isDetailModalOpen: !state.isDetailModalOpen })),

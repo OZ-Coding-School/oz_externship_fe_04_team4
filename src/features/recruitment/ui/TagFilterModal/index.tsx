@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import Modal from '@/components/common/Modal'
-import SelectedTagList from '@/features/recruitment/ui/tagFilterModal/SelectedTagList'
-import TagFilterActionButtons from '@/features/recruitment/ui/tagFilterModal/TagFilterActionButtons'
-import TagOptionList from '@/features/recruitment/ui/tagFilterModal/TagOptionList'
-import TagSearchInput from '@/features/recruitment/ui/tagFilterModal/TagSearchInput'
+import SelectedTagList from '@/features/recruitment/ui/TagFilterModal/SelectedTagList'
+import TagFilterActionButtons from '@/features/recruitment/ui/TagFilterModal/TagFilterActionButtons'
+import TagOptionList from '@/features/recruitment/ui/TagFilterModal/TagOptionList'
+import TagSearchInput from '@/features/recruitment/ui/TagFilterModal/TagSearchInput'
 import {
   useRecruitmentTagsStore,
   useTagFilterModalStore,
