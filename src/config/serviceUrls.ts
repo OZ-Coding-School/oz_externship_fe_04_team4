@@ -1,6 +1,9 @@
 import { ADMIN_TEXT } from '@/config/api'
 
 export const SERVICE_URLS = {
+  // PROFILE: {
+  //   S3_PERSIGNEDURL: `/s3-presigned-url`,
+  // },
   // 회원 관리
   ACCOUNTS: {
     LOGIN: `/accounts/login`,

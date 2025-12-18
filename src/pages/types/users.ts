@@ -1,4 +1,3 @@
-import type { AxiosError } from 'axios'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import type { RoleType } from '@/config/role'
@@ -57,24 +56,16 @@ export interface UserDetailFormProps {
   user: UserDetailUser
   form: UserFormType
   setForm: React.Dispatch<React.SetStateAction<UserFormType>>
-  fileInput: React.RefObject<HTMLInputElement | null>
   isRoleModalOpen: boolean
   setIsRoleModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   handleImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   setRole: React.Dispatch<React.SetStateAction<string>>
   role: string
-  handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  nicknameRes: { detail: string } | null
-  isNicknameLoading: boolean
-  isNicknameError: boolean
-  nicknameError: AxiosError | unknown
   errors: Record<string, string>
   validateField: <T extends keyof typeof userUpdateSchema.shape>(
     field: T,
     value: unknown
   ) => void
-  handlePhoneBlur: () => void
-  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   setIsEditMode: Dispatch<SetStateAction<boolean>>
 }
 
@@ -105,4 +96,17 @@ export interface WithdrawalsApiRawItem {
   birthday: string
   reason: string
   withdrawn_at: string
+}
+
+export interface S3PresignedUrl {
+  type:
+    | 'USER_PROFILE_IMAGE'
+    | 'STUDY_GROUP_IMAGE'
+    | 'RECRUITMENT_IMAGE'
+    | 'NOTE_IMAGE'
+    | 'NOTE_ATTACHMENT'
+    | 'RECRUITMENR_ATTACHMENT'
+  content_type: string
+  file_name: string
+  file_ext: string
 }

@@ -1,24 +1,17 @@
 import type { AxiosError } from 'axios'
 import { ChevronDown } from 'lucide-react'
 
+import { useEffect, useState } from 'react'
+
 import Input from '@/components/common/Input'
 import { STATUS_LABEL } from '@/config/status'
+import { useUserNicknamePolicy } from '@/pages/members/users/hook/useUserNicknamePolicy'
 import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import type { UserFormType } from '@/pages/types/users'
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber'
 type UserDetailLeftProps = {
   isEditMode: boolean
   form: UserFormType
-
-  handleFormChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handlePhoneBlur: () => void
-
-  nicknameRes: { detail: string } | null
-  isNicknameLoading: boolean
-  isNicknameError: boolean
-  nicknameError: unknown
-
   errors: Record<string, string>
   validateField: <T extends keyof typeof userUpdateSchema.shape>(
     field: T,
@@ -28,19 +21,58 @@ type UserDetailLeftProps = {
   setForm: React.Dispatch<React.SetStateAction<UserFormType>>
 }
 export function UserDetailLeft({
-  handlePhoneBlur,
-  handlePhoneChange,
-  handleFormChange,
-  nicknameRes,
-  isNicknameLoading,
-  isNicknameError,
-  nicknameError,
   isEditMode,
   form,
-  validateField,
-  errors,
   setForm,
+  errors,
+  validateField,
 }: UserDetailLeftProps) {
+  const [originalNickname, setOriginalNickname] = useState('')
+
+  const {
+    data: nicknameRes,
+    isLoading: isNicknameLoading,
+    isError: isNicknameError,
+    error: nicknameError,
+  } = useUserNicknamePolicy(form.nickname, originalNickname, isEditMode)
+  // Zod 검증을 먼저 확인
+
+  useEffect(() => {
+    setOriginalNickname(form.nickname)
+  }, [form.nickname])
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onlyNumbers = e.target.value.replace(/\D/g, '')
+
+    setForm((prev) => ({ ...prev, phone: onlyNumbers }))
+  }
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'phone') {
+      const onlyNumbers = value.replace(/\D/g, '')
+      setForm((prev) => ({
+        ...prev,
+        phone: onlyNumbers,
+      }))
+      return
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handlePhoneBlur = () => {
+    const raw = form.phone.replace(/\D/g, '')
+    validateField('phone_number', raw)
+    setForm((prev) => ({
+      ...prev,
+      phone: raw, // form 내부 값은 raw 숫자 유지!
+    }))
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <Input label="회원ID" name="id" value={form.id} />

@@ -9,57 +9,41 @@ function UserDetailFormComponent({
   isEditMode,
   form,
   setForm,
+  errors,
+  validateField,
   setRole,
   isRoleModalOpen,
   setIsRoleModalOpen,
   setIsEditMode,
-  errors,
-  validateField,
   userId,
   role,
-  handlePhoneBlur,
-  handlePhoneChange,
-  handleFormChange,
-  nicknameRes,
-  isNicknameLoading,
-  isNicknameError,
-  nicknameError,
   profileImg,
   user,
   handleImgChange,
-  fileInput,
 }: UserDetailFormProps) {
   return (
     <div>
       <UserDetailProfile
-        profileImg={profileImg}
-        user={user}
-        handleImgChange={handleImgChange}
         isEditMode={isEditMode}
-        fileInput={fileInput}
+        profileImg={profileImg}
+        handleImgChange={handleImgChange}
+        user={user}
         errors={errors}
       />
       <div className="flex justify-between pt-6">
         <UserDetailLeft
-          handlePhoneBlur={handlePhoneBlur}
-          handlePhoneChange={handlePhoneChange}
-          handleFormChange={handleFormChange}
-          nicknameRes={nicknameRes}
-          isNicknameLoading={isNicknameLoading}
-          isNicknameError={isNicknameError}
-          nicknameError={nicknameError}
           isEditMode={isEditMode}
           form={form}
-          validateField={validateField}
-          errors={errors}
           setForm={setForm}
+          errors={errors}
+          validateField={validateField}
         />
         <UserDetailRight
           isEditMode={isEditMode}
-          setForm={setForm}
           form={form}
-          validateField={validateField}
+          setForm={setForm}
           errors={errors}
+          validateField={validateField}
           setRole={setRole}
           isRoleModalOpen={isRoleModalOpen}
           setIsRoleModalOpen={setIsRoleModalOpen}

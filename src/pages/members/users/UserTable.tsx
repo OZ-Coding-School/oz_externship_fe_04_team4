@@ -13,6 +13,7 @@ import type { StatusType } from '@/config/status'
 import { useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
+import { UploadTest } from '@/pages/members/users/UploadTest'
 import { UserDetailModal } from '@/pages/members/users/UserDetailModal'
 import { getRole } from '@/pages/members/withdrawals/utils/getRole'
 import { getStatus } from '@/pages/members/withdrawals/utils/getStatus'
@@ -95,6 +96,8 @@ export default function UserTable() {
     },
   })
 
+  console.log('data', data)
+
   useEffect(() => {
     if (error) {
       handleApiError(error, USER_API_ERROR_MESSAGE.list)
@@ -116,6 +119,7 @@ export default function UserTable() {
   if (isLoading) return <div>Loading</div>
   return (
     <div className="space-y-4 p-6">
+      <UploadTest />
       <FilterBar
         searchConfig={{
           label: '검색',
