@@ -23,12 +23,12 @@ const RIGHT_LEFT_BOX_STYLE = 'flex flex-col gap-1 mb-6 cursor-default'
 const TEXT_STYLE = 'text-sm text-[#374151] cursor-default'
 
 export default function RecruitmentDetailContent() {
-  const { recruitment_id } = useRecruitmentDetailModalStore()
+  const { recruitmentId } = useRecruitmentDetailModalStore()
 
   const { data, isLoading, error } =
     useFetchQuery<GetRecruitmentDetailResponse>({
-      queryKey: ['adminRecruitmentDetail', recruitment_id],
-      url: SERVICE_URLS.RECRUITMENTS.DETAIL(recruitment_id!),
+      queryKey: ['adminRecruitmentDetail', recruitmentId],
+      url: SERVICE_URLS.RECRUITMENTS.DETAIL(recruitmentId!),
     })
 
   if (isLoading) {
