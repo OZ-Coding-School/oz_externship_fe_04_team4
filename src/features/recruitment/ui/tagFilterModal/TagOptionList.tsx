@@ -27,6 +27,7 @@ export default function TagOptionList({ submittedValue }: TagOptionListProps) {
       url: SERVICE_URLS.TAGS.LIST,
       params: apiQueryParams,
     })
+  const Tag = data?.results
 
   if (isLoading) {
     return (
@@ -44,14 +45,14 @@ export default function TagOptionList({ submittedValue }: TagOptionListProps) {
     )
   }
 
-  if (!data?.results) {
+  if (!Tag) {
     return (
       <div className="max-h-96 w-full border-b border-[#E5E7EB] p-6 text-sm text-gray-500">
         검색어를 입력하고 Enter를 눌러 태그를 검색해보세요.
       </div>
     )
   }
-  if (data?.results.length === 0) {
+  if (Tag.length === 0) {
     return (
       <div className="max-h-96 w-full border-b border-[#E5E7EB] p-6 text-sm text-gray-500">
         일치한 검색 결과가 없습니다. 다시 검색하세요.
@@ -60,16 +61,16 @@ export default function TagOptionList({ submittedValue }: TagOptionListProps) {
   }
 
   return (
-    <div className="max-h-96 w-full overflow-scroll border-b border-[#E5E7EB] p-6">
+    <div className="max-h-96 w-full overflow-auto border-b border-[#E5E7EB] p-4">
       <div className="flex flex-wrap gap-2">
-        {data?.results?.map((el) => (
+        {Tag?.map((el) => (
           <div
             key={el.id}
             onClick={() => toggleTag(el)}
             aria-current={Boolean(selectedTags.find((tag) => tag.id === el.id))}
             className={ITEMS_STYLE}
           >
-            <div className="max-w-[165px] truncate"> {el.name}</div>
+            <div className="max-w-[165px] truncate">{el.name}</div>
             {selectedTags.find((tag) => tag.id === el.id) && (
               <Check className="w-4 text-[#CA8A04]" />
             )}
