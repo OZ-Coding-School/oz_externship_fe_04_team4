@@ -89,6 +89,12 @@ export function Table<T>({
                     column.sortable
                       ? 'cursor-pointer select-none hover:bg-gray-100'
                       : ''
+                  } ${
+                    column.align === 'center'
+                      ? 'text-center'
+                      : column.align === 'right'
+                        ? 'text-right'
+                        : 'text-left'
                   }`}
                   style={{ width: column.width }}
                   onClick={() => {
@@ -149,7 +155,13 @@ export function Table<T>({
                   {columns.map((column, colIndex) => (
                     <td
                       key={colIndex}
-                      className="px-4 py-3 text-sm text-gray-600"
+                      className={`px-4 py-3 text-sm text-gray-600 ${
+                        column.align === 'center'
+                          ? 'text-center'
+                          : column.align === 'right'
+                            ? 'text-right'
+                            : 'text-left'
+                      }`}
                     >
                       {column.render
                         ? column.render(row[column.key as keyof T], row)
