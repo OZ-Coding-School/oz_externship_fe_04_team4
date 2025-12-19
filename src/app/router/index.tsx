@@ -9,8 +9,8 @@ import AdminUserManagementPage from '@/pages/members/users'
 import AdminWithdrawalManagementPage from '@/pages/members/withdrawals'
 import ApplicationManagementPage from '@/pages/recruitment/applications'
 import RecruitmentPage from '@/pages/recruitment/recruitment'
-import LectureManagementPage from '@/pages/study/courses'
 import StudyGroupManagementPage from '@/pages/study/groups'
+import LectureManagementPage from '@/pages/study/lectures'
 import ReviewManagementPage from '@/pages/study/reviews'
 
 export default function AppRouter() {
