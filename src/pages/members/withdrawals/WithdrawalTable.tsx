@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { handleApiError } from '@/api/handleApiError'
 import { FilterBar } from '@/components/common/filter'
-import type { PaginationResponse } from '@/components/common/table'
 import { Table } from '@/components/common/table/Table'
-import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useTableFilters } from '@/hooks'
-import { useFetchQuery } from '@/hooks/useFetchQuery'
-import { WITHDRAWALS_API_ERROR_MESSAGE } from '@/pages/members/withdrawals/api/withdrawalsErrorMessageMap'
 import { WITHDRAWAL_COLUMNS } from '@/pages/members/withdrawals/constants/withdrawalColumns'
 import {
   REASON_FILTER_OPTIONS,
   ROLE_FILTER_OPTIONS,
 } from '@/pages/members/withdrawals/constants/withdrawalFilters'
+import { useWithdrawalsTable } from '@/pages/members/withdrawals/hook/useWithdrawalsTable'
 import { WithdrawalDetailModal } from '@/pages/members/withdrawals/WithdrawalDetailModal'
 import type { WithdrawalsApiRawItem } from '@/pages/types/users'
 import 'dayjs/locale/ko'
@@ -38,37 +34,15 @@ export default function WithdrawalTable() {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<number | null>(null)
-
-  const { data, isLoading, error, refetch } = useFetchQuery<
-    PaginationResponse<WithdrawalsApiRawItem>
-  >({
-    queryKey: ['Withdraw-list', filters],
-    url: SERVICE_URLS.WITHDRAWALS.LIST,
-    params: {
-      page: filters.page,
-      page_size: 10,
-      search: filters.search,
-      role: filters.role,
-      reason: filters.reason,
-      sort: filters.sort,
-    },
-  })
-  useEffect(() => {
-    if (error) {
-      handleApiError(error, WITHDRAWALS_API_ERROR_MESSAGE.list)
-    }
-  }, [error])
-
+  const { data, isLoading, error, refetch } = useWithdrawalsTable(filters)
   const handleRowClick = (user: WithdrawalsApiRawItem) => {
     setSelectedUser(user.id)
     setIsModalOpen(true)
   }
-
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setSelectedUser(null)
   }
-
   return (
     <div className="space-y-4 p-6">
       <FilterBar
