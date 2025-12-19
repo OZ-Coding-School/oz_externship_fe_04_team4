@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type { GetLecturesDetailResponse } from '@/types/api/response'
 

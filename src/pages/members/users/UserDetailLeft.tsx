@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import Input from '@/components/common/Input'
-import { STATUS_LABEL } from '@/config/status'
+import { STATUS_LABEL } from '@/config'
 import { useUserNicknamePolicy } from '@/pages/members/users/hook/useUserNicknamePolicy'
 import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import type { UserFormType } from '@/pages/types/users'

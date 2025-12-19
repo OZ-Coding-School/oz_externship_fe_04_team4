@@ -1,4 +1,4 @@
-import { ADMIN_TEXT } from '@/config/api'
+import { ADMIN_TEXT } from '@/config'
 
 export const SERVICE_URLS = {
   // PROFILE: {

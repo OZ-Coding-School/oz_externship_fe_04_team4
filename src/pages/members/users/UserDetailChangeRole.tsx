@@ -4,7 +4,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 import { handleApiError } from '@/api/handleApiError'
 import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
 type UserDetailChangeRoleProps = {

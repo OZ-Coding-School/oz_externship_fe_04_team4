@@ -1,6 +1,6 @@
 import type { UseMutationOptions } from '@tanstack/react-query'
 
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 
 type DeleteRecruitmentResponse = {

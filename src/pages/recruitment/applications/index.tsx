@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import { Table } from '@/components/common/table'
-import { QUERY_KEY } from '@/config/queyrKey'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { QUERY_KEY, SERVICE_URLS } from '@/config'
 import { ApplicationColumns } from '@/features/application/columns'
 import ApplicationDetailModal from '@/features/application/ui/ApplicationDetailModal'
 import ApplicationFilter from '@/features/application/ui/ApplicationFilter'

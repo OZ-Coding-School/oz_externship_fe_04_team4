@@ -1,7 +1,6 @@
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 
-import { API_URL } from '@/config/api'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { API_URL, SERVICE_URLS } from '@/config'
 import { useAuthStore } from '@/store/authStore'
 
 const refreshClient = axios.create({

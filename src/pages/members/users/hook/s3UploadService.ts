@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
 import { axiosInstance } from '@/api/axios'
-import { API_URL } from '@/config/api'
+import { API_URL } from '@/config'
 
 export interface PresignedUrlRequest {
   type: 'USER_PROFILE_IMAGE'

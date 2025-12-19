@@ -5,7 +5,7 @@ import {
   type Column,
   type PaginationResponse,
 } from '@/components/common/table'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { ReviewDetailModal } from '@/pages/study/reviews/ReviewDetailModal'

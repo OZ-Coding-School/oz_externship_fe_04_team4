@@ -1,6 +1,6 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
-import type { RoleType } from '@/config/role'
+import type { RoleType } from '@/config'
 import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 
 export interface UserApiRawItem {

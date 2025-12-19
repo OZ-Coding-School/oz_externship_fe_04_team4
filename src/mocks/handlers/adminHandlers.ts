@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 
-import { ADMIN_API_URL, API_URL } from '@/config/api'
+import { ADMIN_API_URL, API_URL } from '@/config'
 import {
   mockAccountDetailMap,
   mockAccountsList,

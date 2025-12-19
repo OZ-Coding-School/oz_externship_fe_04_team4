@@ -2,7 +2,7 @@ import { ChevronDown } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 
 import Input from '@/components/common/Input'
-import { GENDER_LABEL } from '@/config/gender'
+import { GENDER_LABEL } from '@/config'
 import type { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import { UserDetailChangeRole } from '@/pages/members/users/UserDetailChangeRole'
 import type { UserFormType } from '@/pages/types/users'

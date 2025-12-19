@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { STATUS_LABEL, STATUS_STYLE, type StatusType } from '@/config/status'
+import { STATUS_LABEL, STATUS_STYLE, type StatusType } from '@/config'
 
 export const getStatus = (status: StatusType) => {
   const baseClass = 'inline-block px-2 py-1 text-xs rounded-[999px]'

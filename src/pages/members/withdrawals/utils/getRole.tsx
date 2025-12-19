@@ -1,4 +1,4 @@
-import { ROLE, ROLE_LABEL, type RoleType } from '@/config/role'
+import { ROLE, ROLE_LABEL, type RoleType } from '@/config'
 import { twClassName } from '@/utils/getTwClassName'
 
 export const getRole = (role: RoleType) => {

@@ -1,7 +1,6 @@
 import { Check } from 'lucide-react'
 
-import { QUERY_KEY } from '@/config/queyrKey'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { QUERY_KEY, SERVICE_URLS } from '@/config'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useRecruitmentTagsStore } from '@/store/recruitment'
 import type { GetRecruitmentTagsQuery } from '@/types/api/query'

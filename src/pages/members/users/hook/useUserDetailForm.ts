@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import { ROLE_LABEL } from '@/config/role'
+import { ROLE_LABEL } from '@/config'
 import { userUpdateSchema } from '@/pages/members/users/schema/userUpdateSchema'
 import type { UserDetailUser, UserFormType } from '@/pages/types/users'
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import AnalyzingDistributionOfReasonsForWithdrawalGraph from '@/pages/members/dashboard/graphs/AnalyzingDistributionOfReasonsForWithdrawalGraph'
 import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 

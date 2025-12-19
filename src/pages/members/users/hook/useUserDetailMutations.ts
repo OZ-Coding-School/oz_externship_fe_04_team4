@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 
 import { handleApiError } from '@/api/handleApiError'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
 

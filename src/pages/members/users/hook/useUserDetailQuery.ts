@@ -1,4 +1,4 @@
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import type { UserDetailUser } from '@/pages/types/users'
 

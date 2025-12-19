@@ -1,7 +1,6 @@
 import { useQueryClient, type UseMutationOptions } from '@tanstack/react-query'
 
-import { QUERY_KEY } from '@/config/queyrKey'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { QUERY_KEY, SERVICE_URLS } from '@/config'
 import { useMutateQuery } from '@/hooks/useMutateQuery'
 import { useAuthStore } from '@/store/authStore'
 import type { CreateLoginBody, CreateLoginResponse } from '@/types/api/response'

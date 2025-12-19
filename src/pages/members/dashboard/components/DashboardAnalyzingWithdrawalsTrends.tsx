@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { DashboardAnalyzingSelect } from '@/pages/members/dashboard/components/DashboardAnalyzingSelect'
 import AnalyzingTrendsBarGraph from '@/pages/members/dashboard/graphs/AnalyzingTrendsBarGraph'
 import type { Interval } from '@/pages/types/users'

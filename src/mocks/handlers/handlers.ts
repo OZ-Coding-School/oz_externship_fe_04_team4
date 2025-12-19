@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 
-import { API_URL } from '@/config/api'
+import { API_URL } from '@/config'
 
 import { adminHandlers } from './adminHandlers'
 

@@ -1,5 +1,4 @@
-import { QUERY_KEY } from '@/config/queyrKey'
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { QUERY_KEY, SERVICE_URLS } from '@/config'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useAuthStore } from '@/store/authStore'
 import type { GetAccountsMeResponse } from '@/types/api/response'

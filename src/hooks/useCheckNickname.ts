@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { SERVICE_URLS } from '@/config/serviceUrls'
+import { SERVICE_URLS } from '@/config'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 
 export function useCheckNickname(nickname: string) {

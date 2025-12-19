@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 
-import { QUERY_KEY } from '@/config/queyrKey'
+import { QUERY_KEY } from '@/config'
 import { useRecruitmentDeleteMutation } from '@/hooks/model/useRecruitmentDeleteMutation'
 import { useAuthRole } from '@/hooks/useAuthRole'
 import { useRecruitmentDetailModalStore } from '@/store/recruitment'
