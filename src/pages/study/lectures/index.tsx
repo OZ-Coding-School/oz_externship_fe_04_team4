@@ -8,7 +8,7 @@ import {
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useModal, useTableFilters } from '@/hooks'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
-import { LectureDetailModal } from '@/pages/study/courses/LectureDetailModal'
+import { LectureDetailModal } from '@/pages/study/lectures/LectureDetailModal'
 import type { LecturesResults } from '@/types/api/response'
 import { formatDateTime } from '@/utils'
 
@@ -20,7 +20,7 @@ const COLUMNS: Column<Lecture>[] = [
     width: '60px',
   },
   {
-    key: 'thumbnail_url',
+    key: 'thumbnail_img_url',
     header: '썸네일',
     width: '100px',
     render: (value: string) => (

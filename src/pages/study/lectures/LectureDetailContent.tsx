@@ -43,7 +43,7 @@ export function LectureDetailContent({ lecture }: LectureDetailContentProps) {
 
             <DetailItem label="평점">
               <p className="text-lg font-medium">
-                {lecture.average_rating?.toFixed(1) || '-'}
+                {Number(lecture.average_rating).toFixed(1) || '-'}
               </p>
             </DetailItem>
           </div>
