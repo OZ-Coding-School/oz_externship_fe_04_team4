@@ -1,12 +1,8 @@
-import type { RoleStatus } from '@/types/common.types'
+export type CreateLoginBody = {
+  email: string
+  password: string
+}
 
 export type CreateLoginResponse = {
   access_token: string
-  refresh_token: string
-  user: {
-    id: number
-    email: string
-    name: string
-    role: RoleStatus
-  }
 }
