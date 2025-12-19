@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Table, type SortConfig } from '@/components/common/table'
+import { QUERY_KEY } from '@/config/queyrKey'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import RecruitmentColumns from '@/features/recruitment/columns'
 import RecruitmentDetailModal from '@/features/recruitment/ui/DetailModal'
@@ -50,7 +51,7 @@ export default function RecruitmentPage() {
   // 3) Table에 넘길 response 생성
   const { data, isLoading, error, refetch } =
     useFetchQuery<GetRecruitmentListResponse>({
-      queryKey: ['adminRecruitments', apiQueryParams],
+      queryKey: [QUERY_KEY.RECRUMENTS.LIST, apiQueryParams],
       url: SERVICE_URLS.RECRUITMENTS.LIST,
       params: apiQueryParams,
     })

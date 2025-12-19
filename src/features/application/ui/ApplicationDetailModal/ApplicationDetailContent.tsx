@@ -4,6 +4,7 @@ import type { ChangeEvent } from 'react'
 
 import { ApplicationStatusMediumBadge } from '@/components/common/badge'
 import { GENDER_LABEL } from '@/config/gender'
+import { QUERY_KEY } from '@/config/queyrKey'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { tM } from '@/lib/twMerge'
@@ -20,7 +21,7 @@ export default function ApplicationDetailContent() {
 
   const { data, isLoading, error } =
     useFetchQuery<GetApplicationsDetailResponse>({
-      queryKey: ['applicationDetail', application_id],
+      queryKey: [QUERY_KEY.APPLICATIONS.DETAIL, application_id],
       url: SERVICE_URLS.APPLICATIONS.DETAIL(application_id!),
     })
 

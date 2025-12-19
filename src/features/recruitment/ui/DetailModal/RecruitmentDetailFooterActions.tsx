@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 
+import { QUERY_KEY } from '@/config/queyrKey'
 import { useRecruitmentDeleteMutation } from '@/hooks/model/useRecruitmentDeleteMutation'
 import { useAuthRole } from '@/hooks/useAuthRole'
 import { useRecruitmentDetailModalStore } from '@/store/recruitment'
@@ -12,7 +13,7 @@ export default function RecruitmentDetailFooterActions() {
 
   const { mutate } = useRecruitmentDeleteMutation(recruitmentId!, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['adminRecruitments'] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.RECRUMENTS.LIST] })
       closeDetailModal()
     },
   })

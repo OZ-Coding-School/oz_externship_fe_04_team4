@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react'
 
+import { QUERY_KEY } from '@/config/queyrKey'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useRecruitmentTagsStore } from '@/store/recruitment'
@@ -23,7 +24,7 @@ export default function TagOptionList({ submittedValue }: TagOptionListProps) {
   }
   const { data, isLoading, isError } =
     useFetchQuery<GetRecruitmentTagsResponse>({
-      queryKey: ['recruitment-tags', apiQueryParams],
+      queryKey: [QUERY_KEY.RECRUMENTS.TAGS, apiQueryParams],
       url: SERVICE_URLS.TAGS.LIST,
       params: apiQueryParams,
     })

@@ -10,6 +10,7 @@ import type { ChangeEvent } from 'react'
 import { Link } from 'react-router'
 
 import { ApplicationStatusBadge } from '@/components/common/badge'
+import { QUERY_KEY } from '@/config/queyrKey'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import markdownToHtml from '@/lib/markdown'
@@ -27,7 +28,7 @@ export default function RecruitmentDetailContent() {
 
   const { data, isLoading, error } =
     useFetchQuery<GetRecruitmentDetailResponse>({
-      queryKey: ['adminRecruitmentDetail', recruitmentId],
+      queryKey: [QUERY_KEY.RECRUMENTS.DETAIL, recruitmentId],
       url: SERVICE_URLS.RECRUITMENTS.DETAIL(recruitmentId!),
     })
 

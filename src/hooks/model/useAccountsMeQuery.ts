@@ -1,3 +1,4 @@
+import { QUERY_KEY } from '@/config/queyrKey'
 import { SERVICE_URLS } from '@/config/serviceUrls'
 import { useFetchQuery } from '@/hooks/useFetchQuery'
 import { useAuthStore } from '@/store/authStore'
@@ -7,7 +8,7 @@ export const useAccountsMeQuery = () => {
   const accessToken = useAuthStore((s) => s.accessToken)
 
   return useFetchQuery<GetAccountsMeResponse>({
-    queryKey: ['accountMe', accessToken],
+    queryKey: QUERY_KEY.ACCOUNTS.ME,
     url: SERVICE_URLS.ACCOUNTS.ME,
     enabled: Boolean(accessToken),
   })
