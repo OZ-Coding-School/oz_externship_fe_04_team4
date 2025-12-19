@@ -7,8 +7,8 @@ export const useAccountsMeQuery = () => {
   const accessToken = useAuthStore((s) => s.accessToken)
 
   return useFetchQuery<GetAccountsMeResponse>({
-    queryKey: ['account', 'me', accessToken],
+    queryKey: ['accountMe', accessToken],
     url: SERVICE_URLS.ACCOUNTS.ME,
-    enabled: !!accessToken,
+    enabled: Boolean(accessToken),
   })
 }
