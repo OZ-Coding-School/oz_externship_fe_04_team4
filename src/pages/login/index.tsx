@@ -86,7 +86,9 @@ export default function Login() {
               className={INPUT_STYLE}
             />
             {error && (
-              <p className="mb-3 text-sm text-red-500">{error.message}</p>
+              <p className="mb-3 text-sm text-red-500">
+                {error.message && '아이디/비밀번호를 확인해주세요.'}
+              </p>
             )}
             <Button
               type="submit"
