@@ -108,7 +108,7 @@ export default function StudyGroupManagementPage() {
   }
   return (
     <>
-      <div className="mb-8 space-y-6 rounded-lg bg-white p-6 shadow-sm">
+      <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
         <FilterBar
           searchConfig={{
             label: '검색',

@@ -44,32 +44,33 @@ export default function WithdrawalTable() {
     setSelectedUser(null)
   }
   return (
-    <div className="space-y-4 p-6">
-      <FilterBar
-        searchConfig={{
-          label: '검색',
-          value: filters.search,
-          onChange: updateSearch,
-          placeholder: '탈퇴요청 ID,이메일,이름 검색...',
-        }}
-        filters={[
-          {
-            label: '권한',
-            options: ROLE_FILTER_OPTIONS,
-            value: filters.role,
-            onChange: (value) => updateFilter('role', value),
-            placeholder: '권한 선택',
-          },
-          {
-            label: '탈퇴사유',
-            options: REASON_FILTER_OPTIONS,
-            value: filters.reason,
-            onChange: (value) => updateFilter('reason', value),
-            placeholder: '탈퇴사유 선택',
-          },
-        ]}
-      />
-      <div className="border-t border-gray-200" />
+    <>
+      <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
+        <FilterBar
+          searchConfig={{
+            label: '검색',
+            value: filters.search,
+            onChange: updateSearch,
+            placeholder: '탈퇴요청 ID,이메일,이름 검색...',
+          }}
+          filters={[
+            {
+              label: '권한',
+              options: ROLE_FILTER_OPTIONS,
+              value: filters.role,
+              onChange: (value) => updateFilter('role', value),
+              placeholder: '권한 선택',
+            },
+            {
+              label: '탈퇴사유',
+              options: REASON_FILTER_OPTIONS,
+              value: filters.reason,
+              onChange: (value) => updateFilter('reason', value),
+              placeholder: '탈퇴사유 선택',
+            },
+          ]}
+        />
+      </div>
       <Table
         columns={WITHDRAWAL_COLUMNS}
         response={data || { count: 0, results: [], next: null, previous: null }}
@@ -87,6 +88,6 @@ export default function WithdrawalTable() {
         onClose={handleCloseModal}
         withdrawalId={selectedUser}
       />
-    </div>
+    </>
   )
 }

@@ -48,32 +48,33 @@ export default function UserTable() {
     : []
   if (isLoading) return <div>Loading</div>
   return (
-    <div className="space-y-4 p-6">
-      <FilterBar
-        searchConfig={{
-          label: '검색',
-          placeholder: '이메일, 닉네임, 이름, ID 검색...',
-          value: filters.search,
-          onChange: updateSearch,
-        }}
-        filters={[
-          {
-            label: '상태',
-            options: STATUS_FILTER_OPTIONS,
-            value: filters.status,
-            onChange: (value) => updateFilter('status', value),
-            placeholder: '상태',
-          },
-          {
-            label: '권한',
-            options: ROLE_FILTER_OPTIONS,
-            value: filters.role,
-            onChange: (value) => updateFilter('role', value),
-            placeholder: '권한',
-          },
-        ]}
-      />
-      <div className="border-t border-gray-200" />
+    <>
+      <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
+        <FilterBar
+          searchConfig={{
+            label: '검색',
+            placeholder: '이메일, 닉네임, 이름, ID 검색...',
+            value: filters.search,
+            onChange: updateSearch,
+          }}
+          filters={[
+            {
+              label: '상태',
+              options: STATUS_FILTER_OPTIONS,
+              value: filters.status,
+              onChange: (value) => updateFilter('status', value),
+              placeholder: '상태',
+            },
+            {
+              label: '권한',
+              options: ROLE_FILTER_OPTIONS,
+              value: filters.role,
+              onChange: (value) => updateFilter('role', value),
+              placeholder: '권한',
+            },
+          ]}
+        />
+      </div>
       <Table
         columns={USER_COLUMNS}
         response={
@@ -95,6 +96,6 @@ export default function UserTable() {
         onClose={handleCloseModal}
         userId={selectedUser}
       />
-    </div>
+    </>
   )
 }

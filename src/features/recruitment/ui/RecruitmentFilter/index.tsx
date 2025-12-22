@@ -47,7 +47,7 @@ export default function RecruitmentFilter({
   }
 
   return (
-    <div className="mb-6 space-y-4 rounded-lg bg-white p-6">
+    <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
       <div className="flex items-center">
         <div className="mr-4 flex flex-col">
           <div
