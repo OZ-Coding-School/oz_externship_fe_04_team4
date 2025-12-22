@@ -47,7 +47,7 @@ export default function ApplicationFilter({
   }
 
   return (
-    <div className="mb-8 space-y-6 rounded-lg bg-white p-6 shadow-sm">
+    <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
       <div className="grid grid-cols-3 gap-4 bg-white">
         <ApplicationSearchInput
           label={searchConfig.label}
