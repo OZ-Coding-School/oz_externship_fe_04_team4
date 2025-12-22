@@ -1,6 +1,8 @@
 export const QUERY_KEY = {
   ACCOUNTS: {
     ME: ['accounts', 'me'],
+
+    ME_AUTH: (authVersion: number) => ['accounts', 'me', authVersion],
     CHECK_NICKNAME: ['check', 'nickname'],
   },
   RECRUMENTS: {

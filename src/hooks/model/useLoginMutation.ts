@@ -9,6 +9,7 @@ export function useLoginMutation(
   options?: UseMutationOptions<CreateLoginResponse, Error, CreateLoginBody>
 ) {
   const queryClient = useQueryClient()
+
   const setAuth = useAuthStore((state) => state.setAuth)
 
   return useMutateQuery<CreateLoginResponse, CreateLoginBody>({
@@ -18,7 +19,10 @@ export function useLoginMutation(
     onSuccess: (data, variables, context, mutation) => {
       setAuth(data)
 
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.ACCOUNTS.ME })
+      queryClient.removeQueries({
+        queryKey: QUERY_KEY.ACCOUNTS.ME,
+        exact: false,
+      })
 
       options?.onSuccess?.(data, variables, context, mutation)
     },

@@ -1,9 +1,11 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState, type FormEvent } from 'react'
 
 import { useLocation, useNavigate } from 'react-router'
 
 import { ROUTE_PATHS } from '@/app/router/routePaths'
 import Button from '@/components/common/Button'
+import { QUERY_KEY } from '@/config'
 import { useLoginMutation } from '@/hooks/model'
 import { useAuthRole } from '@/hooks/useAuthRole'
 import { useAuthStore } from '@/store/authStore'
@@ -18,9 +20,10 @@ const INPUT_STYLE =
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
+  const queryClient = useQueryClient()
   const from =
     (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
-  const clearAuth = useAuthStore((s) => s.clearAuth)
+  const clearAuthHard = useAuthStore((s) => s.clearAuthHard)
   const { role } = useAuthRole()
   const [didLogin, setDidLogin] = useState(false)
   const { mutate, isPending, error } = useLoginMutation({
@@ -51,11 +54,15 @@ export default function Login() {
     }
 
     if (role === 'user') {
-      clearAuth()
+      clearAuthHard()
+      queryClient.removeQueries({
+        queryKey: QUERY_KEY.ACCOUNTS.ME,
+        exact: false,
+      })
       setDidLogin(false)
       alert('관리자 페이지는 admin 및 staff 계정만 접근 가능합니다.')
     }
-  }, [didLogin, role, navigate, from, clearAuth])
+  }, [didLogin, role, navigate, from, clearAuthHard, queryClient])
 
   return (
     <div className="flex items-center justify-between">

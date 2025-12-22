@@ -27,7 +27,7 @@ async function refreshAccessToken(): Promise<string> {
     throw new AxiosError('토큰이 없어 refresh 불가')
   }
 
-  const res = await refreshClient.post<{ accessToken: string }>(
+  const res = await refreshClient.post<{ access_token: string }>(
     SERVICE_URLS.ACCOUNTS.REFRESH,
     undefined,
     {
@@ -36,7 +36,7 @@ async function refreshAccessToken(): Promise<string> {
       },
     }
   )
-  return res.data.accessToken
+  return res.data.access_token
 }
 
 export const axiosInstance = axios.create({
