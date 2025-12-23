@@ -38,15 +38,15 @@ export function DashboardAnalyzingwithdrawalReasons() {
   const [reason, setReason] = useState<ReasonType>('OTHER')
   return (
     <div>
-      <div className="flex h-auto w-full max-w-[1120px] flex-col rounded-xl bg-white p-6 shadow">
+      <div className="flex h-auto w-full flex-col rounded-xl bg-white p-6 shadow">
         <AnalyzingDistributionOfReasonsForWithdrawalGraph
           apiUrl={SERVICE_URLS.ANALYTICS.WITHDRAWAL_REASONS_PERCENTAGE}
-          title="탈퇴 사유 비율 분석"
+          title="탈퇴 사유 분포"
           height={360} // 원하는 높이
           isAnimationActive
         />
       </div>
-      <div className="h-1vh relative flex w-full max-w-[1120px] flex-1 flex-col rounded-xl bg-white p-6 shadow">
+      <div className="h-1vh relative mt-6 flex w-full flex-1 flex-col rounded-xl bg-white p-6 shadow">
         <div className="absolute top-5 right-6 flex justify-end">
           <select
             value={reason}

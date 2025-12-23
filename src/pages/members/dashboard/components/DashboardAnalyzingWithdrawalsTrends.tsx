@@ -8,7 +8,7 @@ import type { Interval } from '@/pages/types/users'
 export function DashboardAnalyzingWithdrawalsTrends() {
   const [interval, setInterval] = useState<Interval>('monthly')
   return (
-    <div className="h-1vh relative flex w-full max-w-[1120px] flex-1 flex-col rounded-xl bg-white p-6 shadow">
+    <div className="h-1vh w-fullflex-1 relative flex flex-col rounded-xl bg-white p-6 shadow">
       <div className="absolute top-5 right-6 flex justify-end">
         <DashboardAnalyzingSelect
           interval={interval}

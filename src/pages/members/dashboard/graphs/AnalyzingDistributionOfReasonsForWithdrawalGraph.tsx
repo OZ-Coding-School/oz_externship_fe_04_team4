@@ -21,11 +21,11 @@ import type {
 } from '@/pages/members/dashboard/graphs/types'
 
 const COLORS = [
-  '#6366F1',
-  '#FACC15',
-  '#EF4444',
-  '#10B981',
-  '#3B82F6',
+  '#0088fe',
+  '#8884d8',
+  '#ff8042',
+  '#ffbb28',
+  '#00c49f',
   '#F97316',
   '#8B5CF6',
   '#14B8A6',
