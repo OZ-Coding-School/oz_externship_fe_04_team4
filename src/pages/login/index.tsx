@@ -85,6 +85,7 @@ export default function Login() {
               placeholder="아이디 (example@gmail.com)"
               className={INPUT_STYLE}
             />
+
             <input
               name="password"
               type="password"
