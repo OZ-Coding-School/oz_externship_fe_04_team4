@@ -61,11 +61,11 @@ export function StudyGroupDetailContent({
 
           <div className="grid grid-cols-2 gap-4">
             <DetailItem label="스터디 시작일">
-              <p className="text-base">{formatDateTime(studyGroup.start_at)}</p>
+              <p className="text-base">{studyGroup.start_at}</p>
             </DetailItem>
 
             <DetailItem label="스터디 종료일">
-              <p className="text-base">{formatDateTime(studyGroup.end_at)}</p>
+              <p className="text-base">{studyGroup.end_at}</p>
             </DetailItem>
           </div>
 
@@ -115,7 +115,7 @@ export function StudyGroupDetailContent({
               studyGroup.lectures.map((lecture) => (
                 <div key={lecture.id} className="flex gap-3">
                   <img
-                    src={lecture.thumbnail_img_url || 'Loading . . .'}
+                    src={lecture.profile_img_url || 'Loading . . .'}
                     alt={lecture.title}
                     className="h-16 w-20 shrink-0 rounded object-cover"
                   />
