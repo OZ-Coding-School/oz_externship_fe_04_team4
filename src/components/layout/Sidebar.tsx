@@ -58,7 +58,7 @@ export default function Sidebar() {
   return (
     <div className="flex h-dvh w-[256px] flex-col items-center justify-between border-r border-[#E5E7EB]">
       <div className="flex flex-col items-center">
-        <div className="text-bold flex h-7 w-[256px] cursor-default items-center p-6 text-xl font-bold">
+        <div className="text-bold flex w-[256px] cursor-default items-center p-6 text-xl font-bold">
           관리자 패널
         </div>
 
