@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   dispatch:
-    # 포크로 파일이 따라가도 원본(org) 레포에서만 실행되게 가드
+    # 포크로 동기화되더라도 원본(org) 레포에서만 실행되도록 가드
     if: github.repository == 'OZ-Coding-School/oz_externship_fe_04_team4'
     runs-on: ubuntu-latest
 
@@ -27,6 +27,7 @@ jobs:
             exit 1
           fi
 
+          # repository_dispatch 성공 시 보통 204가 출력됨
           status=$(curl -sS -o resp.json -w "%{http_code}" -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Content-Type: application/json" \

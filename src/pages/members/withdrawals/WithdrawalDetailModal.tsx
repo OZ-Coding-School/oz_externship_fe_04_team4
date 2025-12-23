@@ -25,7 +25,6 @@ export function WithdrawalDetailModal({
     isLoading,
     error,
   } = useWithdrawalsDetail(withdrawalId, isOpen)
-
   const [form, setForm] = useState<WithDrawwDetailFormType>({
     id: withdrawalId ?? 0,
     email: '',
@@ -85,7 +84,7 @@ export function WithdrawalDetailModal({
         <WithdrawalDetailFooter
           onClose={onClose}
           status={form.status}
-          withdrawalId={withdrawalId}
+          userId={Number(form.id)}
         />
       }
     >

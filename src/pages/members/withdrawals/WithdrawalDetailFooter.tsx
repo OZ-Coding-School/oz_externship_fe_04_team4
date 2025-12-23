@@ -10,17 +10,17 @@ import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessa
 interface WithdrawalDetailFooterProps {
   status?: string
   onClose: () => void
-  withdrawalId: number
+  userId: number
 }
 export function WithdrawalDetailFooter({
-  withdrawalId,
+  userId,
   onClose,
 }: WithdrawalDetailFooterProps) {
   const queryClient = useQueryClient()
   const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false)
   const RestoreUserMutation = useMutateQuery<string, number>({
-    url: SERVICE_URLS.ACCOUNTS.ACTIVATE(withdrawalId!),
-    method: 'post',
+    url: SERVICE_URLS.ACCOUNTS.ACTIVATE(userId!),
+    method: 'patch',
     onSuccess: () => {
       alert('회원 복구가 완료되었습니다.')
       onClose()
@@ -28,11 +28,12 @@ export function WithdrawalDetailFooter({
     },
     onError: (error) => handleApiError(error, USER_API_ERROR_MESSAGE.recovery),
   })
+
   const handleUserRecovery = () => {
     setIsRecoveryModalOpen(true)
   }
   const handleUserRecoveryDone = () => {
-    RestoreUserMutation.mutate(withdrawalId)
+    RestoreUserMutation.mutate(userId)
   }
   return (
     <div className="flex w-full items-center justify-end">
