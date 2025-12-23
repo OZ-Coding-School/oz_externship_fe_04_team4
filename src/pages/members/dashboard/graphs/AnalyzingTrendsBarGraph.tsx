@@ -68,7 +68,7 @@ export default function AnalyzingTrendsBarGraph({
               tick={{ fontSize: 12, fill: '#6B7280' }}
               domain={[0, (dataMax: number) => Math.ceil(dataMax) + 30]}
             />
-            <Tooltip />
+            <Tooltip cursor={{ fill: 'rgba(99, 102, 241, 0.1)' }} />
             <Bar
               dataKey="value"
               name={title ?? '값'}
