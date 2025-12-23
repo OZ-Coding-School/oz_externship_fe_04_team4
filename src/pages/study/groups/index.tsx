@@ -45,7 +45,8 @@ const COLUMNS: Column<StudyGroup>[] = [
     key: 'duration',
     header: '스터디 기간',
     width: '150px',
-    render: (_, row) => `${row.start_at} / ${row.end_at}명`,
+    render: (_, row) =>
+      `${formatDateTime(row.start_at)} ~ ${formatDateTime(row.end_at)}`,
   },
   {
     key: 'status',
