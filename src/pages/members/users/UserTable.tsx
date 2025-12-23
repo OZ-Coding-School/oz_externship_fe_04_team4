@@ -26,7 +26,7 @@ export default function UserTable() {
       page: 1,
       status: '',
       role: '',
-      sort: 'id_asc',
+      sort: '',
     },
   })
 
@@ -43,10 +43,6 @@ export default function UserTable() {
     setIsModalOpen(false)
     setSelectedUser(null)
   }
-  const sortedResults = data?.results
-    ? [...data.results].sort((a, b) => a.id - b.id)
-    : []
-  if (isLoading) return <div>Loading</div>
   return (
     <>
       <div className="mb-6 space-y-4 rounded-lg bg-white p-6 shadow-xs">
@@ -77,11 +73,7 @@ export default function UserTable() {
       </div>
       <Table
         columns={USER_COLUMNS}
-        response={
-          data
-            ? { ...data, results: sortedResults }
-            : { count: 0, results: [], next: null, previous: null }
-        }
+        response={data || { count: 0, results: [], next: null, previous: null }}
         currentPage={filters.page}
         onPageChange={updatePage}
         isLoading={isLoading}

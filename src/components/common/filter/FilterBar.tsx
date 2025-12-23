@@ -37,7 +37,7 @@ export function FilterBar({ searchConfig, filters = [] }: FilterBarProps) {
 
       {filters.map((filter) => (
         <FilterSelect
-          key={filter.value}
+          key={`filter-${filter.label}`}
           label={filter.label}
           options={filter.options}
           value={filter.value}
