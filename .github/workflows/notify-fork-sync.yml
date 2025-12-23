@@ -1,0 +1,43 @@
+name: Notify fork to sync (develop)
+
+on:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-fork-sync-develop
+  cancel-in-progress: true
+
+jobs:
+  dispatch:
+    # 포크로 동기화되더라도 원본(org) 레포에서만 실행되도록 가드
+    if: github.repository == 'OZ-Coding-School/oz_externship_fe_04_team4'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dispatch sync event to fork
+        env:
+          DISPATCH_TOKEN: ${{ secrets.FORK_SYNC_PAT }}
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then
+            echo "Missing secret: FORK_SYNC_PAT"
+            exit 1
+          fi
+
+          # repository_dispatch 성공 시 보통 204가 출력됨
+          status=$(curl -sS -o resp.json -w "%{http_code}" -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${DISPATCH_TOKEN}" \
+            https://api.github.com/repos/eisont/oz_externship_fe_04_team4/dispatches \
+            -d '{"event_type":"sync-upstream-develop"}')
+
+          echo "Dispatch HTTP status: $status"
+          if [ "$status" != "204" ]; then
+            echo "Dispatch failed. Response:"
+            cat resp.json
+            exit 1
+          fi
