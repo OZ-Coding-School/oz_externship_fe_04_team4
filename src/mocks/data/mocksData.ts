@@ -2489,7 +2489,7 @@ export const mockStudyGroupDetail: GetStudyGroupDetailResponse = {
       id: 43001,
       title: '파이썬 입문',
       instructor: '김한영',
-      profile_img_url:
+      thumbnail_img_url:
         'https://example.com/images/lecture/thumbnails/python1.png',
       url_link: 'https://www.inflearn.com/course/python-intro',
     },
@@ -2497,7 +2497,7 @@ export const mockStudyGroupDetail: GetStudyGroupDetailResponse = {
       id: 43019,
       title: '파이썬 자동화',
       instructor: '권소연',
-      profile_img_url:
+      thumbnail_img_url:
         'https://example.com/images/lecture/thumbnails/automation.png',
       url_link: 'https://www.inflearn.com/course/python-automation',
     },
