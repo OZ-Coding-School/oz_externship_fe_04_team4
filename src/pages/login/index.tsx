@@ -22,7 +22,8 @@ export default function Login() {
   const location = useLocation()
   const queryClient = useQueryClient()
   const from =
-    (location.state as LocationState)?.from || `${ROUTE_PATHS.MEMBERS.USERS}`
+    (location.state as LocationState)?.from ||
+    `${ROUTE_PATHS.MEMBERS.DASHBOARD}`
   const clearAuthHard = useAuthStore((s) => s.clearAuthHard)
   const { role } = useAuthRole()
   const [didLogin, setDidLogin] = useState(false)
