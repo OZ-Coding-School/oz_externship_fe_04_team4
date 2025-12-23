@@ -34,7 +34,7 @@ const COLORS = [
 
 export const CustomLegend = ({ items, colors }: CustomLegendProps) => {
   return (
-    <ul className="mr-30 flex w-[256px] flex-col gap-2.5">
+    <ul className="mr-30 flex w-[300px] flex-col gap-2.5">
       {items?.map((item, index) => (
         <li key={index} className="flex items-center justify-between gap-3">
           <span className="flex items-center gap-3">
