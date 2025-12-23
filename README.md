@@ -125,14 +125,12 @@ src/
 - **clsx / tailwind-merge**: 조건부 className 구성 및 Tailwind 클래스 충돌 정리
 
 ### 품질/협업 도구
-
 - **ESLint**: 코드 품질/규칙 검사
 - **Prettier (+ prettier-plugin-tailwindcss)**: 코드 포맷팅 및 Tailwind 클래스 정렬
 - **Husky + lint-staged**: 커밋 전 자동 lint/format 수행
 - **Commitlint**: 커밋 메시지 컨벤션 강제
 
 ### 테스트/목데이터
-
 - **MSW**: Mock API(개발 단계에서 목데이터/실API 전환 지원)
 - **Vitest + Testing Library + JSDOM**: 단위/컴포넌트 테스트 환경
 
@@ -150,7 +148,6 @@ src/
   - `staff`는 조회만 가능(수정/삭제 불가)
 
 ### 공통 UI/데이터 처리
-
 - 테이블: 정렬/페이지네이션/검색/필터
 - 모달: 상세보기/셀렉트박스 등
 
@@ -164,12 +161,10 @@ src/
 - Package manager: `npm`
 
 ### 브랜치 전략
-
 - `main`: 배포용
 - `develop`: 개발 통합
 
 작업 브랜치 네이밍:
-
 ```bash
 feat/{issue-number}-{short-kebab}
 fix/{issue-number}-{short-kebab}
@@ -178,7 +173,6 @@ refactor/{issue-number}-{short-kebab}
 ```
 
 ### 커밋 메시지 규칙
-
 - `{type}: {subject}`
 - subject: 한국어, 명령문 스타일, 대문자 시작 금지, 마침표 금지
 
