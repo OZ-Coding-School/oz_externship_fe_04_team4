@@ -39,7 +39,7 @@ const COLUMNS: Column<ReviewProps>[] = [
   {
     key: 'content',
     header: '리뷰 내용',
-    width: '600px',
+    width: '300px',
   },
   {
     key: 'star_rating',
