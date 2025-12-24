@@ -47,6 +47,7 @@ export interface UserFormType {
   birthday: string
   role: string
   joinDateTime: string
+  profile_img_url: string
 }
 
 export interface UserDetailFormProps {
