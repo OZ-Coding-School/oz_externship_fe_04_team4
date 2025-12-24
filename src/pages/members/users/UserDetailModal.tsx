@@ -49,6 +49,7 @@ export function UserDetailModal({
       gender: user.gender,
       birthday: user.birthday,
       role: ROLE_LABEL[user.role as keyof typeof ROLE_LABEL] ?? '',
+      profile_img_url: user.profile_img_url,
       joinDateTime: dayjs(user.created_at)
         .locale('ko')
         .format('YYYY. M. D. A h:mm:ss'),
@@ -60,7 +61,7 @@ export function UserDetailModal({
       return
     }
 
-    setProfileImg(`${user.profile_img_url}?t=${Date.now()}`)
+    setProfileImg(user.profile_img_url)
   }, [user?.profile_img_url])
   const updateUserMutation = useMutateQuery({
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId!),
@@ -91,7 +92,6 @@ export function UserDetailModal({
   useEffect(() => {
     if (!isOpen) {
       setIsEditMode(false)
-      setProfileImg('')
     }
     if (!isRoleModalOpen) {
       setRole('')
@@ -154,7 +154,7 @@ export function UserDetailModal({
       nickname: form.nickname,
       phone_number: form.phone,
       status: form.status,
-      profile_img_url: profileImg || undefined,
+      profile_img_url: form.profile_img_url,
     })
 
     if (!parsed.success) {

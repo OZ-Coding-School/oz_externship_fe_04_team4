@@ -17,6 +17,7 @@ export function useUserDetailForm(user?: UserDetailUser, userId?: number) {
     birthday: '',
     role: '',
     joinDateTime: '',
+    profile_img_url: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   useEffect(() => {
@@ -32,6 +33,7 @@ export function useUserDetailForm(user?: UserDetailUser, userId?: number) {
       gender: user.gender,
       birthday: user.birthday,
       role: ROLE_LABEL[user.role as keyof typeof ROLE_LABEL],
+      profile_img_url: user.profile_img_url,
       joinDateTime: dayjs(user.created_at)
         .locale('ko')
         .format('YYYY. M. D. A h:mm:ss'),
