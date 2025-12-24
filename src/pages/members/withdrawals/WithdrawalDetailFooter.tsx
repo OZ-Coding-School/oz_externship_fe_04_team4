@@ -1,47 +1,39 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { handleApiError } from '@/api/handleApiError'
 import Button from '@/components/common/Button'
 import Modal from '@/components/common/Modal'
-import { SERVICE_URLS } from '@/config'
-import { useMutateQuery } from '@/hooks/useMutateQuery'
-import { USER_API_ERROR_MESSAGE } from '@/pages/members/users/api/userErrorMessageMap'
+import { useWithdrawalsRecovery } from '@/pages/members/withdrawals/hook/useWithdrawalsRecovery'
 interface WithdrawalDetailFooterProps {
   status?: string
   onClose: () => void
-  userId: number
+  userId: number | null
 }
 export function WithdrawalDetailFooter({
   userId,
   onClose,
 }: WithdrawalDetailFooterProps) {
-  const queryClient = useQueryClient()
   const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false)
-  const RestoreUserMutation = useMutateQuery<string, number>({
-    url: SERVICE_URLS.ACCOUNTS.ACTIVATE(userId!),
-    method: 'patch',
-    onSuccess: () => {
-      alert('회원 복구가 완료되었습니다.')
-      onClose()
-      queryClient.invalidateQueries({ queryKey: ['users-list'], exact: false })
-    },
-    onError: (error) => handleApiError(error, USER_API_ERROR_MESSAGE.recovery),
-  })
 
   const handleUserRecovery = () => {
     setIsRecoveryModalOpen(true)
   }
+  const recoveryMutation = useWithdrawalsRecovery(userId!)
+
   const handleUserRecoveryDone = () => {
-    RestoreUserMutation.mutate(userId)
+    recoveryMutation.mutate(undefined, {
+      onSuccess: () => {
+        alert('회원 복구가 완료되었습니다.')
+        setIsRecoveryModalOpen(false)
+      },
+    })
   }
   return (
     <div className="flex w-full items-center justify-end">
       <div className="flex justify-end gap-3">
         <Button
           className="border-primary-light-gray text-primary-dark-gray border bg-white"
-          onClick={onClose}
           type="button"
+          onClick={onClose}
         >
           닫기
         </Button>
@@ -55,7 +47,7 @@ export function WithdrawalDetailFooter({
         </Button>
         <Modal
           isOpen={isRecoveryModalOpen}
-          onClose={onClose}
+          onClose={() => setIsRecoveryModalOpen(false)}
           title="회원 탈퇴 상세 정보"
           className="z-50 w-md"
           titleClassName="border-b-0"
