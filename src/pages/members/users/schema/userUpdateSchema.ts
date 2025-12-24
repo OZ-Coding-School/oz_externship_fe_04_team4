@@ -19,20 +19,12 @@ export const userUpdateSchema = z.object({
   phone_number: z
     .string()
     .regex(/^\d{11}$/, '전화번호는 숫자 11자리여야 합니다.'),
-
   status: z.enum(['active', 'inactive', 'withdraw']),
 
-  profile_img_url: z
-    .string()
-    .refine((v) => {
-      try {
-        new URL(v)
-        return true
-      } catch {
-        return false
-      }
-    }, '유효한 이미지 URL이 아닙니다.')
-    .optional(),
+  profile_img_url: z.preprocess(
+    (v) => (typeof v === 'string' && v.trim() === '' ? undefined : v),
+    z.string().url('유효한 이미지 URL이 아닙니다.').optional()
+  ),
 })
 
 export type UserUpdateSchema = z.infer<typeof userUpdateSchema>

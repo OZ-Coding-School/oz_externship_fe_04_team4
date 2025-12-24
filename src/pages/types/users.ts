@@ -31,7 +31,7 @@ export interface UserDetailUser {
   name: string
   nickname: string
   phone_number: string
-  profile_img_url: string
+  profile_img_url: string | null
   role: string
   status: string
 }
@@ -47,7 +47,7 @@ export interface UserFormType {
   birthday: string
   role: string
   joinDateTime: string
-  profile_img_url: string
+  profile_img_url?: string
 }
 
 export interface UserDetailFormProps {

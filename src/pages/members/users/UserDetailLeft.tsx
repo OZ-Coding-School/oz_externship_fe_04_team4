@@ -47,8 +47,11 @@ export function UserDetailLeft({
     const onlyNumbers = e.target.value.replace(/\D/g, '')
 
     setForm((prev) => ({ ...prev, phone: onlyNumbers }))
-  }
 
+    if (onlyNumbers.length === 11) {
+      validateField('phone_number', onlyNumbers)
+    }
+  }
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'phone') {
@@ -67,14 +70,9 @@ export function UserDetailLeft({
   }
 
   const handlePhoneBlur = () => {
-    const raw = form.phone.replace(/\D/g, '')
-    validateField('phone_number', raw)
-    setForm((prev) => ({
-      ...prev,
-      phone: raw, // form 내부 값은 raw 숫자 유지!
-    }))
+    if (form.phone === '') return
+    validateField('phone_number', form.phone)
   }
-
   return (
     <div className="flex flex-col gap-6">
       <Input label="회원ID" name="id" value={form.id} />
@@ -139,6 +137,7 @@ export function UserDetailLeft({
         editable={isEditMode}
         onChange={handlePhoneChange}
         onBlur={handlePhoneBlur}
+        maxLength={13}
       />
       {errors.phone_number && (
         <span className="text-sm text-red-500">{errors.phone_number}</span>

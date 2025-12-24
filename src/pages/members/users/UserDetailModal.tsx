@@ -35,7 +35,14 @@ export function UserDetailModal({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [profileImg, setProfileImg] = useState<string>('')
   const [role, setRole] = useState('')
+  const toAbsoluteUrl = (path?: string | null) => {
+    if (!path) return undefined
+    if (path.startsWith('http')) return path
 
+    const base = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
+    const cleanPath = path.replace(/^\//, '')
+    return `${base}/${cleanPath}`
+  }
   useEffect(() => {
     if (!user) return
 
@@ -49,7 +56,7 @@ export function UserDetailModal({
       gender: user.gender,
       birthday: user.birthday,
       role: ROLE_LABEL[user.role as keyof typeof ROLE_LABEL] ?? '',
-      profile_img_url: user.profile_img_url,
+      profile_img_url: toAbsoluteUrl(user.profile_img_url),
       joinDateTime: dayjs(user.created_at)
         .locale('ko')
         .format('YYYY. M. D. A h:mm:ss'),
@@ -61,7 +68,7 @@ export function UserDetailModal({
       return
     }
 
-    setProfileImg(user.profile_img_url)
+    setProfileImg(toAbsoluteUrl(user.profile_img_url) ?? '')
   }, [user?.profile_img_url])
   const updateUserMutation = useMutateQuery({
     url: SERVICE_URLS.ACCOUNTS.DETAIL(userId!),
@@ -164,7 +171,6 @@ export function UserDetailModal({
 
     updateUserMutation.mutate(parsed.data)
   }
-
   const { isAdmin } = useAuthRole()
   if (isLoading) return <Loading label="회원 정보를 로딩 중입니다..." />
   if (!isOpen) return null
