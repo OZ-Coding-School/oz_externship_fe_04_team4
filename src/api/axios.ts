@@ -27,15 +27,7 @@ async function refreshAccessToken(): Promise<string> {
     throw new AxiosError('토큰이 없어 refresh 불가')
   }
 
-  const res = await refreshClient.post<{ access_token: string }>(
-    SERVICE_URLS.ACCOUNTS.REFRESH,
-    undefined,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  const res = await refreshClient.post(SERVICE_URLS.ACCOUNTS.REFRESH)
   return res.data.access_token
 }
 
